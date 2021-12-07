@@ -9,6 +9,7 @@
             "homepage": "https://victoranw.fr"
         }
     ],
+    "minimum-stability": "dev",
     "homepage": "https://github.com/victoranw/laradoc",
     "keywords": ["Laravel", "Laradoc"],
     "require": {
