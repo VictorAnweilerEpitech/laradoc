@@ -1,0 +1,39 @@
+{
+  "name": "laradoc",
+  "version": "1.0.0",
+  "description": "[![Latest Version on Packagist][ico-version]][link-packagist] [![Total Downloads][ico-downloads]][link-downloads] [![Build Status][ico-travis]][link-travis] [![StyleCI][ico-styleci]][link-styleci]",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npm run development",
+    "development": "mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production"
+  },
+  "devDependencies": {
+    "laravel-mix": "^6.0.27",
+    "resolve-url-loader": "^4.0.0",
+    "sass": "^1.36.0",
+    "sass-loader": "^12.1.0",
+    "vue-loader": "^15.9.7",
+    "vue-template-compiler": "^2.6.14",
+    "webpack": "^5.46.0",
+    "webpack-cli": "^4.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://victoranweiler@bitbucket.org/victoranweiler/laradoc.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/victoranweiler/laradoc#readme",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bootstrap": "^5.0.2",
+    "bootstrap-vue": "^2.21.2",
+    "trumbowyg": "^2.25.1",
+    "vue": "^2.6.14"
+  }
+}

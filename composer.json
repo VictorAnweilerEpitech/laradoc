@@ -1,0 +1,41 @@
+{
+    "name": "victoranw/laradoc",
+    "description": ":package_description",
+    "license": "license",
+    "authors": [
+        {
+            "name": "Victor Anweiler",
+            "email": "victor.anweiler@epitech.eu",
+            "homepage": "https://victoranw.fr"
+        }
+    ],
+    "homepage": "https://github.com/victoranw/laradoc",
+    "keywords": ["Laravel", "Laradoc"],
+    "require": {
+        "illuminate/support": "~7|~8"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "orchestra/testbench": "~5|~6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Victoranw\\Laradoc\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Victoranw\\Laradoc\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Victoranw\\Laradoc\\LaradocServiceProvider"
+            ],
+            "aliases": {
+                "Laradoc": "Victoranw\\Laradoc\\Facades\\Laradoc"
+            }
+        }
+    }
+}
