@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="https://tympanus.net/Freebies/scribbler/scribbler-doc.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+    {{-- MyCss --}}
+    <link href="{{route('laradoc.assets.css', 'client/client.css')}}" rel="stylesheet" />
+
     @yield('head')
 </head>
 <body>
@@ -45,7 +48,9 @@
         </nav>
         <div class="mt-4">
             <div class="wrapper" style="min-height: 82vh;">
-                @yield('content')
+                <div class="w-100">
+                    @yield('content')
+                </div>
             </div>
         </div>
     </div>
