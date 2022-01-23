@@ -1,123 +1,80 @@
 // utilities
 var get = function (selector, scope) {
-    scope = scope ? scope : document;
-    return scope.querySelector(selector);
-  };
-  
-  var getAll = function (selector, scope) {
-    scope = scope ? scope : document;
-    return scope.querySelectorAll(selector);
-  };
-  
-  // toggle tabs on codeblock
-  window.addEventListener("load", function() {
-    // get all tab_containers in the document
-    var tabContainers = getAll(".tab__container");
-  
-    // bind click event to each tab container
-    for (var i = 0; i < tabContainers.length; i++) {
-      get('.tab__menu', tabContainers[i]).addEventListener("click", tabClick);
-    }
-  
-    // each click event is scoped to the tab_container
-    function tabClick (event) {
-      var scope = event.currentTarget.parentNode;
-      var clickedTab = event.target;
-      var tabs = getAll('.tab', scope);
-      var panes = getAll('.tab__pane', scope);
-      var activePane = get(`.${clickedTab.getAttribute('data-tab')}`, scope);
-  
-      // remove all active tab classes
-      for (var i = 0; i < tabs.length; i++) {
-        tabs[i].classList.remove('active');
-      }
-  
-      // remove all active pane classes
-      for (var i = 0; i < panes.length; i++) {
-        panes[i].classList.remove('active');
-      }
-  
-      // apply active classes on desired tab and pane
-      clickedTab.classList.add('active');
-      activePane.classList.add('active');
-    }
-  });
-  
-  //in page scrolling for documentaiton page
-  var btns = getAll('.js-btn');
-  var sections = getAll('.js-section');
+  scope = scope ? scope : document;
+  return scope.querySelector(selector);
+};
 
-  function setActiveToIndexBtn(index) {
-    for (var i = 0; i < btns.length; i++) {
-      btns[i].classList.remove('selected');
-    }
+var getAll = function (selector, scope) {
+  scope = scope ? scope : document;
+  return scope.querySelectorAll(selector);
+};
 
-    btns[index].classList.add('selected');
+//in page scrolling for documentaiton page
+var btns = getAll('.js-btn');
+var sections = getAll('.js-section');
+
+// Add selected on btn clss
+function setActiveToIndexBtn(index) {
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.remove('selected');
   }
-  
-  function smoothScrollTo(element, event) {
-    window.scrollTo({
-      'behavior': 'smooth',
-      'top': element.offsetTop - 20,
-      'left': 0
+
+  btns[index].classList.add('selected');
+}
+
+function smoothScrollTo(element, event) {
+  window.scrollTo({
+    'behavior': 'smooth',
+    'top': element.offsetTop + 50,
+    'left': 0
+  });
+}
+
+// Scroll to specific section
+if (btns.length && sections.length > 0) {
+  btns.forEach((btn, index) => {
+    btn.addEventListener('click', function (event) {
+      smoothScrollTo(sections[index], event);
     });
-  }
-  
-  if (btns.length && sections.length > 0) {
-    btns.forEach((btn, index) => {
-      btn.addEventListener('click', function (event) {
-        smoothScrollTo(sections[index], event);
-      });
-    })
-  }
-  
-  // fix menu to page-top once user starts scrolling
-  function fixedPosition() {
-    var docNav = get('.doc__nav > ul');
-    var sectionTitle = null
-    var sectionTitleScroll = null
-    var findSection = false
-    sections.forEach((section, index) => {
-      sectionTitle = getAll('.section__title', section)[0]
-      sectionTitleScroll = sectionTitle.offsetTop - window.scrollY;
-      if (sectionTitleScroll > 45 && !findSection) {
-        setActiveToIndexBtn(index - 1 > 0 ? index - 1 : 0)
-        findSection = true
-      }
-    })
-    if (!findSection) {
-      setActiveToIndexBtn(sections.length - 1)
+  })
+}
 
+// ScrollSpy section
+let positionRect = null
+let indexSectionFound = 1
+function activeItem() {
+  indexSectionFound = 1
+  sections.forEach((section, index) => {
+    positionRect = section.getBoundingClientRect()
+    if (positionRect.top < 50) {
+      indexSectionFound = index
     }
+  })
+  setActiveToIndexBtn(indexSectionFound);
+}
 
-    if (docNav) {
-      if (window.pageYOffset > 63) {
-        docNav.classList.add('fixed');
-        docNav.classList.add('col-2');
-      } else {
-        docNav.classList.remove('fixed');
-        docNav.classList.remove('col-2');
-      }
-    }
+window.addEventListener('scroll', function (event) {
+  activeItem()
+  displayBtnScrollTop()
+});
+activeItem()
+
+// ScrollTop Btn
+let elBtnScrollTop = get('.btn-scrolltop')
+
+function displayBtnScrollTop() {
+  if (window.scrollY > 450) {
+    elBtnScrollTop.classList.remove('d-none');
+  } else {
+    elBtnScrollTop.classList.add('d-none');
   }
-  window.addEventListener('scroll', function () {
-    fixedPosition()
+}
+displayBtnScrollTop()
+
+elBtnScrollTop.addEventListener('click', function (event) {
+  window.scrollTo({
+    'behavior': 'smooth',
+    'top': 0,
+    'left': 0
   });
-  fixedPosition()
-  
-  // responsive navigation
-  var topNav = get('.menu');
-  var icon = get('.toggle');
-  
-  window.addEventListener('load', function(){
-    function showNav() {
-      if (topNav.className === 'menu') {
-        topNav.className += ' responsive';
-        icon.className += ' open';
-      } else {
-        topNav.className = 'menu';
-        icon.classList.remove('open');
-      }
-    }
-    icon.addEventListener('click', showNav);
-  });
+});

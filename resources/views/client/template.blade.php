@@ -10,10 +10,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="icon" type="image/png" href="{{config('laradoc.logo')}}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900" rel="stylesheet">
-    <link rel="stylesheet" href="https://tympanus.net/Freebies/scribbler/scribbler-global.css">
-    <link rel="stylesheet" href="https://tympanus.net/Freebies/scribbler/scribbler-doc.css">
+    {{-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> --}}
+    {{-- <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700,800,900" rel="stylesheet"> --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     {{-- MyCss --}}
@@ -23,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-        <div class="doc__bg"></div>
+        {{-- <div class="doc__bg"></div>
         <nav class="header">
             <h1 class="logo mb-0 d-flex align-items-center">
                 <a href="{{route('laradoc.client.home')}}" class="d-flex align-items-center text-dark">
@@ -52,10 +50,42 @@
                     @yield('content')
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
-    <footer class="footer" style="background-color: #34495e !important;">Documentation | © {{\Carbon\Carbon::now()->year}}</footer>
+    {{-- <footer class="footer" style="background-color: #34495e !important;">Documentation | © {{\Carbon\Carbon::now()->year}}</footer> --}}
+
+
+
+
+
+    <div class="container">
+        <nav class="py-3 mb-2 border-bottom d-flex justify-content-between align-items-center">
+            <span class="logo mb-0 d-flex align-items-center">
+                <a href="{{route('laradoc.client.home')}}" style="text-decoration: none" class="d-flex align-items-center text-dark h5 mb-0">
+                    <img style="margin-right: 15px;" src="{{config('laradoc.logo')}}" height="30" />
+                    <span class="font-weight-bold">{{config('laradoc.name') ?? 'LaraDoc'}}</span>
+                    <span class="logo__thin ml-2">Doc</span>
+                </a>
+            </span>
+            <ul class="d-flex align-items-center pl-0 mb-0" style="list-style-type: none">
+                @php
+                    $user = Auth::guard(config('laradoc.auth.guard'))->user();
+                    $columnName = config('laradoc.auth.loginColumn');
+                    $permission = \Victoranw\Laradoc\Models\DocumentationPermission::where('user_id', Auth::guard(config('laradoc.auth.guard'))->user()->id)->first();
+                @endphp
+                <li class="ml-4"><a class="text-dark" href="{{route('laradoc.client.home')}}">Accueil</a></li>
+                @if ($permission->admin)
+                    <li class="ml-4"><a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/structure'}}">Admin</a></li>
+                @endif
+                <li class="ml-4">{{$user->$columnName}}</li>
+                <li class="ml-4"><a class="text-dark" href="{{route('laradoc.back.auth.logout')}}"><i class="fas fa-sign-out-alt"></i></a></li>
+            </ul>
+        </nav>
+        @yield('content')
+    </div>
+
+
 
     <script src="{{route('laradoc.assets.js', 'client/template.js')}}"></script>
 

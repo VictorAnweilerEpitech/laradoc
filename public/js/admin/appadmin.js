@@ -66780,8 +66780,8 @@ Vue.compile = compileToFunctions;
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/public/js/admin/appadmin": 0,
-/******/ 			"public/css/components/Tree": 0,
 /******/ 			"public/css/client/client": 0,
+/******/ 			"public/css/components/Tree": 0,
 /******/ 			"public/css/admin/admin": 0
 /******/ 		};
 /******/ 		
@@ -66830,10 +66830,10 @@ Vue.compile = compileToFunctions;
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["public/css/components/Tree","public/css/client/client","public/css/admin/admin"], () => (__webpack_require__("./resources/assets/js/admin/appadmin.js")))
-/******/ 	__webpack_require__.O(undefined, ["public/css/components/Tree","public/css/client/client","public/css/admin/admin"], () => (__webpack_require__("./resources/assets/scss/admin.scss")))
-/******/ 	__webpack_require__.O(undefined, ["public/css/components/Tree","public/css/client/client","public/css/admin/admin"], () => (__webpack_require__("./resources/assets/scss/client.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["public/css/components/Tree","public/css/client/client","public/css/admin/admin"], () => (__webpack_require__("./resources/assets/scss/Components/Tree.scss")))
+/******/ 	__webpack_require__.O(undefined, ["public/css/client/client","public/css/components/Tree","public/css/admin/admin"], () => (__webpack_require__("./resources/assets/js/admin/appadmin.js")))
+/******/ 	__webpack_require__.O(undefined, ["public/css/client/client","public/css/components/Tree","public/css/admin/admin"], () => (__webpack_require__("./resources/assets/scss/admin.scss")))
+/******/ 	__webpack_require__.O(undefined, ["public/css/client/client","public/css/components/Tree","public/css/admin/admin"], () => (__webpack_require__("./resources/assets/scss/client.scss")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["public/css/client/client","public/css/components/Tree","public/css/admin/admin"], () => (__webpack_require__("./resources/assets/scss/Components/Tree.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()
