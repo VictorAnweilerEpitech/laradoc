@@ -19,11 +19,13 @@ var btns = getAll('.js-btn');
 var sections = getAll('.js-section'); // Add selected on btn clss
 
 function setActiveToIndexBtn(index) {
-  for (var i = 0; i < btns.length; i++) {
-    btns[i].classList.remove('selected');
-  }
+  if (btns.length > 0) {
+    for (var i = 0; i < btns.length; i++) {
+      btns[i].classList.remove('selected');
+    }
 
-  btns[index].classList.add('selected');
+    btns[index].classList.add('selected');
+  }
 }
 
 function smoothScrollTo(element, event) {
@@ -75,13 +77,15 @@ function displayBtnScrollTop() {
   }
 }
 
-displayBtnScrollTop();
-elBtnScrollTop.addEventListener('click', function (event) {
-  window.scrollTo({
-    'behavior': 'smooth',
-    'top': 0,
-    'left': 0
+if (elBtnScrollTop) {
+  displayBtnScrollTop();
+  elBtnScrollTop.addEventListener('click', function (event) {
+    window.scrollTo({
+      'behavior': 'smooth',
+      'top': 0,
+      'left': 0
+    });
   });
-});
+}
 /******/ })()
 ;

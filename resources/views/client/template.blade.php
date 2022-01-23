@@ -21,68 +21,38 @@
 </head>
 <body>
     <div id="app">
-        {{-- <div class="doc__bg"></div>
-        <nav class="header">
-            <h1 class="logo mb-0 d-flex align-items-center">
-                <a href="{{route('laradoc.client.home')}}" class="d-flex align-items-center text-dark">
-                    <img style="margin-right: 15px;" src="{{config('laradoc.logo')}}" height="30" />
-                    {{config('laradoc.name') ?? 'LaraDoc'}} <span class="logo__thin ml-2">Doc</span>
-                </a>
-            </h1>
-            <ul class="menu">
-                @php
-                    $user = Auth::guard(config('laradoc.auth.guard'))->user();
-                    $columnName = config('laradoc.auth.loginColumn');
-                    $permission = \Victoranw\Laradoc\Models\DocumentationPermission::where('user_id', Auth::guard(config('laradoc.auth.guard'))->user()->id)->first();
-                @endphp
-                <div class="menu__item toggle"><span></span></div>
-                <li class="menu__item"><a href="{{route('laradoc.client.home')}}" class="link link--dark"><i class="fa fa-home"></i> Accueil</a></li>
-                @if ($permission->admin)
-                    <li class="menu__item"><a href="{{config('laradoc.url_prefix').'/admin/structure'}}" class="link link--dark"><i class="fas fa-tools" style="margin-right: 5px;"></i>Admin</a></li>
-                @endif
-                <li class="menu__item"><i class="fas fa-user" style="margin-right: 5px;"></i>{{$user->$columnName}}</li>
-                <li class="menu__item"><a href="{{route('laradoc.back.auth.logout')}}" class="link link--dark"><i class="fas fa-sign-out-alt"></i></a></li>
-            </ul>
-        </nav>
-        <div class="mt-4">
-            <div class="wrapper" style="min-height: 82vh;">
-                <div class="w-100">
-                    @yield('content')
-                </div>
-            </div>
-        </div> --}}
-    </div>
 
-    {{-- <footer class="footer" style="background-color: #34495e !important;">Documentation | © {{\Carbon\Carbon::now()->year}}</footer> --}}
+        {{-- <footer class="footer" style="background-color: #34495e !important;">Documentation | © {{\Carbon\Carbon::now()->year}}</footer> --}}
 
 
 
 
 
-    <div class="container">
-        <nav class="py-3 mb-2 border-bottom d-flex justify-content-between align-items-center">
-            <span class="logo mb-0 d-flex align-items-center">
-                <a href="{{route('laradoc.client.home')}}" style="text-decoration: none" class="d-flex align-items-center text-dark h5 mb-0">
-                    <img style="margin-right: 15px;" src="{{config('laradoc.logo')}}" height="30" />
-                    <span class="font-weight-bold">{{config('laradoc.name') ?? 'LaraDoc'}}</span>
-                    <span class="logo__thin ml-2">Doc</span>
-                </a>
-            </span>
-            <ul class="d-flex align-items-center pl-0 mb-0" style="list-style-type: none">
-                @php
-                    $user = Auth::guard(config('laradoc.auth.guard'))->user();
-                    $columnName = config('laradoc.auth.loginColumn');
-                    $permission = \Victoranw\Laradoc\Models\DocumentationPermission::where('user_id', Auth::guard(config('laradoc.auth.guard'))->user()->id)->first();
-                @endphp
-                <li class="ml-4"><a class="text-dark" href="{{route('laradoc.client.home')}}">Accueil</a></li>
-                @if ($permission->admin)
-                    <li class="ml-4"><a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/structure'}}">Admin</a></li>
-                @endif
-                <li class="ml-4">{{$user->$columnName}}</li>
-                <li class="ml-4"><a class="text-dark" href="{{route('laradoc.back.auth.logout')}}"><i class="fas fa-sign-out-alt"></i></a></li>
-            </ul>
-        </nav>
-        @yield('content')
+        <div class="container">
+            <nav class="py-3 mb-2 border-bottom d-flex justify-content-between align-items-center">
+                <span class="logo mb-0 d-flex align-items-center">
+                    <a href="{{route('laradoc.client.home')}}" style="text-decoration: none" class="d-flex align-items-center text-dark h5 mb-0">
+                        <img style="margin-right: 15px;" src="{{config('laradoc.logo')}}" height="30" />
+                        <span class="font-weight-bold">{{config('laradoc.name') ?? 'LaraDoc'}}</span>
+                        <span class="logo__thin ml-2">Doc</span>
+                    </a>
+                </span>
+                <ul class="d-flex align-items-center pl-0 mb-0" style="list-style-type: none">
+                    @php
+                        $user = Auth::guard(config('laradoc.auth.guard'))->user();
+                        $columnName = config('laradoc.auth.loginColumn');
+                        $permission = \Victoranw\Laradoc\Models\DocumentationPermission::where('user_id', Auth::guard(config('laradoc.auth.guard'))->user()->id)->first();
+                    @endphp
+                    <li class="ml-4"><a class="text-dark" href="{{route('laradoc.client.home')}}">Accueil</a></li>
+                    @if ($permission->admin)
+                        <li class="ml-4"><a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/structure'}}">Admin</a></li>
+                    @endif
+                    <li class="ml-4">{{$user->$columnName}}</li>
+                    <li class="ml-4"><a class="text-dark" href="{{route('laradoc.back.auth.logout')}}"><i class="fas fa-sign-out-alt"></i></a></li>
+                </ul>
+            </nav>
+            @yield('content')
+        </div>
     </div>
 
 
