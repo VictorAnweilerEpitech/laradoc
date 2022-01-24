@@ -14,7 +14,7 @@
             <div class="pb-1 mt-2">
                 @foreach ($categories as $category)
                     <div class="text-center d-inline-block mt-3">
-                        <a href="{{route('laradoc.client.page', $category->id)}}" class="bg-light px-3 py-1 mr-1 font-weight-light my-rounded">
+                        <a href="{{route('laradoc.client.page', $category->id)}}" class="bg-light px-3 py-1 mr-1 font-weight-light my-rounded" style="text-decoration: none;">
                             <small class="w-100 mb-0 text-secondary">{{$category->name}}</small>
                         </a>
                     </div>

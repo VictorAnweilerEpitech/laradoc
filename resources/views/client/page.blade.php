@@ -89,7 +89,9 @@
             <div class="sticky-top">
                 <div class="pt-3">
                     <h1>{{$category->name}}</h1>
-                    <hr>
+                    @if ($category->parent || count($children) > 0)
+                        <hr>
+                    @endif
                     <ul class="pl-0 mb-0" style="list-style-type: none;">
                         @if ($category->parent)
                             <li class="js-btn">
@@ -109,12 +111,17 @@
                 <div class="doc_nav">
                     <ul class="pl-0" style="list-style-type: none">
                         @if (isset($category))
-                            @foreach ($category->pages as $index => $CategoryPage)
+                            @foreach ($category->pages as $index => $categoryPage)
                                 <li class="d-flex align-items-center js-btn mb-3 {{$index == 0 ? 'selected' : ''}} pr-5" style="cursor: pointer">
                                     <div class="square-selected"></div>
-                                    {{$CategoryPage->name}}
+                                    {{$categoryPage->name}}
                                 </li>
                             @endforeach
+                        @endif
+                        @if (count($category->pages) <= 0)
+                            <small class="font-weight-light text-secondary">
+                                Aucune page
+                            </small>
                         @endif
                     </ul>
                 </div>
@@ -123,6 +130,15 @@
         <div class="col-8">
             <div class="mt-3">
                 <div class="js-section"></div>
+                @if (count($category->pages) <= 0)
+                <div class="bg-light p-3 border my-rounded text-center shadow">
+                    <img height="75" class="mt-2" src="https://cdn-icons-png.flaticon.com/512/869/869078.png" />
+                    <h4 class="font-weight-light mt-2 mb-1">
+                        Aucun contenu disponible
+                    </h4>
+                    <p class="text-secondary font-weight-light">Cette page ne possède pas de contenu</p>
+                </div>
+                @endif
                 @foreach ($category->pages as $index => $page)
                     <section class="my-5 js-section" style="min-height: 50vh;">
                         <h3 class="section_title mb-4">
