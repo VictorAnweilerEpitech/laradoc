@@ -2489,6 +2489,98 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2503,43 +2595,50 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      tree: {},
+      startData: {},
       category: null,
+      subCategory: null,
       newCategoryName: "",
-      updateCategoryName: "",
+      newSubCategoryName: "",
       pages: [],
+      categorySelected: null,
+      subCategorySelectedModal: null,
       pageSelected: null
     };
   },
-  watch: {
-    category: function category(value) {
-      this.updateCategoryName = value.name;
-    }
-  },
+  // watch: {
+  //     category: function(value) {
+  //         this.getPages(value.id)
+  //     }
+  // },
   methods: {
-    logClick: function logClick(node) {
-      if (node.id) {
-        this.getCategory(node.id);
-      } else {
-        this.category = this.tree[0];
-      }
-    },
-    getStructure: function getStructure() {
+    // logClick(node) {
+    //     if (node.id) {
+    //         this.getCategory(node.id);
+    //     } else {
+    //         this.category = this.tree[0]
+    //     }
+    // },
+    getStartStructure: function getStartStructure() {
       var _this = this;
 
       axios.post(this.baseUrl + '/structure/browse').then(function (response) {
-        _this.tree = response.data;
+        _this.startData = response.data;
       });
     },
     getCategory: function getCategory(id) {
       var _this2 = this;
 
       this.pages = [];
-      axios.post(this.baseUrl + '/structure/' + id + '/voir').then(function (response) {
-        _this2.category = response.data;
 
-        _this2.getPages(id);
-      });
+      if (id) {
+        axios.post(this.baseUrl + '/structure/' + id + '/voir').then(function (response) {
+          _this2.subCategory = response.data;
+
+          _this2.getPages(id);
+        });
+      } else {// this.listCateg = this.startData.children
+      }
     },
     getPages: function getPages(categoryId) {
       var _this3 = this;
@@ -2553,53 +2652,69 @@ __webpack_require__.r(__webpack_exports__);
 
       axios.post(this.baseUrl + '/structure/create', {
         name: this.newCategoryName,
-        parent_id: this.category && this.category.id ? this.category.id : null
+        parent_id: null
       }).then(function (response) {
-        _this4.newCategoryName = "";
+        _this4.getStartStructure();
 
-        _this4.getStructure();
+        _this4.newCategoryName = null;
 
         _this4.$bvModal.hide('modal-add-category');
       });
     },
-    updateCategory: function updateCategory(id) {
+    createSubCategory: function createSubCategory() {
       var _this5 = this;
 
-      axios.post(this.baseUrl + '/structure/' + id + '/update', {
-        name: this.updateCategoryName
+      var copySubCategory = this.subCategory;
+      axios.post(this.baseUrl + '/structure/create', {
+        name: this.newSubCategoryName,
+        parent_id: this.subCategory && this.subCategory.id ? this.subCategory.id : null
       }).then(function (response) {
-        _this5.updateCategoryName = "";
+        _this5.getCategory(copySubCategory.id);
 
-        _this5.getStructure();
+        _this5.newSubCategoryName = null;
 
-        _this5.getCategory(id);
+        _this5.$bvModal.hide('modal-add-subcategory');
+      });
+    },
+    updateCategory: function updateCategory(id) {
+      var _this6 = this;
 
-        _this5.$bvModal.hide('modal-update-category');
+      axios.post(this.baseUrl + '/structure/' + id + '/update', {
+        name: this.subCategorySelectedModal.name
+      }).then(function (response) {
+        _this6.subCategorySelectedModal = null;
+
+        _this6.getStartStructure();
+
+        _this6.getCategory(id);
+
+        _this6.$bvModal.hide('modal-update-category');
       });
     },
     deleteCategory: function deleteCategory(id) {
-      var _this6 = this;
+      var _this7 = this;
 
-      axios.post(this.baseUrl + '/page/' + id + '/delete').then(function (response) {
-        _this6.category = null;
+      console.log(id);
+      axios.post(this.baseUrl + '/structure/' + id + '/delete').then(function (response) {
+        _this7.subCategory = null;
 
-        _this6.getStructure();
+        _this7.getStartStructure();
 
-        _this6.$bvModal.hide('modal-delete-category');
+        _this7.$bvModal.hide('modal-delete-category');
       });
     },
     deletePage: function deletePage(id) {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.post(this.baseUrl + '/page/' + id + '/delete').then(function (response) {
-        _this7.getPages(_this7.category.id);
+        _this8.getPages(_this8.category.id);
 
-        _this7.$bvModal.hide('modal-delete-page');
+        _this8.$bvModal.hide('modal-delete-page');
       });
     }
   },
   mounted: function mounted() {
-    this.getStructure();
+    this.getStartStructure();
   }
 });
 
@@ -50858,7 +50973,7 @@ var render = function() {
                   }
                 },
                 [
-                  _c("h3", [_vm._v("Ajouter une catégorie")]),
+                  _c("h3", [_vm._v("Ajouter un chapitre")]),
                   _vm._v(" "),
                   _c("input", {
                     directives: [
@@ -50897,13 +51012,58 @@ var render = function() {
                 "b-modal",
                 {
                   attrs: {
+                    id: "modal-add-subcategory",
+                    "hide-header": "",
+                    "hide-footer": ""
+                  }
+                },
+                [
+                  _c("h3", [_vm._v("Ajouter une catégorie")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.newSubCategoryName,
+                        expression: "newSubCategoryName"
+                      }
+                    ],
+                    staticClass: "form-control mt-3 mb-2",
+                    attrs: { placeholder: "Nom" },
+                    domProps: { value: _vm.newSubCategoryName },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.newSubCategoryName = $event.target.value
+                      }
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-sm bg-my-primary text-white",
+                      on: { click: _vm.createSubCategory }
+                    },
+                    [_vm._v("Ajouter")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "b-modal",
+                {
+                  attrs: {
                     id: "modal-update-category",
                     "hide-header": "",
                     "hide-footer": ""
                   }
                 },
                 [
-                  _vm.category
+                  _vm.subCategorySelectedModal
                     ? [
                         _c("h3", [_vm._v("Modification")]),
                         _vm._v(" "),
@@ -50912,19 +51072,25 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.updateCategoryName,
-                              expression: "updateCategoryName"
+                              value: _vm.subCategorySelectedModal.name,
+                              expression: "subCategorySelectedModal.name"
                             }
                           ],
                           staticClass: "form-control mt-3 mb-2",
                           attrs: { placeholder: "Nom" },
-                          domProps: { value: _vm.updateCategoryName },
+                          domProps: {
+                            value: _vm.subCategorySelectedModal.name
+                          },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.updateCategoryName = $event.target.value
+                              _vm.$set(
+                                _vm.subCategorySelectedModal,
+                                "name",
+                                $event.target.value
+                              )
                             }
                           }
                         }),
@@ -50935,7 +51101,9 @@ var render = function() {
                             staticClass: "btn btn-sm bg-my-primary text-white",
                             on: {
                               click: function($event) {
-                                return _vm.updateCategory(_vm.category.id)
+                                return _vm.updateCategory(
+                                  _vm.subCategorySelectedModal.id
+                                )
                               }
                             }
                           },
@@ -50957,13 +51125,15 @@ var render = function() {
                   }
                 },
                 [
-                  _vm.category
+                  _vm.subCategorySelectedModal
                     ? [
                         _c("h3", [_vm._v("Confirmation")]),
                         _vm._v(" "),
                         _c("p", { staticClass: "mb-2" }, [
                           _vm._v("Êtes-vous sûr de vouloir supprimer "),
-                          _c("b", [_vm._v(_vm._s(_vm.category.name))]),
+                          _c("b", [
+                            _vm._v(_vm._s(_vm.subCategorySelectedModal.name))
+                          ]),
                           _vm._v(" ?")
                         ]),
                         _vm._v(" "),
@@ -50973,7 +51143,9 @@ var render = function() {
                             attrs: { variant: "danger" },
                             on: {
                               click: function($event) {
-                                return _vm.deleteCategory(_vm.category.id)
+                                return _vm.deleteCategory(
+                                  _vm.subCategorySelectedModal.id
+                                )
                               }
                             }
                           },
@@ -51052,22 +51224,22 @@ var render = function() {
                               ? _vm.pageSelected.id
                               : null,
                           "parent-id":
-                            _vm.category && _vm.category.id
-                              ? _vm.category.id
+                            _vm.subCategory && _vm.subCategory.id
+                              ? _vm.subCategory.id
                               : null
                         },
                         on: {
                           "new-page": function($event) {
                             return _vm.getPages(
-                              _vm.category && _vm.category.id
-                                ? _vm.category.id
+                              _vm.subCategory && _vm.subCategory.id
+                                ? _vm.subCategory.id
                                 : null
                             )
                           },
                           "change-title": function($event) {
                             return _vm.getPages(
-                              _vm.category && _vm.category.id
-                                ? _vm.category.id
+                              _vm.subCategory && _vm.subCategory.id
+                                ? _vm.subCategory.id
                                 : null
                             )
                           }
@@ -51079,263 +51251,501 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-4" }, [
+              _c("h3", { staticClass: "mt-2" }, [_vm._v("Gestion du contenu")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "font-weight-light text-secondary" }, [
+                _vm._v("Contenu de la documentation")
+              ]),
+              _vm._v(" "),
+              _c("hr"),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "mb-3" },
+                [
+                  _vm._l(_vm.startData.children, function(categ, index) {
+                    return _c(
+                      "div",
+                      {
+                        key: "categ-" + index,
+                        staticClass: "d-inline-block text-center"
+                      },
+                      [
+                        _c(
+                          "span",
+                          {
+                            staticClass:
+                              "px-3 py-1 mr-1 font-weight-light my-rounded",
+                            class:
+                              _vm.categorySelected &&
+                              _vm.categorySelected.id == categ.id
+                                ? "bg-secondary text-white"
+                                : "bg-light text-secondary",
+                            staticStyle: { cursor: "pointer" },
+                            on: {
+                              click: function($event) {
+                                _vm.getCategory(categ.id)
+                                _vm.categorySelected = categ
+                              }
+                            }
+                          },
+                          [
+                            _c("small", { staticClass: "w-100 mb-0" }, [
+                              _vm._v(_vm._s(categ.name))
+                            ])
+                          ]
+                        )
+                      ]
+                    )
+                  }),
+                  _vm._v(" "),
                   _c(
-                    "div",
-                    { staticClass: "p-4 bg-light rounded border" },
+                    "span",
+                    {
+                      staticClass:
+                        "px-3 py-1 mr-1 font-weight-light my-rounded",
+                      staticStyle: { cursor: "pointer" },
+                      on: {
+                        click: function($event) {
+                          return _vm.$bvModal.show("modal-add-category")
+                        }
+                      }
+                    },
                     [
-                      _c("tree", {
-                        attrs: { "tree-data": _vm.tree },
-                        on: { "node-click": _vm.logClick }
-                      })
-                    ],
-                    1
+                      _c("small", { staticClass: "w-100 mb-0" }, [
+                        _c("i", { staticClass: "fas fa-plus" })
+                      ])
+                    ]
                   )
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "col-8" },
-                  [
-                    _vm.category
-                      ? [_c("h4", [_vm._v(_vm._s(_vm.category.name))])]
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _vm.subCategory
+                ? _c("div", { staticClass: "row" }, [
+                    _vm.subCategory
+                      ? _c(
+                          "div",
+                          { staticClass: "mb-3 d-flex align-items-center" },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "mr-2" },
+                              [
+                                _c(
+                                  "b-dropdown",
+                                  {
+                                    attrs: { variant: "light", size: "sm" },
+                                    scopedSlots: _vm._u(
+                                      [
+                                        {
+                                          key: "button-content",
+                                          fn: function() {
+                                            return undefined
+                                          },
+                                          proxy: true
+                                        }
+                                      ],
+                                      null,
+                                      false,
+                                      1109824379
+                                    )
+                                  },
+                                  [
+                                    _vm._v(" "),
+                                    _c("b-dropdown-item", [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-sm text-dark",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.subCategorySelectedModal = Object.assign(
+                                                {},
+                                                _vm.categorySelected
+                                              )
+                                              _vm.$bvModal.show(
+                                                "modal-update-category"
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                Editer\n                            "
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("b-dropdown-item", [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-sm text-danger",
+                                          on: {
+                                            click: function($event) {
+                                              _vm.subCategorySelectedModal = Object.assign(
+                                                {},
+                                                _vm.categorySelected
+                                              )
+                                              _vm.$bvModal.show(
+                                                "modal-delete-category"
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                                Supprimer\n                            "
+                                          )
+                                        ]
+                                      )
+                                    ])
+                                  ],
+                                  1
+                                )
+                              ],
+                              1
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "d-flex align-items-center" },
+                              [
+                                _vm.subCategory.parent_id
+                                  ? _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-sm",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.getCategory(
+                                              _vm.subCategory.parent_id
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fas fa-arrow-left"
+                                        })
+                                      ]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("h4", { staticClass: "mb-0" }, [
+                                  _vm._v(_vm._s(_vm.subCategory.name))
+                                ])
+                              ]
+                            )
+                          ]
+                        )
                       : _vm._e(),
                     _vm._v(" "),
                     _c(
-                      "b-button",
-                      {
-                        directives: [
-                          {
-                            name: "b-modal",
-                            rawName: "v-b-modal.modal-add-category",
-                            modifiers: { "modal-add-category": true }
-                          }
-                        ],
-                        staticClass:
-                          "bg-my-primary text-white border-my-primary"
-                      },
-                      [_vm._v("Ajouter une catégorie")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-button",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.category && _vm.category.id,
-                            expression: "category && category.id"
-                          },
-                          {
-                            name: "b-modal",
-                            rawName: "v-b-modal.modal-update-category",
-                            modifiers: { "modal-update-category": true }
-                          }
-                        ],
-                        staticClass:
-                          "border-my-primary text-my-primary bg-white"
-                      },
-                      [_vm._v("Modifier")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "b-button",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.category && _vm.category.id,
-                            expression: "category && category.id"
-                          },
-                          {
-                            name: "b-modal",
-                            rawName: "v-b-modal.modal-delete-category",
-                            modifiers: { "modal-delete-category": true }
-                          }
-                        ],
-                        attrs: { variant: "danger" }
-                      },
-                      [_vm._v("Supprimer")]
-                    ),
-                    _vm._v(" "),
-                    _vm.category && _vm.category.id && _vm.pages
-                      ? _c(
-                          "div",
-                          { staticClass: "mt-3" },
-                          [
-                            _c(
-                              "b-button",
+                      "div",
+                      { staticClass: "col-4" },
+                      [
+                        _vm._l(_vm.subCategory.children, function(
+                          child,
+                          index
+                        ) {
+                          return _c(
+                            "div",
+                            {
+                              key: "child-menu-" + index,
+                              staticClass: "p-2 border-bottom",
+                              staticStyle: { cursor: "pointer" }
+                            },
+                            [
+                              _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "d-flex align-items-center justify-content-between"
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "flex-fill",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.getCategory(child.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _vm._v(
+                                        "\n                            " +
+                                          _vm._s(child.name) +
+                                          "\n                        "
+                                      )
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c("div", [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-sm bg-light border-light text-dark",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.subCategorySelectedModal = Object.assign(
+                                              {},
+                                              child
+                                            )
+                                            _vm.$bvModal.show(
+                                              "modal-update-category"
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_c("i", { staticClass: "fas fa-pen" })]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-sm bg-light border-light text-danger",
+                                        on: {
+                                          click: function($event) {
+                                            _vm.subCategorySelectedModal = Object.assign(
+                                              {},
+                                              child
+                                            )
+                                            _vm.$bvModal.show(
+                                              "modal-delete-category"
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [_c("i", { staticClass: "fas fa-trash" })]
+                                    )
+                                  ])
+                                ]
+                              )
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _vm.subCategory.children.length <= 0
+                          ? _c(
+                              "div",
                               {
-                                directives: [
-                                  {
-                                    name: "b-modal",
-                                    rawName: "v-b-modal.modal-manage-page",
-                                    modifiers: { "modal-manage-page": true }
-                                  }
-                                ],
-                                staticClass: "btn btn-success",
-                                on: {
-                                  click: function($event) {
-                                    _vm.pageSelected = null
-                                  }
-                                }
+                                staticClass:
+                                  "p-2 text-secondary font-weight-light"
                               },
                               [
-                                _c("small", [
-                                  _vm._v(
-                                    "\n                            Ajouter une page\n                        "
-                                  )
-                                ])
+                                _c(
+                                  "small",
+                                  {
+                                    staticClass:
+                                      "text-secondary font-weight-light"
+                                  },
+                                  [_vm._v("Aucune catégorie")]
+                                )
                               ]
-                            ),
-                            _vm._v(" "),
-                            _vm.pages.length > 0
-                              ? _c(
-                                  "table",
-                                  { staticClass: "table mt-3 border bg-white" },
-                                  [
-                                    _c("thead", [
-                                      _c("tr", [
-                                        _c("th", { attrs: { scope: "col" } }, [
-                                          _vm._v("Nom")
-                                        ]),
-                                        _vm._v(" "),
-                                        _c(
-                                          "th",
-                                          {
-                                            attrs: { scope: "col text-right" }
-                                          },
-                                          [_vm._v("Action")]
-                                        )
-                                      ])
+                            )
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c(
+                          "b-button",
+                          {
+                            directives: [
+                              {
+                                name: "b-modal",
+                                rawName: "v-b-modal.modal-add-subcategory",
+                                modifiers: { "modal-add-subcategory": true }
+                              }
+                            ],
+                            staticClass: "bg-dark mt-2",
+                            attrs: { size: "sm" }
+                          },
+                          [
+                            _c("small", [
+                              _vm._v("\n                        Ajouter "),
+                              _c("i", { staticClass: "fas fa-plus ml-1" })
+                            ])
+                          ]
+                        )
+                      ],
+                      2
+                    ),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-8" }, [
+                      _vm.subCategory && _vm.subCategory.id
+                        ? _c("div", { staticClass: "mt-3" }, [
+                            _c(
+                              "table",
+                              { staticClass: "table mt-3 border bg-white" },
+                              [
+                                _c("thead", [
+                                  _c("tr", [
+                                    _c("th", { attrs: { scope: "col" } }, [
+                                      _vm._v("Nom")
                                     ]),
                                     _vm._v(" "),
                                     _c(
-                                      "tbody",
-                                      [
-                                        _vm._l(_vm.pages, function(
-                                          page,
-                                          index
-                                        ) {
-                                          return [
-                                            _c("tr", { key: index }, [
+                                      "th",
+                                      { attrs: { scope: "col text-right" } },
+                                      [_vm._v("Action")]
+                                    )
+                                  ])
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "tbody",
+                                  [
+                                    _vm._l(_vm.pages, function(page, index) {
+                                      return [
+                                        _c("tr", { key: index }, [
+                                          _c(
+                                            "td",
+                                            { staticClass: "bg-white" },
+                                            [_vm._v(_vm._s(page.name))]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "td",
+                                            { staticClass: "text-right" },
+                                            [
                                               _c(
-                                                "td",
-                                                { staticClass: "bg-white" },
-                                                [_vm._v(_vm._s(page.name))]
+                                                "b-button",
+                                                {
+                                                  directives: [
+                                                    {
+                                                      name: "b-modal",
+                                                      rawName:
+                                                        "v-b-modal.modal-manage-page",
+                                                      modifiers: {
+                                                        "modal-manage-page": true
+                                                      }
+                                                    }
+                                                  ],
+                                                  staticClass:
+                                                    "btn bg-light border-light text-dark",
+                                                  attrs: { size: "sm" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.pageSelected = page
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass: "fas fa-eye"
+                                                  })
+                                                ]
                                               ),
                                               _vm._v(" "),
                                               _c(
-                                                "td",
-                                                { staticClass: "text-right" },
+                                                "b-button",
+                                                {
+                                                  directives: [
+                                                    {
+                                                      name: "b-modal",
+                                                      rawName:
+                                                        "v-b-modal.modal-delete-page",
+                                                      modifiers: {
+                                                        "modal-delete-page": true
+                                                      }
+                                                    }
+                                                  ],
+                                                  staticClass:
+                                                    "btn bg-light border-light text-danger",
+                                                  attrs: { size: "sm" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      _vm.pageSelected = page
+                                                    }
+                                                  }
+                                                },
                                                 [
-                                                  _c(
-                                                    "b-button",
-                                                    {
-                                                      directives: [
-                                                        {
-                                                          name: "b-modal",
-                                                          rawName:
-                                                            "v-b-modal.modal-manage-page",
-                                                          modifiers: {
-                                                            "modal-manage-page": true
-                                                          }
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "btn bg-white border text-dark",
-                                                      attrs: { size: "sm" },
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          _vm.pageSelected = page
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "fas fa-eye"
-                                                      }),
-                                                      _vm._v(
-                                                        " Voir\n                                        "
-                                                      )
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "b-button",
-                                                    {
-                                                      directives: [
-                                                        {
-                                                          name: "b-modal",
-                                                          rawName:
-                                                            "v-b-modal.modal-delete-page",
-                                                          modifiers: {
-                                                            "modal-delete-page": true
-                                                          }
-                                                        }
-                                                      ],
-                                                      staticClass:
-                                                        "btn bg-danger border text-white",
-                                                      attrs: { size: "sm" },
-                                                      on: {
-                                                        click: function(
-                                                          $event
-                                                        ) {
-                                                          _vm.pageSelected = page
-                                                        }
-                                                      }
-                                                    },
-                                                    [
-                                                      _c("i", {
-                                                        staticClass:
-                                                          "fas fa-trash"
-                                                      }),
-                                                      _vm._v(
-                                                        " Supprimer\n                                        "
-                                                      )
-                                                    ]
-                                                  )
-                                                ],
-                                                1
+                                                  _c("i", {
+                                                    staticClass: "fas fa-trash"
+                                                  })
+                                                ]
                                               )
-                                            ])
-                                          ]
-                                        })
-                                      ],
-                                      2
-                                    )
-                                  ]
+                                            ],
+                                            1
+                                          )
+                                        ])
+                                      ]
+                                    }),
+                                    _vm._v(" "),
+                                    _vm.pages.length <= 0
+                                      ? _c("tr", [
+                                          _c("td", [
+                                            _c(
+                                              "small",
+                                              {
+                                                staticClass:
+                                                  "text-secondary font-weight-light"
+                                              },
+                                              [_vm._v("Aucune page")]
+                                            )
+                                          ])
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    _c("tr", [
+                                      _c("td"),
+                                      _vm._v(" "),
+                                      _c(
+                                        "td",
+                                        { staticClass: "text-right" },
+                                        [
+                                          _c(
+                                            "b-button",
+                                            {
+                                              directives: [
+                                                {
+                                                  name: "b-modal",
+                                                  rawName:
+                                                    "v-b-modal.modal-manage-page",
+                                                  modifiers: {
+                                                    "modal-manage-page": true
+                                                  }
+                                                }
+                                              ],
+                                              staticClass:
+                                                "btn btn-dark btn-sm",
+                                              on: {
+                                                click: function($event) {
+                                                  _vm.pageSelected = null
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c("small", [
+                                                _vm._v(
+                                                  "\n                                            Ajouter "
+                                                ),
+                                                _c("i", {
+                                                  staticClass:
+                                                    "fas fa-plus ml-1"
+                                                })
+                                              ])
+                                            ]
+                                          )
+                                        ],
+                                        1
+                                      )
+                                    ])
+                                  ],
+                                  2
                                 )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.pages.length <= 0
-                              ? _c(
-                                  "div",
-                                  {
-                                    staticClass:
-                                      "mt-3 bg-white rounded border p-3"
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                        Aucune page\n                    "
-                                    )
-                                  ]
-                                )
-                              : _vm._e()
-                          ],
-                          1
-                        )
-                      : _vm._e()
-                  ],
-                  2
-                )
-              ])
+                              ]
+                            )
+                          ])
+                        : _vm._e()
+                    ])
+                  ])
+                : _vm._e()
             ],
             1
           )
