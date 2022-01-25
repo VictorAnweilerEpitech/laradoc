@@ -194,7 +194,7 @@
 
 <script>
 import AdminTemplate from './Template'
-import BaseComponent from './BaseComponent'
+import BaseComponent from './../../BaseComponent'
 
 import Tree from './../Components/Tree'
 import MyEditor from '../Components/MyEditor.vue'

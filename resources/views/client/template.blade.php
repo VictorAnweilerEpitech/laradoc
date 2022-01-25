@@ -21,7 +21,6 @@
 </head>
 <body>
     <div id="app">
-
         {{-- <footer class="footer" style="background-color: #34495e !important;">Documentation | © {{\Carbon\Carbon::now()->year}}</footer> --}}
         <div class="container">
             <nav class="py-3 mb-2 border-bottom d-flex justify-content-between align-items-center">
@@ -32,18 +31,10 @@
                         <small class="font-weight-light text-secondary mt-1 ml-2">Doc</small>
                     </a>
                 </span>
-                <div class="input-group col-4">
-                    <div class="input-group-prepend bg-white">
-                        <span class="input-group-text bg-white" id="basic-addon1" style="border-right: 0px !important;">
-                            <i class="fas fa-search"></i>
-                        </span>
-                    </div>
-                    <input
-                    type="text"
-                    class="form-control rounded font-weight-light"
-                    placeholder="Rechercher.."
-                    style="border-top-left-radius: 0px !important; border-bottom-left-radius: 0px !important; border-left: 0px;"
-                    >
+                <div class="col-4">
+                    <search-bar
+                    :lara-config="{{json_encode(config('laradoc'))}}"
+                    />
                 </div>
                 <ul class="d-flex align-items-center pl-0 mb-0" style="list-style-type: none">
                     @php
@@ -69,6 +60,7 @@
 
 
     <script src="{{route('laradoc.assets.js', 'client/template.js')}}"></script>
+    <script src="{{route('laradoc.assets.js', 'client/appclient.js')}}"></script>
 
     @yield('scripts')
 

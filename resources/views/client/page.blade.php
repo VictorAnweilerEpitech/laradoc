@@ -140,7 +140,7 @@
                 </div>
                 @endif
                 @foreach ($category->pages as $index => $page)
-                    <section class="my-5 js-section" style="min-height: 50vh;">
+                    <section class="my-5 js-section" id="{{'section-'.$page->id}}">
                         <h3 class="section_title mb-4">
                             <b>
                                 <span class="text-my-primary">#</span>

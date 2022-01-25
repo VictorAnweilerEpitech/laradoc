@@ -3,14 +3,29 @@
 namespace Victoranw\Laradoc\Http\Structure\Controllers;
 
 use Illuminate\Http\Request;
+use Victoranw\Laradoc\Http\Authentication\Requests\LoginRequest;
 use Victoranw\Laradoc\Http\Controllers\LaradocController;
 
 use Victoranw\Laradoc\Http\Structure\Requests\StructureEditAddRequest;
+use Victoranw\Laradoc\Http\Structure\Requests\SearchRequest;
 
 use Victoranw\Laradoc\Models\Category;
+use Victoranw\Laradoc\Models\Page;
 
 class StructureController extends LaradocController
 {
+    public function search(SearchRequest $request)
+    {
+        $categResult = Category::where('name', 'like', '%'.$request['query'].'%')->get()->toArray();
+        $pageResult = Page::where('name', 'like', '%'.$request['query'].'%')->get()->toArray();
+        
+        $result = new \stdClass;
+        $result->categories = $categResult;
+        $result->pages = $pageResult;
+        
+        return $result;
+    }
+
     public function home()
     {
         return view('laradoc::admin.structure');
