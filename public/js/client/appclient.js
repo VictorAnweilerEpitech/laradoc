@@ -1956,12 +1956,15 @@ __webpack_require__.r(__webpack_exports__);
 
       if (value) {
         this.requestLoading = true;
-        axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.baseUrl + '/structure/search', {
-          query: value
-        }).then(function (response) {
-          _this.result = response.data;
-          _this.requestLoading = false;
-        });
+        window.clearTimeout(this.timerRequest);
+        this.timerRequest = setTimeout(function () {
+          axios__WEBPACK_IMPORTED_MODULE_0___default().post(_this.baseUrl + '/structure/search', {
+            query: value
+          }).then(function (response) {
+            _this.result = response.data;
+            _this.requestLoading = false;
+          });
+        }, 500);
       } else {
         this.result = null;
       }
@@ -1971,7 +1974,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       query: "",
       result: null,
-      requestLoading: false
+      requestLoading: false,
+      timerRequest: null
     };
   },
   methods: {

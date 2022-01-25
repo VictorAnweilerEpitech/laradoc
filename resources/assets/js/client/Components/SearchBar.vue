@@ -65,13 +65,16 @@ export default {
         query: function(value) {
             if (value) {
                 this.requestLoading = true
-                axios.post(this.baseUrl + '/structure/search', {
-                    query: value
-                })
-                .then((response) => {
-                    this.result = response.data
-                    this.requestLoading = false
-                })
+                window.clearTimeout(this.timerRequest);
+                this.timerRequest = setTimeout(() => {
+                    axios.post(this.baseUrl + '/structure/search', {
+                        query: value
+                    })
+                    .then((response) => {
+                        this.result = response.data
+                        this.requestLoading = false
+                    })
+                }, 500)
             } else {
                 this.result = null
             }
@@ -81,7 +84,8 @@ export default {
         return {
             query: "",
             result: null,
-            requestLoading: false
+            requestLoading: false,
+            timerRequest: null,
         }
     },
     methods: {
