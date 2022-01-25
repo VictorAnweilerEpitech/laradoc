@@ -6,3 +6,8 @@ body {
 .my-rounded {
   border-radius: 15px !important;
 }
+
+.form-control:focus {
+  box-shadow: none;
+  border: 1px solid #ced4da;
+}

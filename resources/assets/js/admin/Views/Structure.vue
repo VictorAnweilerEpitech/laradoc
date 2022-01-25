@@ -65,7 +65,7 @@
                     <span
                     @click="getCategory(categ.id); categorySelected = categ"
                     style="cursor: pointer"
-                    class="px-3 py-1 mr-1 font-weight-light my-rounded"
+                    class="px-3 pt-1 pb-2 mr-1 font-weight-light my-rounded"
                     :class="categorySelected && categorySelected.id == categ.id ? 'bg-secondary text-white' : 'bg-light text-secondary'"
                     >
                         <small class="w-100 mb-0">{{categ.name}}</small>

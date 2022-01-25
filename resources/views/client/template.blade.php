@@ -23,31 +23,42 @@
     <div id="app">
 
         {{-- <footer class="footer" style="background-color: #34495e !important;">Documentation | © {{\Carbon\Carbon::now()->year}}</footer> --}}
-
-
-
-
-
         <div class="container">
             <nav class="py-3 mb-2 border-bottom d-flex justify-content-between align-items-center">
                 <span class="logo mb-0 d-flex align-items-center">
                     <a href="{{route('laradoc.client.home')}}" style="text-decoration: none" class="d-flex align-items-center text-dark h5 mb-0">
                         <img style="margin-right: 15px;" src="{{config('laradoc.logo')}}" height="30" />
                         <span class="font-weight-bold">{{config('laradoc.name') ?? 'LaraDoc'}}</span>
-                        <span class="logo__thin ml-2">Doc</span>
+                        <small class="font-weight-light text-secondary mt-1 ml-2">Doc</small>
                     </a>
                 </span>
+                <div class="input-group col-4">
+                    <div class="input-group-prepend bg-white">
+                        <span class="input-group-text bg-white" id="basic-addon1" style="border-right: 0px !important;">
+                            <i class="fas fa-search"></i>
+                        </span>
+                    </div>
+                    <input
+                    type="text"
+                    class="form-control rounded font-weight-light"
+                    placeholder="Rechercher.."
+                    style="border-top-left-radius: 0px !important; border-bottom-left-radius: 0px !important; border-left: 0px;"
+                    >
+                </div>
                 <ul class="d-flex align-items-center pl-0 mb-0" style="list-style-type: none">
                     @php
                         $user = Auth::guard(config('laradoc.auth.guard'))->user();
                         $columnName = config('laradoc.auth.loginColumn');
                         $permission = \Victoranw\Laradoc\Models\DocumentationPermission::where('user_id', Auth::guard(config('laradoc.auth.guard'))->user()->id)->first();
                     @endphp
-                    <li class="ml-4"><a class="text-dark" href="{{route('laradoc.client.home')}}">Accueil</a></li>
+                    <li class="ml-4"><a class="text-dark" href="{{route('laradoc.client.home')}}">
+                        <i class="fas fa-home"></i>
+                    </a></li>
                     @if ($permission->admin)
-                        <li class="ml-4"><a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/structure'}}">Admin</a></li>
+                        <li class="ml-4"><a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/structure'}}">
+                            <i class="fas fa-pen"></i>
+                        </a></li>
                     @endif
-                    <li class="ml-4">{{$user->$columnName}}</li>
                     <li class="ml-4"><a class="text-dark" href="{{route('laradoc.back.auth.logout')}}"><i class="fas fa-sign-out-alt"></i></a></li>
                 </ul>
             </nav>

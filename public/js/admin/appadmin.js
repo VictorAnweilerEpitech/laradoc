@@ -51275,7 +51275,7 @@ var render = function() {
                           "span",
                           {
                             staticClass:
-                              "px-3 py-1 mr-1 font-weight-light my-rounded",
+                              "px-3 pt-1 pb-2 mr-1 font-weight-light my-rounded",
                             class:
                               _vm.categorySelected &&
                               _vm.categorySelected.id == categ.id
