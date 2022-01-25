@@ -1,0 +1,13 @@
+@import url(https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap);
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.my-rounded {
+  border-radius: 15px !important;
+}
+
+.form-control:focus {
+  box-shadow: none;
+  border: 1px solid #ced4da;
+}
