@@ -2,7 +2,7 @@
     'pageTitle' => $category->name
 ])
 
-@section('content')
+@section('head')
 <style>
 .doc_nav .selected, .doc_nav .selected:hover
 {
@@ -34,7 +34,11 @@
 .js-btn:hover, .js-btn:hover a {
     color: rgba(0, 0, 0, 1);
 }
+
 </style>
+@endsection
+
+@section('content')
 {{-- <aside class="doc__nav">
     <ul>
         @foreach ($category->pages as $index => $page ?? '')

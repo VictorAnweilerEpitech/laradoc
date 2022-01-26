@@ -56,7 +56,7 @@
     </div>
 </template>
 
-<script>
+<script type="application/javascript">
 import axios from 'axios'
 import BaseComponent from '../../BaseComponent.vue'
 export default {

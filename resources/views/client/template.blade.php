@@ -57,9 +57,6 @@
         </div>
     </div>
 
-
-
-    <script src="{{route('laradoc.assets.js', 'client/template.js')}}"></script>
     <script src="{{route('laradoc.assets.js', 'client/appclient.js')}}"></script>
 
     @yield('scripts')

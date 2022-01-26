@@ -10,3 +10,5 @@ Vue.component('search-bar', require('./Components/SearchBar').default);
 
 const router = new VueRouter({ mode: 'history'});
 new Vue(Vue.util.extend({ router })).$mount('#app');
+
+require('./../client/template').default

@@ -47,6 +47,8 @@ let indexSectionFound = 1
 function activeItem() {
   indexSectionFound = 1
   sections.forEach((section, index) => {
+  // console.log(sections[1]);
+
     positionRect = section.getBoundingClientRect()
     if (positionRect.top < 50) {
       indexSectionFound = index
@@ -71,9 +73,11 @@ function displayBtnScrollTop() {
     elBtnScrollTop.classList.add('d-none');
   }
 }
+console.log(elBtnScrollTop);
 if (elBtnScrollTop) {
   displayBtnScrollTop()
   elBtnScrollTop.addEventListener('click', function (event) {
+    console.log('ok');
     window.scrollTo({
       'behavior': 'smooth',
       'top': 0,
