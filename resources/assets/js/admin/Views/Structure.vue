@@ -39,11 +39,19 @@
             </b-modal>
             <!-- Add page -->
             <b-modal id="modal-manage-page" size="xl" hide-header hide-footer>
-                <div class="p-3">
+                <div class="p-3 pb-5">
                     <h2 class="mb-1">Edition de page</h2>
                     <small>Enregistrement automatique</small>
-                    <my-editor
+                    <!-- <my-editor
                     class="mt-3"
+                    :id="pageSelected && pageSelected.id ? pageSelected.id : null"
+                    :parent-id="subCategory && subCategory.id ? subCategory.id : null"
+                    @new-page="getPages(subCategory && subCategory.id ? subCategory.id : null)"
+                    @change-title="getPages(subCategory && subCategory.id ? subCategory.id : null)"
+                    /> -->
+
+                    <my-quill-editor
+                    class="mt-3 mb-5"
                     :id="pageSelected && pageSelected.id ? pageSelected.id : null"
                     :parent-id="subCategory && subCategory.id ? subCategory.id : null"
                     @new-page="getPages(subCategory && subCategory.id ? subCategory.id : null)"
@@ -157,11 +165,8 @@
                             <tbody>
                                 <template v-for="(page, index) in pages">
                                     <tr :key="index">
-                                        <td class="bg-white">{{page.name}}</td>
+                                        <td class="bg-white" v-b-modal.modal-manage-page @click="pageSelected = page">{{page.name}}</td>
                                         <td class="text-right">
-                                            <b-button size="sm" v-b-modal.modal-manage-page class="btn bg-light border-light text-dark" @click="pageSelected = page">
-                                                <i class="fas fa-eye"></i>
-                                            </b-button>
                                             <b-button size="sm" v-b-modal.modal-delete-page class="btn bg-light border-light text-danger" @click="pageSelected = page">
                                                 <i class="fas fa-trash"></i>
                                             </b-button>
@@ -199,6 +204,8 @@ import BaseComponent from './../../default/Components/BaseComponent'
 import Tree from './../Components/Tree'
 import MyEditor from '../Components/MyEditor.vue'
 
+import MyQuillEditor from './../Components/MyQuillEditor.vue'
+
 export default {
     name: 'admin-structure',
     extends: BaseComponent,
@@ -207,6 +214,7 @@ export default {
         AdminTemplate,
         Tree,
         MyEditor,
+        MyQuillEditor
     },
 
     data() {

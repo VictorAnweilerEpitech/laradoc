@@ -4,12 +4,11 @@
     {{-- EditorCss --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/trumbowyg@2.25.1/dist/ui/trumbowyg.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/trumbowyg@2.25.1/dist/plugins/table/ui/trumbowyg.table.min.css">
+    
+    @yield('client-head')
 
     {{-- MyCss --}}
     <link href="{{route('laradoc.assets.css', 'client/client.css')}}" rel="stylesheet" />
-
-
-    @yield('client-head')
 @endsection
 
 @section('content')

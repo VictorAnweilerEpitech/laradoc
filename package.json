@@ -33,8 +33,10 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.2",
     "bootstrap-vue": "^2.21.2",
+    "quill-delta-to-html": "^0.12.0",
     "trumbowyg": "^2.25.1",
     "vue": "^2.6.14",
-    "vue-router": "^3.5.3"
+    "vue-router": "^3.5.3",
+    "vuejs-quill": "^1.4.0"
   }
 }

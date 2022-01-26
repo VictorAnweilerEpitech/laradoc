@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap);
 body {
   font-family: "Lato", sans-serif;
+  background: black !important;
 }
 
 .my-rounded {
@@ -20,4 +21,15 @@ body {
 .result-item:hover {
   background: #F4F4F4 !important;
   cursor: pointer;
+}
+
+pre {
+  background: #333;
+  white-space: pre;
+  word-wrap: break-word;
+  overflow: auto;
+  margin: 20px 25px;
+  border-radius: 4px;
+  border: 1px solid #292929;
+  position: relative;
 }
