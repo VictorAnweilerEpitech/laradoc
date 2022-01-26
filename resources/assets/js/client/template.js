@@ -19,7 +19,9 @@ function setActiveToIndexBtn(index) {
     for (var i = 0; i < btns.length; i++) {
       btns[i].classList.remove('selected');
     }
-  
+    if (btns.length == 1) {
+      index = 0
+    }
     btns[index].classList.add('selected');
   }
 }
@@ -47,7 +49,6 @@ let indexSectionFound = 1
 function activeItem() {
   indexSectionFound = 1
   sections.forEach((section, index) => {
-
     positionRect = section.getBoundingClientRect()
     if (positionRect.top < 50) {
       indexSectionFound = index
