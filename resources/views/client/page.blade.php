@@ -99,14 +99,16 @@
                     <ul class="pl-0 mb-0" style="list-style-type: none;">
                         @if ($category->parent)
                             <li class="js-btn">
-                                <i class="fas fa-arrow-left mr-2"></i>
-                                <a style="text-decoration: none;" class="text-dark" href="{{route('laradoc.client.page', $category->parent->id)}}">Retour</a>
+                                <a style="text-decoration: none;" class="text-dark" href="{{route('laradoc.client.page', $category->parent->id)}}">
+                                    <i class="fas fa-arrow-left mr-2"></i>Retour
+                                </a>
                             </li>
                         @endif
                         @foreach ($children as $child)
                             <li class="js-btn">
-                                <i class="fas fa-external-link-square-alt mr-2"></i>
-                                <a style="text-decoration: none;" class="text-dark" href="{{route('laradoc.client.page', $child->id)}}">{{$child->name}}</a>
+                                <a style="text-decoration: none;" class="text-dark" href="{{route('laradoc.client.page', $child->id)}}">
+                                    <i class="fas fa-external-link-square-alt mr-2"></i>{{$child->name}}
+                                </a>
                             </li>
                         @endforeach
                     </ul>
