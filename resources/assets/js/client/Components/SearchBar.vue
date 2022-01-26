@@ -24,6 +24,11 @@
                 >
             </div>
             <div v-show="result" class="show-result bg-white border shadow p-2 py-3">
+                <template v-if="noResult">
+                    <small class="font-weight-light">
+                        Aucun résultat
+                    </small>
+                </template>
                 <template v-if="result && result.categories && result.categories.length > 0">
                     <h6>Catégories</h6>
                     <div
@@ -86,6 +91,21 @@ export default {
             result: null,
             requestLoading: false,
             timerRequest: null,
+        }
+    },
+    computed: {
+        noResult() {
+            let dataFound = false
+            let objectsInArray = ['categories', 'pages']
+            if (this.result) {
+                objectsInArray.forEach((objName) => {
+                    if (this.result[objName] && this.result[objName].length > 0) {
+                        dataFound = true
+                    }
+                })
+            }
+
+            return !dataFound
         }
     },
     methods: {

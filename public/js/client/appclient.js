@@ -1946,6 +1946,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -1978,6 +1983,24 @@ __webpack_require__.r(__webpack_exports__);
       timerRequest: null
     };
   },
+  computed: {
+    noResult: function noResult() {
+      var _this2 = this;
+
+      var dataFound = false;
+      var objectsInArray = ['categories', 'pages'];
+
+      if (this.result) {
+        objectsInArray.forEach(function (objName) {
+          if (_this2.result[objName] && _this2.result[objName].length > 0) {
+            dataFound = true;
+          }
+        });
+      }
+
+      return !dataFound;
+    }
+  },
   methods: {
     goToNextPage: function goToNextPage(url) {
       window.location.href = url;
@@ -1992,11 +2015,11 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
     this.placeResultDiv();
     window.addEventListener('resize', function (event) {
-      _this2.placeResultDiv();
+      _this3.placeResultDiv();
     }, true);
   }
 });
@@ -2058,7 +2081,6 @@ var indexSectionFound = 1;
 function activeItem() {
   indexSectionFound = 1;
   sections.forEach(function (section, index) {
-    // console.log(sections[1]);
     positionRect = section.getBoundingClientRect();
 
     if (positionRect.top < 50) {
@@ -2084,12 +2106,9 @@ function displayBtnScrollTop() {
   }
 }
 
-console.log(elBtnScrollTop);
-
 if (elBtnScrollTop) {
   displayBtnScrollTop();
   elBtnScrollTop.addEventListener('click', function (event) {
-    console.log('ok');
     window.scrollTo({
       'behavior': 'smooth',
       'top': 0,
@@ -48136,6 +48155,16 @@ var render = function() {
           staticClass: "show-result bg-white border shadow p-2 py-3"
         },
         [
+          _vm.noResult
+            ? [
+                _c("small", { staticClass: "font-weight-light" }, [
+                  _vm._v(
+                    "\n                    Aucun résultat\n                "
+                  )
+                ])
+              ]
+            : _vm._e(),
+          _vm._v(" "),
           _vm.result &&
           _vm.result.categories &&
           _vm.result.categories.length > 0
