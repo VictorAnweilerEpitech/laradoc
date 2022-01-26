@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import myAxios from './services/axios.service'
+import myAxios from './../services/axios.service'
 
 export default {
     props: {

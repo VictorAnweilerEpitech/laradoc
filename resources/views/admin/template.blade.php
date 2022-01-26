@@ -1,4 +1,4 @@
-@extends('laradoc::client.template')
+@extends('laradoc::template')
 
 @section('head')
     {{-- EditorCss --}}

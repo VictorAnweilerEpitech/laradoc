@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import BaseComponent from './../../BaseComponent'
+import BaseComponent from './../../default/Components/BaseComponent'
 import AdminTemplate from './Template'
 
 import axios from 'axios'

@@ -6,7 +6,7 @@ Vue.use(VueRouter);
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 
-Vue.component('search-bar', require('./Components/SearchBar').default);
+Vue.component('search-bar', require('./../default/Components/SearchBar').default);
 
 const router = new VueRouter({ mode: 'history'});
 new Vue(Vue.util.extend({ router })).$mount('#app');

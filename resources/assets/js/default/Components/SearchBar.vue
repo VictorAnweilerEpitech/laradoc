@@ -63,7 +63,7 @@
 
 <script type="application/javascript">
 import axios from 'axios'
-import BaseComponent from '../../BaseComponent.vue'
+import BaseComponent from './BaseComponent.vue'
 export default {
     extends: BaseComponent,
     watch: {

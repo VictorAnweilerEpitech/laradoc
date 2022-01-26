@@ -5,20 +5,20 @@
             <b-modal id="modal-add-category" hide-header hide-footer>
                 <h3>Ajouter un chapitre</h3>
                 <input v-model="newCategoryName" class="form-control mt-3 mb-2" placeholder="Nom" />
-                <button class="btn btn-sm bg-my-primary text-white" @click="createCategory">Ajouter</button>
+                <button class="btn btn-sm bg-dark text-white" @click="createCategory">Ajouter</button>
             </b-modal>
             <!-- Add sub category -->
             <b-modal id="modal-add-subcategory" hide-header hide-footer>
                 <h3>Ajouter une catégorie</h3>
                 <input v-model="newSubCategoryName" class="form-control mt-3 mb-2" placeholder="Nom" />
-                <button class="btn btn-sm bg-my-primary text-white" @click="createSubCategory">Ajouter</button>
+                <button class="btn btn-sm bg-dark text-white" @click="createSubCategory">Ajouter</button>
             </b-modal>
             <!-- Update category -->
             <b-modal id="modal-update-category" hide-header hide-footer>
                 <template v-if="subCategorySelectedModal">
                     <h3>Modification</h3>
                     <input v-model="subCategorySelectedModal.name" class="form-control mt-3 mb-2" placeholder="Nom" />
-                    <button class="btn btn-sm bg-my-primary text-white" @click="updateCategory(subCategorySelectedModal.id)">Modifier</button>
+                    <button class="btn btn-sm bg-dark text-white" @click="updateCategory(subCategorySelectedModal.id)">Modifier</button>
                 </template>
             </b-modal>
             <!-- Delete category -->
@@ -64,8 +64,8 @@
                 class="d-inline-block text-center">
                     <span
                     @click="getCategory(categ.id); categorySelected = categ"
-                    style="cursor: pointer"
-                    class="px-3 pt-1 pb-2 mr-1 font-weight-light my-rounded"
+                    style="cursor: pointer; padding-bottom: 6px;"
+                    class="px-3 pt-1 mr-1 font-weight-light rounded-pill"
                     :class="categorySelected && categorySelected.id == categ.id ? 'bg-secondary text-white' : 'bg-light text-secondary'"
                     >
                         <small class="w-100 mb-0">{{categ.name}}</small>
@@ -194,7 +194,7 @@
 
 <script>
 import AdminTemplate from './Template'
-import BaseComponent from './../../BaseComponent'
+import BaseComponent from './../../default/Components/BaseComponent'
 
 import Tree from './../Components/Tree'
 import MyEditor from '../Components/MyEditor.vue'
