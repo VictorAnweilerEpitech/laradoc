@@ -19,7 +19,9 @@ function setActiveToIndexBtn(index) {
     for (var i = 0; i < btns.length; i++) {
       btns[i].classList.remove('selected');
     }
-  
+    if (btns.length == 1) {
+      index = 0
+    }
     btns[index].classList.add('selected');
   }
 }

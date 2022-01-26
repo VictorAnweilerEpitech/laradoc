@@ -2,7 +2,7 @@
     'pageTitle' => $category->name
 ])
 
-@section('content')
+@section('head')
 <style>
 .doc_nav .selected, .doc_nav .selected:hover
 {
@@ -34,55 +34,11 @@
 .js-btn:hover, .js-btn:hover a {
     color: rgba(0, 0, 0, 1);
 }
+
 </style>
-{{-- <aside class="doc__nav">
-    <ul>
-        @foreach ($category->pages as $index => $page ?? '')
-            <li class="js-btn mb-3 {{$index == 0 ? 'selected' : ''}} pr-5">
-                {{$page ?? ''->name}}
-            </li>
-        @endforeach
-    </ul>
-</aside>
-<article class="doc__content">
-    <h1 class="mb-4">{{$category->name}}</h1>
-    <div class="bg-light p-3 border rounded mb-4">
-        <h5 class="font-weight-bold">Navigation</h5>
-        <ul class="pl-0 mb-0" style="list-style-type: none;">
-            @if ($category->parent)
-                <li class="js-btn">
-                    <i class="fas fa-arrow-left"></i>
-                    <a href="{{route('laradoc.client.page', $category->parent->id)}}">Retour</a>
-                </li>
-            @endif
-            @foreach ($category->children as $child)
-                <li class="js-btn">
-                    <i class="fas fa-link"></i>
-                    <a href="{{route('laradoc.client.page', $child->id)}}">{{$child->name}}</a>
-                </li>
-            @endforeach
-        </ul>
-    </div>
-    @if (count($children) > 0)
-        <hr />
-    @endif
-    @foreach ($category->pages as $index => $page ?? '')
-        <section class="js-section my-5 pt-2" style="min-height: 50vh;">
-            <h3 class="section__title mb-4">
-                <b>
-                    <span class="text-my-primary">#</span>
-                    {{$page ?? ''->name}}
-                </b>
-            </h3>
-            <div class="pl-4">
-                {!!$page->content!!}
-            </div>
-            @if ($index < count($category->pages) - 1)
-                <hr class="border-dark mt-4" />
-            @endif
-        </section>
-    @endforeach
-</article> --}}
+@endsection
+
+@section('content')
 <div class="container">
     <div class="row">
         <div class="col-4">
@@ -95,14 +51,16 @@
                     <ul class="pl-0 mb-0" style="list-style-type: none;">
                         @if ($category->parent)
                             <li class="js-btn">
-                                <i class="fas fa-arrow-left mr-2"></i>
-                                <a style="text-decoration: none;" href="{{route('laradoc.client.page', $category->parent->id)}}">Retour</a>
+                                <a style="text-decoration: none;" class="text-dark" href="{{route('laradoc.client.page', $category->parent->id)}}">
+                                    <i class="fas fa-arrow-left mr-2"></i>Retour
+                                </a>
                             </li>
                         @endif
                         @foreach ($children as $child)
                             <li class="js-btn">
-                                <i class="fas fa-external-link-square-alt mr-2"></i>
-                                <a style="text-decoration: none;" href="{{route('laradoc.client.page', $child->id)}}">{{$child->name}}</a>
+                                <a style="text-decoration: none;" class="text-dark" href="{{route('laradoc.client.page', $child->id)}}">
+                                    <i class="fas fa-external-link-square-alt mr-2"></i>{{$child->name}}
+                                </a>
                             </li>
                         @endforeach
                     </ul>
@@ -140,7 +98,7 @@
                 </div>
                 @endif
                 @foreach ($category->pages as $index => $page)
-                    <section class="my-5 js-section" style="min-height: 50vh;">
+                    <section class="my-5 js-section" id="{{'section-'.$page->id}}">
                         <h3 class="section_title mb-4">
                             <b>
                                 <span class="text-my-primary">#</span>

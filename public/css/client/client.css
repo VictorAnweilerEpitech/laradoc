@@ -11,3 +11,13 @@ body {
   box-shadow: none;
   border: 1px solid #ced4da;
 }
+
+.show-result {
+  position: absolute;
+  z-index: 2;
+}
+
+.result-item:hover {
+  background: #F4F4F4 !important;
+  cursor: pointer;
+}

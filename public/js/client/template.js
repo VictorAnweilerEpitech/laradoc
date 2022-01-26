@@ -24,6 +24,10 @@ function setActiveToIndexBtn(index) {
       btns[i].classList.remove('selected');
     }
 
+    if (btns.length == 1) {
+      index = 0;
+    }
+
     btns[index].classList.add('selected');
   }
 }

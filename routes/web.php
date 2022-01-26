@@ -27,6 +27,7 @@ Route::prefix(config('laradoc.url_prefix'))->group(function () {
         // Admin space
         Route::group(['middleware' => ['adminDoc']], function () {            
             Route::prefix('/structure')->group(function () {
+                Route::post('/search', [StructureController::class, 'search'])->name('laradoc.back.structure.search');
                 Route::post('/browse', [StructureController::class, 'structure'])->name('laradoc.back.structure.browse');
                 Route::post('/create', [StructureController::class, 'create'])->name('laradoc.back.structure.create');
                 Route::post('/{category}/voir', [StructureController::class, 'view'])->name('laradoc.back.structure.view');
