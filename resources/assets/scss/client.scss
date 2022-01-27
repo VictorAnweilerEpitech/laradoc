@@ -22,3 +22,35 @@ body {
     background: #F4F4F4 !important;
     cursor: pointer;
 }
+
+.doc-reader {
+    h1 {
+        font-size: 200% !important;
+    }
+    h2 {
+        font-size: 150% !important;
+    }
+    h3 {
+        font-size: 135% !important;
+    }
+    h4 {
+        font-size: 125% !important;
+    }
+    h5 {
+        font-size: 110% !important;
+    }
+    h6 {
+        font-size: 90% !important;
+    }
+    pre {
+        background: #333 !important;
+        white-space: pre;
+        word-wrap: break-word;
+        overflow: auto;
+        margin: 20px 25px;
+        border-radius: 4px;
+        border: 1px solid #292929;
+        position: relative;
+        color: #aed581;
+    }
+}

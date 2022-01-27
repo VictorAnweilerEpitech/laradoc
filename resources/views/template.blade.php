@@ -66,6 +66,6 @@
         .border-my-primary {
             border: 1px solid {{config('laradoc.color')}} !important;
         }
-    </style>
+    </style>    
 </body>
 </html>

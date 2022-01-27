@@ -82,39 +82,32 @@
                 </span>
             </div>
 
-            <div class="row" v-if="subCategory">
-                <div class="mb-3 d-flex align-items-center" v-if="subCategory">
-                    <div class="mr-2">
-                        <!-- <button class="btn btn-sm text-dark" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-update-category')">
-                            <i class="fas fa-ellipsis-v"></i>
-                        </button> -->
-                        <!-- <button class="btn btn-sm bg-light border-light text-danger" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-delete-category')">
-                            <i class="fas fa-trash"></i>
-                        </button> -->
-
-                        <b-dropdown variant="light" size="sm">
-                            <template #button-content>
-                                <!-- <i class="fas fa-ellipsis-v"></i> -->
-                            </template>
-                            <b-dropdown-item>
-                                <button class="btn btn-sm text-dark" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-update-category')">
-                                    Editer
-                                </button>
-                            </b-dropdown-item>
-                            <b-dropdown-item>
-                                <button class="btn btn-sm text-danger" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-delete-category')">
-                                    Supprimer
-                                </button>
-                            </b-dropdown-item>
-                        </b-dropdown>
-                    </div>
-                    <div class="d-flex align-items-center">
-                        <button class="btn btn-sm" v-if="subCategory.parent_id" @click="getCategory(subCategory.parent_id)">
-                            <i class="fas fa-arrow-left"></i>
-                        </button>
-                        <h4 class="mb-0">{{subCategory.name}}</h4>
-                    </div>
+            <div class="mb-3 d-flex align-items-center" v-if="subCategory">
+                <div class="mr-2">
+                    <b-dropdown variant="light" size="sm">
+                        <template #button-content>
+                            <!-- <i class="fas fa-ellipsis-v"></i> -->
+                        </template>
+                        <b-dropdown-item>
+                            <button class="btn btn-sm text-dark" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-update-category')">
+                                Editer
+                            </button>
+                        </b-dropdown-item>
+                        <b-dropdown-item>
+                            <button class="btn btn-sm text-danger" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-delete-category')">
+                                Supprimer
+                            </button>
+                        </b-dropdown-item>
+                    </b-dropdown>
                 </div>
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-sm" v-if="subCategory.parent_id" @click="getCategory(subCategory.parent_id)">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <h4 class="mb-0">{{subCategory.name}}</h4>
+                </div>
+            </div>
+            <div class="row" v-if="subCategory">
                 <div class="col-4">
                     <div
                     style="cursor: pointer"

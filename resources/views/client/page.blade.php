@@ -2,7 +2,7 @@
     'pageTitle' => $category->name
 ])
 
-@section('head')
+@section('client-head')
 <style>
 .doc_nav .selected, .doc_nav .selected:hover
 {
@@ -38,7 +38,7 @@
 </style>
 @endsection
 
-@section('content')
+@section('client-content')
 <div class="container">
     <div class="row">
         <div class="col-4">
@@ -86,7 +86,7 @@
             </div>
         </div>
         <div class="col-8">
-            <div class="mt-3">
+            <div class="mt-3 doc-reader">
                 <div class="js-section"></div>
                 @if (count($category->pages) <= 0)
                 <div class="bg-light p-3 border my-rounded text-center shadow">
