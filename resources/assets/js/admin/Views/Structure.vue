@@ -190,7 +190,7 @@ import AdminTemplate from './Template'
 import BaseComponent from './../../default/Components/BaseComponent'
 
 import Tree from './../Components/Tree'
-import MyEditor from '../Components/MyEditor.vue'
+import MyEditor from '../Components/Editor/TipTapEditor.vue'
 
 export default {
     name: 'admin-structure',
