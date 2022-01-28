@@ -1,6 +1,7 @@
 <template>
     <div>
         <div v-if="editor">
+            {{content}}
             <div class="mb-3">
                 <tip-tap-buttons
                 class="d-inline-block"
@@ -143,6 +144,7 @@ import Typography from '@tiptap/extension-typography'
 
 import TipTapButton from './TipTapButton.vue'
 import TipTapButtons from './TipTapButtons.vue'
+import TipTapRequest from './SendRequest/Extension'
 
 export default {
     components: {
@@ -154,7 +156,12 @@ export default {
     data() {
         return {
             editor: null,
-            content: '<h1>test</h1>',
+            content: `
+                <h1>test</h1>
+                <tip-tap-request-editor
+                url="https://be-angel.com/api/aidant/login"
+                />
+            `,
         }
     },
 
@@ -171,6 +178,7 @@ export default {
                 StarterKit,
                 Highlight,
                 Typography,
+                TipTapRequest
             ],
             onUpdate: () => {
                 // HTML
@@ -194,6 +202,8 @@ export default {
 }
 /* Basic editor styles */
 .ProseMirror {
+    min-height: 60vh !important;
+
     > * + * {
         margin-top: 0.75em;
     }
