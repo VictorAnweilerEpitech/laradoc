@@ -1,8 +1,9 @@
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
-import { BootstrapVue } from 'bootstrap-vue'
+import { BootstrapVue, BootstrapVueIcons } from 'bootstrap-vue'
 Vue.use(BootstrapVue)
+Vue.use(BootstrapVueIcons)
 
 
 Vue.component('search-bar', require('./../default/Components/SearchBar').default);

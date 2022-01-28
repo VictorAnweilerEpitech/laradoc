@@ -4,7 +4,15 @@
         @click="getClick"
         class="tiptap-btn rounded p-2"
         :class="isSelected ? 'bg-dark text-white' : 'text-dark border'">
-            <i :class="icon"></i>
+            <template v-if="icon.split(' ')[0] == 'fas'">
+                <i :class="icon"></i>
+            </template>
+            <template v-else-if="icon.split(' ')[0] == 'bi'">
+                <b-icon :icon="icon.split(' ')[1]" />
+            </template>
+            <template v-else>
+                <span v-html="icon"></span>
+            </template>
         </span>
     </div>
 </template>
@@ -25,7 +33,6 @@
                 required: true
             },
             isActive: {
-                required: true,
                 default: false
             }
         },
@@ -36,9 +43,6 @@
         },
         methods: {
             getClick() {
-                if (!this.isActive) {
-                    this.isSelected = !this.isSelected
-                }
                 this.action()
             }
         }
