@@ -35,7 +35,6 @@ import TipTapButton from './TipTapButton.vue'
 export default {
     props: {
         buttons: {
-            type: Array,
             required: true
         }
     },

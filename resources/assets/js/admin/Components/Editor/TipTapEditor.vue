@@ -1,7 +1,7 @@
 <template>
     <div>
+        <input v-model="title" type="text" class="form-control mb-3" placeholder="Nom de la page">
         <div v-if="editor">
-            {{content}}
             <div class="mb-3">
                 <tip-tap-buttons
                 class="d-inline-block"
@@ -147,6 +147,12 @@ import TipTapButtons from './TipTapButtons.vue'
 import TipTapRequest from './SendRequest/Extension'
 
 export default {
+    props: {
+        id: {
+            type: Number,
+            required: true,
+        }
+    },
     components: {
         EditorContent,
         TipTapButton,
@@ -155,15 +161,12 @@ export default {
 
     data() {
         return {
+            title: "",
             editor: null,
-            content: `
-                <h1>test</h1>
-                <tip-tap-request-editor
-                url="https://be-angel.com/api/aidant/login"
-                />
-            `,
+            content: null,
         }
     },
+    // <tip-tap-request-editor url="https://be-angel.com/api/aidant/login" type="post" requestbody="[{&quot;label&quot;:&quot;email&quot;,&quot;value&quot;:{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;victor.anweiler@epitech.eu&quot;}},{&quot;label&quot;:&quot;password&quot;,&quot;value&quot;:{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;password&quot;}}]" requestheader="[{&quot;label&quot;:&quot;Authorization&quot;,&quot;value&quot;:{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI3IiwianRpIjoiMTk3ZGE3MDQ0Njg3MGYzZmM5ZDU1ZmE4YWFhOGFhZTQ2ZTJlZWNmZGQwNzkzMWY3ODk3OWRjNGRmZmFjYjhjZjA2MzJiYTk2YWQzN2M4Y2EiLCJpYXQiOjE2NDM0MDE3NTMuNjU5NjU3LCJuYmYiOjE2NDM0MDE3NTMuNjU5NjU4LCJleHAiOjE2NzQ5Mzc3NTMuNjU0ODQ5LCJzdWIiOiIyNCIsInNjb3BlcyI6W119.kQmrtSuFQjQ9eAKliRxV__tQRS6umclLbqzYoWxN5LZ4YlxiScDVuVGZWzaN49QxwSkIMRnkHRjqC2Ts0hpC41scB1dRpQR8aezVX4Ub1fWmm10LCVc-DufKQ9X-m9XgvUqx-_axxT8muWeWHZqrO3GHwEdifJIZQgarnPP4QWLNRxqlBvF_x_wjivS6sU5zFMK-G7KzXUNJzziph_tyCcszVEcWYNFG5aFtzIBr_0DSc_24psccvVgNwzoueNc3brcAjQiNHrqaKSyadTzPBwSQViAcQkD3IRDIKzEiBZSc9C4CoVJSf8CofzJ8efWqpQyxNsncTXsw2516zQ6X5OjV_sU70DcoLNfkAxMpFDPmjtaqWqNFiBh6Ab6-bo16RjiMFDhZKPzOE8nwgxbzRJxCHbcRvgPk__880FCmbZVEhL2nnagNmK1gyyMBrQtvYvbmXNSgXw6LjBf6_YMU2JMAYexMXLctrzPKXFHrY-PpPi5w_fSV_WvG9KwcnmLsgi9Gcjr4ZIBBBl78daE_lMcRc25z-pC6pT4sCTBDUSX6x3Bh0M-Ga34RUXTSO2m-jkO2W7oZOEaaNK0wzaNn7ScrxRSSYOtPJW4bLjTeJB1tc_sNbsBeWNDGBFs9LaLt_SzXzzxg2Pp0WqPXYJIGabkVMPEqExxMwFs5Q2xd9qI&quot;}}]"></tip-tap-request-editor>
 
     watch: {
         content: function(value) {
@@ -171,23 +174,38 @@ export default {
         }
     },
 
-    mounted() {
-        this.editor = new Editor({
-            content: this.content,
-            extensions: [
-                StarterKit,
-                Highlight,
-                Typography,
-                TipTapRequest
-            ],
-            onUpdate: () => {
-                // HTML
-                this.content = this.editor.getHTML()
+    methods: {
+        async getPage(pageId) {
+            let response = await axios.post('/doc/page/' + pageId + '/view')
+            this.title = response.data.name
+            this.content = response.data.content
+            this.renderEditor()
+        },
 
-                // JSON
-                // this.$emit('input', this.editor.getJSON())
-            },
-        })
+        renderEditor() {
+            this.editor = new Editor({
+                content: this.content,
+                extensions: [
+                    StarterKit,
+                    Highlight,
+                    Typography,
+                    TipTapRequest
+                ],
+                onUpdate: () => {
+                    // HTML
+                    this.content = this.editor.getHTML()
+
+                    // JSON
+                    // this.$emit('input', this.editor.getJSON())
+                },
+            })
+        }
+    },
+
+    mounted() {
+        if (this.id) {
+            this.getPage(this.id)
+        }
     },
 
     beforeUnmount() {

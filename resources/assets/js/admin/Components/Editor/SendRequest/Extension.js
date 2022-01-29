@@ -15,7 +15,13 @@ export default Node.create({
         default: "",
       },
       type: {
-          default: "get"
+        default: "get"
+      },
+      body: {
+        default: ""
+      },
+      header: {
+        default: ""
       }
     }
   },
@@ -29,9 +35,9 @@ export default Node.create({
   },
 
   renderHTML({ HTMLAttributes, node }) {
-    return ['tip-tap-request-viewer', mergeAttributes(
-        HTMLAttributes,
-        {type: node.attrs.type}
+    console.log(HTMLAttributes);
+    return ['tip-tap-request-editor', mergeAttributes(
+        HTMLAttributes
     )]
   },
 
