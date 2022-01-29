@@ -118,6 +118,11 @@
                 :action="() => {editor.chain().focus().toggleBlockquote().run()}"
                 :is-active="editor.isActive('blockquote')"
                 />
+                <tip-tap-button
+                class="d-inline-block"
+                icon="fas fa-rocket"
+                :action="() => {this.addTipTapRequest()}"
+                />
                 <span class="separator d-inline-block mx-2" style="height: 24px;"></span>
                 <tip-tap-button
                 class="d-inline-block"
@@ -148,10 +153,8 @@ import TipTapRequest from './SendRequest/Extension'
 
 export default {
     props: {
-        id: {
-            type: Number,
-            required: true,
-        }
+        id: {},
+        parentId: {}
     },
     components: {
         EditorContent,
@@ -161,15 +164,17 @@ export default {
 
     data() {
         return {
+            pageId: null,
             title: "",
             editor: null,
             content: null,
+            timerUpdate: null,
         }
     },
-    // <tip-tap-request-editor url="https://be-angel.com/api/aidant/login" type="post" requestbody="[{&quot;label&quot;:&quot;email&quot;,&quot;value&quot;:{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;victor.anweiler@epitech.eu&quot;}},{&quot;label&quot;:&quot;password&quot;,&quot;value&quot;:{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;password&quot;}}]" requestheader="[{&quot;label&quot;:&quot;Authorization&quot;,&quot;value&quot;:{&quot;type&quot;:&quot;text&quot;,&quot;value&quot;:&quot;Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiI3IiwianRpIjoiMTk3ZGE3MDQ0Njg3MGYzZmM5ZDU1ZmE4YWFhOGFhZTQ2ZTJlZWNmZGQwNzkzMWY3ODk3OWRjNGRmZmFjYjhjZjA2MzJiYTk2YWQzN2M4Y2EiLCJpYXQiOjE2NDM0MDE3NTMuNjU5NjU3LCJuYmYiOjE2NDM0MDE3NTMuNjU5NjU4LCJleHAiOjE2NzQ5Mzc3NTMuNjU0ODQ5LCJzdWIiOiIyNCIsInNjb3BlcyI6W119.kQmrtSuFQjQ9eAKliRxV__tQRS6umclLbqzYoWxN5LZ4YlxiScDVuVGZWzaN49QxwSkIMRnkHRjqC2Ts0hpC41scB1dRpQR8aezVX4Ub1fWmm10LCVc-DufKQ9X-m9XgvUqx-_axxT8muWeWHZqrO3GHwEdifJIZQgarnPP4QWLNRxqlBvF_x_wjivS6sU5zFMK-G7KzXUNJzziph_tyCcszVEcWYNFG5aFtzIBr_0DSc_24psccvVgNwzoueNc3brcAjQiNHrqaKSyadTzPBwSQViAcQkD3IRDIKzEiBZSc9C4CoVJSf8CofzJ8efWqpQyxNsncTXsw2516zQ6X5OjV_sU70DcoLNfkAxMpFDPmjtaqWqNFiBh6Ab6-bo16RjiMFDhZKPzOE8nwgxbzRJxCHbcRvgPk__880FCmbZVEhL2nnagNmK1gyyMBrQtvYvbmXNSgXw6LjBf6_YMU2JMAYexMXLctrzPKXFHrY-PpPi5w_fSV_WvG9KwcnmLsgi9Gcjr4ZIBBBl78daE_lMcRc25z-pC6pT4sCTBDUSX6x3Bh0M-Ga34RUXTSO2m-jkO2W7oZOEaaNK0wzaNn7ScrxRSSYOtPJW4bLjTeJB1tc_sNbsBeWNDGBFs9LaLt_SzXzzxg2Pp0WqPXYJIGabkVMPEqExxMwFs5Q2xd9qI&quot;}}]"></tip-tap-request-editor>
 
     watch: {
         content: function(value) {
+            this.save()
             // console.log(value);
         }
     },
@@ -180,6 +185,10 @@ export default {
             this.title = response.data.name
             this.content = response.data.content
             this.renderEditor()
+        },
+
+        addTipTapRequest() {
+            this.editor.commands.setContent((this.content || '') + '<tip-tap-request-editor url="" type="get" header="" body=""></tip-tap-request-editor><p></p>')
         },
 
         renderEditor() {
@@ -199,12 +208,35 @@ export default {
                     // this.$emit('input', this.editor.getJSON())
                 },
             })
-        }
+        },
+        save() {
+            window.clearTimeout(this.timerUpdate)
+
+            this.timerUpdate = setTimeout(async () => {
+                if (this.pageId) {
+                    await axios.post('/doc/page/' + this.pageId + '/update', {
+                        name: this.title,
+                        content: this.content
+                    })
+                } else {
+                    let response = await axios.post('/doc/page/create', {
+                        name: this.title,
+                        content: this.content,
+                        parent_id: this.parentId
+                    })
+                    this.pageId = response.data.id
+                    this.$emit('new-page', response.data.id)
+                }
+            }, 700)
+        },
     },
 
     mounted() {
         if (this.id) {
+            this.pageId = this.id
             this.getPage(this.id)
+        } else {
+            this.renderEditor()
         }
     },
 

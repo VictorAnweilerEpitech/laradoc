@@ -35,7 +35,6 @@ export default Node.create({
   },
 
   renderHTML({ HTMLAttributes, node }) {
-    console.log(HTMLAttributes);
     return ['tip-tap-request-editor', mergeAttributes(
         HTMLAttributes
     )]

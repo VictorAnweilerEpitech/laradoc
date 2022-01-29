@@ -296,7 +296,6 @@ export default {
         },
 
         deleteCategory(id) {
-            console.log(id);
             axios.post(this.baseUrl + '/structure/' + id + '/delete')
             .then((response) => {
                 this.subCategory = null
