@@ -105,7 +105,7 @@
                                 {{$page->name}}
                             </b>
                         </h3>
-                        <div class="pl-4 pb-5">
+                        <div class="pl-4 pb-5 page-content-reader">
                             {!!$page->content!!}
                         </div>
                         @if ($index < count($category->pages) - 1)

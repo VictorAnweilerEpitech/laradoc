@@ -2,7 +2,7 @@
     <div>
         <input v-model="title" type="text" class="form-control mb-3" placeholder="Nom de la page">
         <div v-if="editor">
-            <div class="mb-3">
+            <div class="editor-navbar-buttons bg-white pb-3">
                 <tip-tap-buttons
                 class="d-inline-block"
                 :buttons='{
@@ -135,8 +135,8 @@
                 :action="() => {editor.chain().focus().redo().run()}"
                 />
             </div>
+            <editor-content class="border p-4 my-rounded mt-3" :editor="editor" />
         </div>
-        <editor-content class="border p-4 my-rounded mt-3" :editor="editor" />
     </div>
 </template>
 
@@ -247,6 +247,27 @@ export default {
 </script>
 
 <style lang="scss">
+.editor-navbar-buttons {
+    position: fixed;
+    bottom: 15px;
+    z-index: 999;
+    
+    tip-tap-button, tip-tap-buttons {
+        background: white !important;
+    }
+}
+
+// .modal-dialog {
+//     max-width: 100%;
+//     margin: 0;
+//     top: 0;
+//     bottom: 0;
+//     left: 0;
+//     right: 0;
+//     height: 100vh;
+//     display: flex;
+// }
+
 .ProseMirror:focus {
     outline: none;
 }

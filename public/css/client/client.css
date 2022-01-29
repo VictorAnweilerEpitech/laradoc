@@ -22,6 +22,9 @@ body {
   cursor: pointer;
 }
 
+.doc-reader {
+  min-height: 60vh !important;
+}
 .doc-reader h1 {
   font-size: 200% !important;
 }
@@ -40,14 +43,48 @@ body {
 .doc-reader h6 {
   font-size: 90% !important;
 }
+.doc-reader > * + * {
+  margin-top: 0.75em;
+}
+.doc-reader ul,
+.doc-reader ol {
+  padding: 0 1rem;
+}
+.doc-reader h1,
+.doc-reader h2,
+.doc-reader h3,
+.doc-reader h4,
+.doc-reader h5,
+.doc-reader h6 {
+  line-height: 1.1;
+}
+.doc-reader code {
+  background-color: rgba(97, 97, 97, 0.1);
+  color: #616161;
+}
 .doc-reader pre {
-  background: #333 !important;
-  white-space: pre;
-  word-wrap: break-word;
-  overflow: auto;
-  margin: 20px 25px;
-  border-radius: 4px;
-  border: 1px solid #292929;
-  position: relative;
-  color: #aed581;
+  background: #0D0D0D;
+  color: #FFF;
+  font-family: "JetBrainsMono", monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+.doc-reader pre code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.8rem;
+}
+.doc-reader img {
+  max-width: 100%;
+  height: auto;
+}
+.doc-reader blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid rgba(13, 13, 13, 0.1);
+}
+.doc-reader hr {
+  border: none;
+  border-top: 2px solid rgba(13, 13, 13, 0.1);
+  margin: 2rem 0;
 }
