@@ -1,8 +1,10 @@
 <template>
-    <div>
-        <input v-model="title" type="text" class="form-control mb-3" placeholder="Nom de la page">
-        <div v-if="editor">
-            <div class="editor-navbar-buttons bg-white pb-3">
+    <div class="pb-4">
+        <input v-model="title" type="text" class="form-control w-100" placeholder="Nom de la page">
+
+        <div v-if="editor" class="mb-2">
+            <editor-content class="border p-4 rounded mt-3 mb-4" :editor="editor" />
+            <div class="editor-navbar-buttons bg-light rounded shadow p-3">
                 <tip-tap-buttons
                 class="d-inline-block"
                 :buttons='{
@@ -135,7 +137,6 @@
                 :action="() => {editor.chain().focus().redo().run()}"
                 />
             </div>
-            <editor-content class="border p-4 my-rounded mt-3" :editor="editor" />
         </div>
     </div>
 </template>
@@ -249,24 +250,26 @@ export default {
 <style lang="scss">
 .editor-navbar-buttons {
     position: fixed;
-    bottom: 15px;
+    bottom: 10px;
     z-index: 999;
+    left: 50%;
+    transform: translate(-50%, 0);
     
     tip-tap-button, tip-tap-buttons {
         background: white !important;
     }
 }
 
-// .modal-dialog {
-//     max-width: 100%;
-//     margin: 0;
-//     top: 0;
-//     bottom: 0;
-//     left: 0;
-//     right: 0;
-//     height: 100vh;
-//     display: flex;
-// }
+.editor-navbar-buttons {
+    .tiptap-btn {
+        background: white !important;
+    }
+}
+
+.modal-dialog {
+    margin-bottom: 0;
+    display: flex;
+}
 
 .ProseMirror:focus {
     outline: none;

@@ -20,7 +20,7 @@
             </div>
             <template v-if="headerRequest && headerRequest.length > 0">
                 <small class="font-weight-light text-secondary d-block mb-1">Header</small>
-                <table class="table table-bordered bg-white">
+                <table class="table table-bordered bg-white mb-0">
                     <thead>
                         <tr>
                             <th scope="col">Nom</th>
@@ -43,7 +43,7 @@
             </template>
             <template v-if="bodyRequest && bodyRequest.length > 0">
                 <small class="font-weight-light text-secondary d-block mb-1">Paramètres</small>
-                <table class="table table-bordered bg-white">
+                <table class="table table-bordered bg-white mb-0">
                     <thead>
                         <tr>
                             <th scope="col">Nom</th>
@@ -63,18 +63,18 @@
                         </tr>
                     </tbody>
                 </table>
-                <div>
-                    <small class="font-weight-light text-secondary d-block mb-1">Tester</small>
-                    <request-button-sender
-                    :url="url"
-                    :type="type"
-                    :body="bodyRequest"
-                    :header="headerRequest"
-                    btn-class="btn-dark btn-sm"
-                    btn-label="Envoyer"
-                    />
-                </div>
             </template>
+            <div class="mt-1">
+                <small class="font-weight-light text-secondary d-block mb-1">Tester</small>
+                <request-button-sender
+                :url="url"
+                :type="type"
+                :body="bodyRequest"
+                :header="headerRequest"
+                btn-class="btn-dark btn-sm"
+                btn-label="Envoyer"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -104,7 +104,7 @@ export default {
     data() {
         return {
             bodyRequest: null,
-            bodyHeader: null,
+            headerRequest: null,
             tryRequest: false
         }
     },

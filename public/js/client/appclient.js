@@ -2103,7 +2103,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       bodyRequest: null,
-      bodyHeader: null,
+      headerRequest: null,
       tryRequest: false
     };
   },
@@ -49135,37 +49135,41 @@ var render = function() {
                 [_vm._v("Header")]
               ),
               _vm._v(" "),
-              _c("table", { staticClass: "table table-bordered bg-white" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.headerRequest, function(item, index) {
-                    return _c(
-                      "tr",
-                      { key: "request-" + item.label + "-" + index },
-                      [
-                        _c("td", [_vm._v(_vm._s(item.label))]),
-                        _vm._v(" "),
-                        _c("td", [
+              _c(
+                "table",
+                { staticClass: "table table-bordered bg-white mb-0" },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.headerRequest, function(item, index) {
+                      return _c(
+                        "tr",
+                        { key: "request-" + item.label + "-" + index },
+                        [
+                          _c("td", [_vm._v(_vm._s(item.label))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "span",
+                              { staticClass: "badge text-white bg-my-primary" },
+                              [_vm._v(_vm._s(item.value.type))]
+                            )
+                          ]),
+                          _vm._v(" "),
                           _c(
-                            "span",
-                            { staticClass: "badge text-white bg-my-primary" },
-                            [_vm._v(_vm._s(item.value.type))]
+                            "td",
+                            { staticClass: "font-weight-light text-secondary" },
+                            [_c("small", [_vm._v(_vm._s(item.value.value))])]
                           )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "font-weight-light text-secondary" },
-                          [_c("small", [_vm._v(_vm._s(item.value.value))])]
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              ])
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                ]
+              )
             ]
           : _vm._e(),
         _vm._v(" "),
@@ -49179,65 +49183,67 @@ var render = function() {
                 [_vm._v("Paramètres")]
               ),
               _vm._v(" "),
-              _c("table", { staticClass: "table table-bordered bg-white" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.bodyRequest, function(item, index) {
-                    return _c(
-                      "tr",
-                      { key: "request-" + item.label + "-" + index },
-                      [
-                        _c("td", [_vm._v(_vm._s(item.label))]),
-                        _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "span",
-                            { staticClass: "badge text-white bg-my-primary" },
-                            [_vm._v(_vm._s(item.value.type))]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "td",
-                          { staticClass: "font-weight-light text-secondary" },
-                          [_c("small", [_vm._v(_vm._s(item.value.value))])]
-                        )
-                      ]
-                    )
-                  }),
-                  0
-                )
-              ]),
-              _vm._v(" "),
               _c(
-                "div",
+                "table",
+                { staticClass: "table table-bordered bg-white mb-0" },
                 [
-                  _c(
-                    "small",
-                    {
-                      staticClass:
-                        "font-weight-light text-secondary d-block mb-1"
-                    },
-                    [_vm._v("Tester")]
-                  ),
+                  _vm._m(1),
                   _vm._v(" "),
-                  _c("request-button-sender", {
-                    attrs: {
-                      url: _vm.url,
-                      type: _vm.type,
-                      body: _vm.bodyRequest,
-                      header: _vm.headerRequest,
-                      "btn-class": "btn-dark btn-sm",
-                      "btn-label": "Envoyer"
-                    }
-                  })
-                ],
-                1
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.bodyRequest, function(item, index) {
+                      return _c(
+                        "tr",
+                        { key: "request-" + item.label + "-" + index },
+                        [
+                          _c("td", [_vm._v(_vm._s(item.label))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "span",
+                              { staticClass: "badge text-white bg-my-primary" },
+                              [_vm._v(_vm._s(item.value.type))]
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            { staticClass: "font-weight-light text-secondary" },
+                            [_c("small", [_vm._v(_vm._s(item.value.value))])]
+                          )
+                        ]
+                      )
+                    }),
+                    0
+                  )
+                ]
               )
             ]
-          : _vm._e()
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "mt-1" },
+          [
+            _c(
+              "small",
+              { staticClass: "font-weight-light text-secondary d-block mb-1" },
+              [_vm._v("Tester")]
+            ),
+            _vm._v(" "),
+            _c("request-button-sender", {
+              attrs: {
+                url: _vm.url,
+                type: _vm.type,
+                body: _vm.bodyRequest,
+                header: _vm.headerRequest,
+                "btn-class": "btn-dark btn-sm",
+                "btn-label": "Envoyer"
+              }
+            })
+          ],
+          1
+        )
       ],
       2
     )
