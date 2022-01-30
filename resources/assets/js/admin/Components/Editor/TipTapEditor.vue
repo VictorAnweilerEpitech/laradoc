@@ -1,141 +1,150 @@
 <template>
     <div class="pb-4">
         <input v-model="title" type="text" class="form-control w-100" placeholder="Nom de la page">
-
+        {{content}}
         <div v-if="editor" class="mb-2">
             <editor-content class="border p-4 rounded mt-3 mb-4" :editor="editor" />
-            <div class="editor-navbar-buttons bg-light rounded shadow p-3">
-                <tip-tap-buttons
-                class="d-inline-block"
-                :buttons='{
-                    icon: "fas fa-heading",
-                    items: [
-                        {
-                            class: "d-inline-block mr-2 mt-3 col-12",
-                            icon: "Paragraph",
-                            action: () => {editor.chain().focus().setParagraph({ level: 1 }).run()},
-                            isActive: editor.isActive("paragraph")
-                        },
-                        {
-                            class: "d-inline-block mr-2 mt-3 col-3",
-                            icon: "H1",
-                            action: () => {editor.chain().focus().toggleHeading({ level: 1 }).run()},
-                            isActive: editor.isActive("heading", { level: 1 })
-                        },
-                        {
-                            class: "d-inline-block mr-2 mt-3 col-3",
-                            icon: "H2",
-                            action: () => {editor.chain().focus().toggleHeading({ level: 2 }).run()},
-                            isActive: editor.isActive("heading", { level: 2 })
-                        },
-                        {
-                            class: "d-inline-block mr-2 mt-3 col-3",
-                            icon: "H3",
-                            action: () => {editor.chain().focus().toggleHeading({ level: 3 }).run()},
-                            isActive: editor.isActive("heading", { level: 3 })
-                        },
-                        {
-                            class: "d-inline-block mr-2 mt-3 col-3",
-                            icon: "H4",
-                            action: () => {editor.chain().focus().toggleHeading({ level: 4 }).run()},
-                            isActive: editor.isActive("heading", { level: 4 })
-                        },
-                        {
-                            class: "d-inline-block mr-2 mt-3 col-3",
-                            icon: "H5",
-                            action: () => {editor.chain().focus().toggleHeading({ level: 5 }).run()},
-                            isActive: editor.isActive("heading", { level: 5 })
-                        },
-                        {
-                            class: "d-inline-block mr-2 mt-3 col-3",
-                            icon: "H6",
-                            action: () => {editor.chain().focus().toggleHeading({ level: 6}).run()},
-                            isActive: editor.isActive("heading", { level: 6 })
-                        }
-                    ]
-                }'
-                />
-                <tip-tap-button
-                class="d-inline-block"
-                icon="fas fa-remove-format"
-                :action="() => {
-                    editor.chain().focus().clearNodes().run();
-                    editor.chain().focus().unsetAllMarks().run()
-                }"
-                />
-                <span class="separator d-inline-block mx-2" style="height: 24px;"></span>
-                <tip-tap-button
-                class="d-inline-block"
-                icon="fas fa-bold"
-                :action="() => {editor.chain().focus().toggleBold().run()}"
-                :is-active="editor.isActive('bold')"
-                />
-                <tip-tap-button
-                class="d-inline-block"
-                icon="fas fa-italic"
-                :action="() => {editor.chain().focus().toggleItalic().run()}"
-                :is-active="editor.isActive('italic')"
-                />
-                <tip-tap-button
-                class="d-inline-block"
-                icon="fas fa-strikethrough"
-                :action="() => {editor.chain().focus().toggleStrike().run()}"
-                :is-active="editor.isActive('strike')"
-                />
-                <span class="separator d-inline-block mx-2" style="height: 24px;"></span>
-                <tip-tap-buttons
-                class="d-inline-block"
-                :buttons='{
-                    icon: "fas fa-list",
-                    items: [
-                        {
-                            class: "d-inline-block mr-2 mt-3 col-3",
-                            icon: "fas fa-list-ul",
-                            action: () => {editor.chain().focus().toggleBulletList().run()},
-                            isActive: editor.isActive("bulletList")
-                        },
-                        {
-                            class: "d-inline-block mr-2 mt-3 col-3",
-                            icon: "fas fa-list-ol",
-                            action: () => {editor.chain().focus().toggleOrderedList().run()},
-                            isActive: editor.isActive("orderedList")
-                        }
-                    ]
-                }'
-                />
-                <tip-tap-button
-                class="d-inline-block"
-                icon="fas fa-code"
-                :action="() => {editor.chain().focus().toggleCodeBlock().run()}"
-                :is-active="editor.isActive('codeBlock')"
-                />
-                <tip-tap-button
-                class="d-inline-block"
-                icon="bi hr"
-                :action="() => {editor.chain().focus().setHorizontalRule().run()}"
-                />
-                <tip-tap-button
-                class="d-inline-block"
-                icon="fas fa-quote-left"
-                :action="() => {editor.chain().focus().toggleBlockquote().run()}"
-                :is-active="editor.isActive('blockquote')"
-                />
-                <tip-tap-button
-                class="d-inline-block"
-                icon="fas fa-rocket"
-                :action="() => {this.addTipTapRequest()}"
-                />
-                <span class="separator d-inline-block mx-2" style="height: 24px;"></span>
-                <tip-tap-button
-                class="d-inline-block"
-                icon="fas fa-undo"
-                :action="() => {editor.chain().focus().undo().run()}"
-                />
-                <tip-tap-button
-                class="d-inline-block"
-                icon="fas fa-redo"
-                :action="() => {editor.chain().focus().redo().run()}"
-                />
+            <div class="d-flex align-items-center justify-content-between editor-navbar-buttons bg-light rounded shadow p-3">
+                <div class="d-flex align-items-center">
+                    <tip-tap-buttons
+                    class="mr-1"
+                    :buttons='{
+                        icon: "fas fa-heading",
+                        items: [
+                            {
+                                class: " mr-2 mt-3 col-12",
+                                icon: "Paragraph",
+                                action: () => {editor.chain().focus().setParagraph({ level: 1 }).run()},
+                                isActive: editor.isActive("paragraph")
+                            },
+                            {
+                                class: " mr-2 mt-3 col-3",
+                                icon: "H1",
+                                action: () => {editor.chain().focus().toggleHeading({ level: 1 }).run()},
+                                isActive: editor.isActive("heading", { level: 1 })
+                            },
+                            {
+                                class: " mr-2 mt-3 col-3",
+                                icon: "H2",
+                                action: () => {editor.chain().focus().toggleHeading({ level: 2 }).run()},
+                                isActive: editor.isActive("heading", { level: 2 })
+                            },
+                            {
+                                class: " mr-2 mt-3 col-3",
+                                icon: "H3",
+                                action: () => {editor.chain().focus().toggleHeading({ level: 3 }).run()},
+                                isActive: editor.isActive("heading", { level: 3 })
+                            },
+                            {
+                                class: " mr-2 mt-3 col-3",
+                                icon: "H4",
+                                action: () => {editor.chain().focus().toggleHeading({ level: 4 }).run()},
+                                isActive: editor.isActive("heading", { level: 4 })
+                            },
+                            {
+                                class: " mr-2 mt-3 col-3",
+                                icon: "H5",
+                                action: () => {editor.chain().focus().toggleHeading({ level: 5 }).run()},
+                                isActive: editor.isActive("heading", { level: 5 })
+                            },
+                            {
+                                class: " mr-2 mt-3 col-3",
+                                icon: "H6",
+                                action: () => {editor.chain().focus().toggleHeading({ level: 6}).run()},
+                                isActive: editor.isActive("heading", { level: 6 })
+                            }
+                        ]
+                    }'
+                    />
+                    <tip-tap-button
+                    icon="fas fa-remove-format"
+                    :action="() => {
+                        editor.chain().focus().clearNodes().run();
+                        editor.chain().focus().unsetAllMarks().run()
+                    }"
+                    />
+                </div>
+                <div class="d-flex align-items-center">
+                    <tip-tap-button
+                    class="mr-1"
+                    icon="fas fa-bold"
+                    :action="() => {editor.chain().focus().toggleBold().run()}"
+                    :is-active="editor.isActive('bold')"
+                    />
+                    <tip-tap-button
+                    class="mr-1"
+                    icon="fas fa-italic"
+                    :action="() => {editor.chain().focus().toggleItalic().run()}"
+                    :is-active="editor.isActive('italic')"
+                    />
+                    <tip-tap-button
+                    class="mr-1"
+                    icon="fas fa-strikethrough"
+                    :action="() => {editor.chain().focus().toggleStrike().run()}"
+                    :is-active="editor.isActive('strike')"
+                    />
+                </div>
+                <div class="d-flex align-items-center">
+                    <tip-tap-buttons
+                    class="mr-1"
+                    :buttons='{
+                        icon: "fas fa-list",
+                        items: [
+                            {
+                                class: " mr-2 mt-3 col-3",
+                                icon: "fas fa-list-ul",
+                                action: () => {editor.chain().focus().toggleBulletList().run()},
+                                isActive: editor.isActive("bulletList")
+                            },
+                            {
+                                class: " mr-2 mt-3 col-3",
+                                icon: "fas fa-list-ol",
+                                action: () => {editor.chain().focus().toggleOrderedList().run()},
+                                isActive: editor.isActive("orderedList")
+                            }
+                        ]
+                    }'
+                    />
+                    <tip-tap-button
+                    class="mr-1"
+                    icon="fas fa-code"
+                    :action="() => {editor.chain().focus().toggleCodeBlock().run()}"
+                    :is-active="editor.isActive('codeBlock')"
+                    />
+                    <tip-tap-button
+                    class="mr-1"
+                    icon="bi hr"
+                    :action="() => {editor.chain().focus().setHorizontalRule().run()}"
+                    />
+                    <tip-tap-button
+                    class="mr-1"
+                    icon="fas fa-quote-left"
+                    :action="() => {editor.chain().focus().toggleBlockquote().run()}"
+                    :is-active="editor.isActive('blockquote')"
+                    />
+                    <tip-tap-button
+                    class="mr-1"
+                    icon="fas fa-rocket"
+                    :action="() => {this.addTipTapRequest()}"
+                    />
+                    <tip-tap-button
+                    class="mr-1"
+                    icon="fas fa-exclamation-circle"
+                    :action="() => {this.addAlertComponent()}"
+                    />
+                </div>
+                <div class="d-flex align-items-center">
+                    <tip-tap-button
+                    class="mr-1"
+                    icon="fas fa-undo"
+                    :action="() => {editor.chain().focus().undo().run()}"
+                    />
+                    <tip-tap-button
+                    class="mr-1"
+                    icon="fas fa-redo"
+                    :action="() => {editor.chain().focus().redo().run()}"
+                    />
+                </div>
             </div>
         </div>
     </div>
@@ -151,6 +160,7 @@ import Typography from '@tiptap/extension-typography'
 import TipTapButton from './TipTapButton.vue'
 import TipTapButtons from './TipTapButtons.vue'
 import TipTapRequest from './SendRequest/Extension'
+import TipTapAlert from './Alert/Extension'
 
 export default {
     props: {
@@ -160,7 +170,8 @@ export default {
     components: {
         EditorContent,
         TipTapButton,
-        TipTapButtons
+        TipTapButtons,
+        TipTapAlert
     },
 
     data() {
@@ -189,7 +200,11 @@ export default {
         },
 
         addTipTapRequest() {
-            this.editor.commands.setContent((this.content || '') + '<tip-tap-request-editor url="" type="get" header="" body=""></tip-tap-request-editor><p></p>')
+            this.editor.commands.setContent((this.content || '') + '<tip-tap-request url="" type="get" header="" body=""></tip-tap-request><p></p>')
+        },
+
+        addAlertComponent() {
+            this.editor.commands.setContent((this.content || '') + '<tip-tap-alert type="success" class="alert alert-warning" value=""></tip-tap-alert><p></p>')
         },
 
         renderEditor() {
@@ -199,7 +214,8 @@ export default {
                     StarterKit,
                     Highlight,
                     Typography,
-                    TipTapRequest
+                    TipTapRequest,
+                    TipTapAlert
                 ],
                 onUpdate: () => {
                     // HTML
@@ -239,6 +255,7 @@ export default {
         } else {
             this.renderEditor()
         }
+        console.log(TipTapRequest);
     },
 
     beforeUnmount() {
@@ -253,6 +270,7 @@ export default {
     bottom: 10px;
     z-index: 999;
     left: 50%;
+    width: 715px !important;
     transform: translate(-50%, 0);
     
     tip-tap-button, tip-tap-buttons {

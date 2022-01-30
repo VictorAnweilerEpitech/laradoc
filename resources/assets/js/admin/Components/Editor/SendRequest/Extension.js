@@ -3,7 +3,7 @@ import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import Component from './TipTapRequestEditor.vue'
 
 export default Node.create({
-  name: 'vueComponent',
+  name: 'tip-tap-request-component',
 
   group: 'block',
 
@@ -29,13 +29,13 @@ export default Node.create({
   parseHTML() {
     return [
       {
-        tag: 'tip-tap-request-editor',
+        tag: 'tip-tap-request',
       },
     ]
   },
 
   renderHTML({ HTMLAttributes, node }) {
-    return ['tip-tap-request-editor', mergeAttributes(
+    return ['tip-tap-request', mergeAttributes(
         HTMLAttributes
     )]
   },

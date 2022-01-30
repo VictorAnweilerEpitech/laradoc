@@ -84,9 +84,9 @@
 
             <div class="mb-3 d-flex align-items-center" v-if="subCategory">
                 <div class="mr-2">
-                    <b-dropdown variant="light" size="sm">
+                    <b-dropdown variant="white" size="sm">
                         <template #button-content>
-                            <!-- <i class="fas fa-ellipsis-v"></i> -->
+                            <i class="fas fa-pen"></i>
                         </template>
                         <b-dropdown-item>
                             <button class="btn btn-sm text-dark" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-update-category')">
