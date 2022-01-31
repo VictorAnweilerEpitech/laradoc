@@ -90,7 +90,7 @@
                 <div class="js-section"></div>
                 @if (count($category->pages) <= 0)
                 <div class="bg-light p-3 border my-rounded text-center shadow">
-                    <img height="75" class="mt-2" src="https://cdn-icons-png.flaticon.com/512/869/869078.png" />
+                    <img style="height: 75px !important;" class="mt-2" src="https://cdn-icons-png.flaticon.com/512/869/869078.png" />
                     <h4 class="font-weight-light mt-2 mb-1">
                         Aucun contenu disponible
                     </h4>

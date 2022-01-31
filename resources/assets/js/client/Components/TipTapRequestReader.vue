@@ -116,10 +116,6 @@ export default {
         if (this.header) {
             this.headerRequest = JSON.parse(this.header)
         }
-        console.log(this.url);
-        console.log(this.type);
-        console.log(this.body);
-        console.log(this.header);
     }
 }
 </script>

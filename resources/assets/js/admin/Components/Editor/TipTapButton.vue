@@ -3,7 +3,7 @@
         <span
         @click="getClick"
         class="tiptap-btn rounded p-2"
-        :class="isSelected ? 'bg-dark text-white' : 'text-dark border'">
+        :class="isSelected ? 'tip-tap-btn-selected border' : 'tip-tap-btn-not-selected border'">
             <template v-if="icon.split(' ')[0] == 'fas'">
                 <i :class="icon"></i>
             </template>

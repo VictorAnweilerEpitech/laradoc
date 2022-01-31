@@ -124,21 +124,25 @@ export default {
 
         getOnlyBodyRequest() {
             let endObj = {}
-            this.body.forEach((inp) => {
-                if (inp.label && inp.value.value) {
-                    endObj[inp.label] = inp.value.value
-                }
-            })
+            if (this.body) {
+                this.body.forEach((inp) => {
+                    if (inp.label && inp.value.value) {
+                        endObj[inp.label] = inp.value.value
+                    }
+                })
+            }
             return endObj
         },
 
         getOnlyHeaderRequest() {
             let endObj = {}
-            this.header.forEach((inp) => {
-                if (inp.label && inp.value.value) {
-                    endObj[inp.label] = inp.value.value
-                }
-            })
+            if (this.header) {
+                this.header.forEach((inp) => {
+                    if (inp.label && inp.value.value) {
+                        endObj[inp.label] = inp.value.value
+                    }
+                })
+            }
             return endObj
         },
     }

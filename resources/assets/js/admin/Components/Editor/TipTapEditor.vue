@@ -1,7 +1,6 @@
 <template>
     <div class="pb-4">
         <input v-model="title" type="text" class="form-control w-100" placeholder="Nom de la page">
-        {{content}}
         <div v-if="editor" class="mb-2">
             <editor-content class="border p-4 rounded mt-3 mb-4" :editor="editor" />
             <div class="d-flex align-items-center justify-content-between editor-navbar-buttons bg-light rounded shadow p-3">
@@ -12,43 +11,43 @@
                         icon: "fas fa-heading",
                         items: [
                             {
-                                class: " mr-2 mt-3 col-12",
+                                class: "d-inline-block mr-2 mt-3 mb-3 col-12",
                                 icon: "Paragraph",
                                 action: () => {editor.chain().focus().setParagraph({ level: 1 }).run()},
                                 isActive: editor.isActive("paragraph")
                             },
                             {
-                                class: " mr-2 mt-3 col-3",
+                                class: "d-inline-block mr-2 mt-3 col-3",
                                 icon: "H1",
                                 action: () => {editor.chain().focus().toggleHeading({ level: 1 }).run()},
                                 isActive: editor.isActive("heading", { level: 1 })
                             },
                             {
-                                class: " mr-2 mt-3 col-3",
+                                class: "d-inline-block mr-2 mt-3 col-3",
                                 icon: "H2",
                                 action: () => {editor.chain().focus().toggleHeading({ level: 2 }).run()},
                                 isActive: editor.isActive("heading", { level: 2 })
                             },
                             {
-                                class: " mr-2 mt-3 col-3",
+                                class: "d-inline-block mr-2 mt-3 col-3",
                                 icon: "H3",
                                 action: () => {editor.chain().focus().toggleHeading({ level: 3 }).run()},
                                 isActive: editor.isActive("heading", { level: 3 })
                             },
                             {
-                                class: " mr-2 mt-3 col-3",
+                                class: "d-inline-block mr-2 mt-3 col-3",
                                 icon: "H4",
                                 action: () => {editor.chain().focus().toggleHeading({ level: 4 }).run()},
                                 isActive: editor.isActive("heading", { level: 4 })
                             },
                             {
-                                class: " mr-2 mt-3 col-3",
+                                class: "d-inline-block mr-2 mt-3 col-3",
                                 icon: "H5",
                                 action: () => {editor.chain().focus().toggleHeading({ level: 5 }).run()},
                                 isActive: editor.isActive("heading", { level: 5 })
                             },
                             {
-                                class: " mr-2 mt-3 col-3",
+                                class: "d-inline-block mr-2 mt-3 col-3",
                                 icon: "H6",
                                 action: () => {editor.chain().focus().toggleHeading({ level: 6}).run()},
                                 isActive: editor.isActive("heading", { level: 6 })
@@ -62,6 +61,68 @@
                         editor.chain().focus().clearNodes().run();
                         editor.chain().focus().unsetAllMarks().run()
                     }"
+                    />
+                    <tip-tap-buttons
+                    class="mr-1"
+                    :buttons='{
+                        icon: "fas fa-palette",
+                        items: [
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #a29bfe; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {editor.chain().focus().setColor("#a29bfe").run()},
+                                isActive: editor.isActive("textStyle", { color: "#a29bfe" })
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #55efc4; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {editor.chain().focus().setColor("#55efc4").run()},
+                                isActive: editor.isActive("textStyle", { color: "#55efc4" })
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #81ecec; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {editor.chain().focus().setColor("#81ecec").run()},
+                                isActive: editor.isActive("textStyle", { color: "#81ecec" })
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #74b9ff; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {editor.chain().focus().setColor("#74b9ff").run()},
+                                isActive: editor.isActive("textStyle", { color: "#74b9ff" })
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #ffeaa7; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {editor.chain().focus().setColor("#ffeaa7").run()},
+                                isActive: editor.isActive("textStyle", { color: "#ffeaa7" })
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #fab1a0; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {editor.chain().focus().setColor("#fab1a0").run()},
+                                isActive: editor.isActive("textStyle", { color: "#fab1a0" })
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #b2bec3; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {editor.chain().focus().setColor("#b2bec3").run()},
+                                isActive: editor.isActive("textStyle", { color: "#b2bec3" })
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #636e72; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {editor.chain().focus().setColor("#636e72").run()},
+                                isActive: editor.isActive("textStyle", { color: "#636e72" })
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #000; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {editor.chain().focus().setColor("#000").run()},
+                                isActive: editor.isActive("textStyle", { color: "#000" })
+                            }
+                        ]
+                    }'
                     />
                 </div>
                 <div class="d-flex align-items-center">
@@ -91,13 +152,13 @@
                         icon: "fas fa-list",
                         items: [
                             {
-                                class: " mr-2 mt-3 col-3",
+                                class: "d-inline-block mr-2 mt-3 col-3",
                                 icon: "fas fa-list-ul",
                                 action: () => {editor.chain().focus().toggleBulletList().run()},
                                 isActive: editor.isActive("bulletList")
                             },
                             {
-                                class: " mr-2 mt-3 col-3",
+                                class: "d-inline-block mr-2 mt-3 col-3",
                                 icon: "fas fa-list-ol",
                                 action: () => {editor.chain().focus().toggleOrderedList().run()},
                                 isActive: editor.isActive("orderedList")
@@ -156,6 +217,11 @@ import StarterKit from '@tiptap/starter-kit'
 
 import Highlight from '@tiptap/extension-highlight'
 import Typography from '@tiptap/extension-typography'
+import Document from '@tiptap/extension-document'
+import Paragraph from '@tiptap/extension-paragraph'
+import Text from '@tiptap/extension-text'
+import TextStyle from '@tiptap/extension-text-style'
+import { Color } from '@tiptap/extension-color'
 
 import TipTapButton from './TipTapButton.vue'
 import TipTapButtons from './TipTapButtons.vue'
@@ -213,6 +279,11 @@ export default {
                 extensions: [
                     StarterKit,
                     Highlight,
+                    Document,
+                    Paragraph,
+                    Text,
+                    TextStyle,
+                    Color,,
                     Typography,
                     TipTapRequest,
                     TipTapAlert
@@ -255,7 +326,6 @@ export default {
         } else {
             this.renderEditor()
         }
-        console.log(TipTapRequest);
     },
 
     beforeUnmount() {
@@ -272,15 +342,16 @@ export default {
     left: 50%;
     width: 715px !important;
     transform: translate(-50%, 0);
-    
-    tip-tap-button, tip-tap-buttons {
-        background: white !important;
-    }
 }
 
 .editor-navbar-buttons {
-    .tiptap-btn {
+    .tip-tap-btn-not-selected, tip-tap-buttons {
         background: white !important;
+        color: black !important;
+    }
+    .tip-tap-btn-selected {
+        background: #2d3436 !important;
+        color: white !important;
     }
 }
 

@@ -1967,20 +1967,28 @@ __webpack_require__.r(__webpack_exports__);
     },
     getOnlyBodyRequest: function getOnlyBodyRequest() {
       var endObj = {};
-      this.body.forEach(function (inp) {
-        if (inp.label && inp.value.value) {
-          endObj[inp.label] = inp.value.value;
-        }
-      });
+
+      if (this.body) {
+        this.body.forEach(function (inp) {
+          if (inp.label && inp.value.value) {
+            endObj[inp.label] = inp.value.value;
+          }
+        });
+      }
+
       return endObj;
     },
     getOnlyHeaderRequest: function getOnlyHeaderRequest() {
       var endObj = {};
-      this.header.forEach(function (inp) {
-        if (inp.label && inp.value.value) {
-          endObj[inp.label] = inp.value.value;
-        }
-      });
+
+      if (this.header) {
+        this.header.forEach(function (inp) {
+          if (inp.label && inp.value.value) {
+            endObj[inp.label] = inp.value.value;
+          }
+        });
+      }
+
       return endObj;
     }
   }
@@ -2149,11 +2157,6 @@ __webpack_require__.r(__webpack_exports__);
     if (this.header) {
       this.headerRequest = JSON.parse(this.header);
     }
-
-    console.log(this.url);
-    console.log(this.type);
-    console.log(this.body);
-    console.log(this.header);
   }
 });
 
