@@ -199,6 +199,64 @@
                     icon="fas fa-exclamation-circle"
                     :action="() => {this.addAlertComponent()}"
                     />
+                    <tip-tap-buttons
+                    class="mr-1"
+                    :buttons='{
+                        icon: "fas fa-table",
+                        items: [
+                            {
+                                class: "border-bottom w-100",
+                                icon: "Ajouter un tableau",
+                                action: () => {editor.commands.insertTable()},
+                            },
+                            {
+                                class: "border-bottom w-100",
+                                icon: "Ajouter colonne avant",
+                                action: () => {editor.commands.addColumnBefore()},
+                            },
+                            {
+                                class: "border-bottom w-100",
+                                icon: "Ajouter colonne après",
+                                action: () => {editor.commands.addColumnAfter()},
+                            },
+                            {
+                                class: "border-bottom w-100",
+                                icon: "Ajouter ligne dessus",
+                                action: () => {editor.commands.addRowBefore()},
+                            },
+                            {
+                                class: "border-bottom w-100",
+                                icon: "Ajouter ligne dessous",
+                                action: () => {editor.commands.addRowAfter()},
+                            },
+                            {
+                                class: "border-bottom w-100",
+                                icon: "Supprimer colonne",
+                                action: () => {editor.commands.deleteColumn()},
+                            },
+                            {
+                                class: "border-bottom w-100",
+                                icon: "Supprimer ligne",
+                                action: () => {editor.commands.deleteRow()},
+                            },
+                            {
+                                class: "border-bottom w-100",
+                                icon: "Merge",
+                                action: () => {editor.commands.mergeCells()},
+                            },
+                            {
+                                class: "border-bottom w-100",
+                                icon: "Split",
+                                action: () => {editor.commands.splitCell()},
+                            },
+                            {
+                                class: "border-bottom w-100",
+                                icon: "Supprimer le tableau",
+                                action: () => {editor.commands.deleteTable()},
+                            },
+                        ]
+                    }'
+                    />
                 </div>
                 <div class="d-flex align-items-center">
                     <tip-tap-button
@@ -229,6 +287,12 @@ import Text from '@tiptap/extension-text'
 import TextStyle from '@tiptap/extension-text-style'
 import Underline from '@tiptap/extension-underline'
 import { Color } from '@tiptap/extension-color'
+import Table from '@tiptap/extension-table'
+import TableRow from '@tiptap/extension-table-row'
+import TableCell from '@tiptap/extension-table-cell'
+import TableHeader from '@tiptap/extension-table-header'
+import Gapcursor from '@tiptap/extension-gapcursor'
+
 
 import TipTapButton from './TipTapButton.vue'
 import TipTapButtons from './TipTapButtons.vue'
@@ -244,7 +308,7 @@ export default {
         EditorContent,
         TipTapButton,
         TipTapButtons,
-        TipTapAlert
+        TipTapAlert,
     },
 
     data() {
@@ -291,7 +355,14 @@ export default {
                     Text,
                     Underline,
                     TextStyle,
-                    Color,,
+                    Color,
+                    Gapcursor,
+                    Table.configure({
+                        resizable: true,
+                    }),
+                    TableRow,
+                    TableHeader,
+                    TableCell,
                     Typography,
                     TipTapRequest,
                     TipTapAlert
@@ -427,6 +498,67 @@ export default {
         border: none;
         border-top: 2px solid rgba(#0D0D0D, 0.1);
         margin: 2rem 0;
+    }
+
+    table {
+        border-collapse: collapse;
+        table-layout: fixed;
+        width: 100%;
+        margin: 0;
+        overflow: hidden;
+
+        td,
+        th {
+        min-width: 1em;
+        border: 2px solid #ced4da;
+        padding: 3px 5px;
+        vertical-align: top;
+        box-sizing: border-box;
+        position: relative;
+
+        > * {
+            margin-bottom: 0;
+        }
+        }
+
+        th {
+        font-weight: bold;
+        text-align: left;
+        background-color: #f1f3f5;
+        }
+
+        .selectedCell:after {
+        z-index: 2;
+        position: absolute;
+        content: "";
+        left: 0; right: 0; top: 0; bottom: 0;
+        background: rgba(200, 200, 255, 0.4);
+        pointer-events: none;
+        }
+
+        .column-resize-handle {
+        position: absolute;
+        right: -2px;
+        top: 0;
+        bottom: -2px;
+        width: 4px;
+        background-color: #adf;
+        pointer-events: none;
+        }
+
+        p {
+        margin: 0;
+        }
+    }
+
+    .tableWrapper {
+        padding: 1rem 0;
+        overflow-x: auto;
+    }
+
+    .resize-cursor {
+        cursor: ew-resize;
+        cursor: col-resize;
     }
 }
 </style>

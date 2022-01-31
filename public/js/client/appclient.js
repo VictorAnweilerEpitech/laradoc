@@ -1932,7 +1932,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       this.requestLoading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url, this.getOnlyHeaderRequest()).then(function (response) {
+      var config = {
+        headers: this.getOnlyHeaderRequest()
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get(this.url, config).then(function (response) {
         _this.resultSuccess = response.data;
         _this.requestLoading = false;
       })["catch"](function (error) {
@@ -1944,7 +1947,10 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.requestLoading = true;
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url, this.getOnlyBodyRequest(), this.getOnlyHeaderRequest()).then(function (response) {
+      var config = {
+        headers: this.getOnlyHeaderRequest()
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post(this.url, this.getOnlyBodyRequest(), config).then(function (response) {
         _this2.resultSuccess = response.data;
         _this2.requestLoading = false;
       })["catch"](function (error) {

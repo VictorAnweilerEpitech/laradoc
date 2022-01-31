@@ -85,7 +85,8 @@ export default {
     methods: {
         getRequest() {
             this.requestLoading = true
-            axios.get(this.url, this.getOnlyHeaderRequest())
+            let config = {headers: this.getOnlyHeaderRequest()}
+            axios.get(this.url, config)
             .then((response) => {
                 this.resultSuccess = response.data
                 this.requestLoading = false
@@ -98,7 +99,8 @@ export default {
 
         postRequest() {
             this.requestLoading = true
-            axios.post(this.url, this.getOnlyBodyRequest(), this.getOnlyHeaderRequest())
+            let config = {headers: this.getOnlyHeaderRequest()}
+            axios.post(this.url, this.getOnlyBodyRequest(), config)
             .then((response) => {
                 this.resultSuccess = response.data
                 this.requestLoading = false
