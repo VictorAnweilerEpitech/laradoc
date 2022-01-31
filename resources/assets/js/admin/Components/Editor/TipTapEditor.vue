@@ -140,6 +140,12 @@
                     />
                     <tip-tap-button
                     class="mr-1"
+                    icon="fas fa-underline"
+                    :action="() => {editor.chain().focus().toggleUnderline().run()}"
+                    :is-active="editor.isActive('underline')"
+                    />
+                    <tip-tap-button
+                    class="mr-1"
                     icon="fas fa-strikethrough"
                     :action="() => {editor.chain().focus().toggleStrike().run()}"
                     :is-active="editor.isActive('strike')"
@@ -221,6 +227,7 @@ import Document from '@tiptap/extension-document'
 import Paragraph from '@tiptap/extension-paragraph'
 import Text from '@tiptap/extension-text'
 import TextStyle from '@tiptap/extension-text-style'
+import Underline from '@tiptap/extension-underline'
 import { Color } from '@tiptap/extension-color'
 
 import TipTapButton from './TipTapButton.vue'
@@ -282,6 +289,7 @@ export default {
                     Document,
                     Paragraph,
                     Text,
+                    Underline,
                     TextStyle,
                     Color,,
                     Typography,
