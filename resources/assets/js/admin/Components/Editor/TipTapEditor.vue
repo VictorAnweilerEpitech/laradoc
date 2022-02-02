@@ -194,10 +194,58 @@
                     icon="fas fa-rocket"
                     :action="() => {this.addTipTapRequest()}"
                     />
-                    <tip-tap-button
+                    <!-- <tip-tap-button
                     class="mr-1"
                     icon="fas fa-exclamation-circle"
                     :action="() => {this.addAlertComponent()}"
+                    /> -->
+                    <tip-tap-buttons
+                    class="mr-1"
+                    :buttons='{
+                        icon: "fas fa-exclamation-circle",
+                        items: [
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #CFE2FF; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {this.addAlertComponent("primary")}
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #E2E3E5; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {this.addAlertComponent("secondary")}
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #D1E7DD; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {this.addAlertComponent("success")}
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #F8D7DA; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {this.addAlertComponent("danger")}
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #FFF3CD; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {this.addAlertComponent("warning")}
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #CFF4FC; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {this.addAlertComponent("info")}
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #FEFEFE; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {this.addAlertComponent("light")}
+                            },
+                            {
+                                class: "d-inline-block mr-2 mt-3 col-3",
+                                icon: "<button style=\"background: #141619; border-width: 0px; width: 10px; height: 11px; border-radius: 50%\"></button>",
+                                action: () => {this.addAlertComponent("dark")}
+                            },
+                        ]
+                    }'
                     />
                     <tip-tap-buttons
                     class="mr-1"
@@ -340,8 +388,8 @@ export default {
             this.editor.commands.setContent((this.content || '') + '<tip-tap-request url="" type="get" header="" body=""></tip-tap-request><p></p>')
         },
 
-        addAlertComponent() {
-            this.editor.commands.setContent((this.content || '') + '<tip-tap-alert type="success" class="alert alert-warning" value=""></tip-tap-alert><p></p>')
+        addAlertComponent(type) {
+            this.editor.commands.setContent((this.content || '') + '<tip-tap-alert type="' + type + '" value=""></tip-tap-alert><p></p>')
         },
 
         renderEditor() {
@@ -399,6 +447,7 @@ export default {
     },
 
     mounted() {
+        console.log('ta grosse mere la pute');
         if (this.id) {
             this.pageId = this.id
             this.getPage(this.id)

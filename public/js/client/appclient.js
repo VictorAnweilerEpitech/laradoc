@@ -2129,6 +2129,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -2142,6 +2145,9 @@ __webpack_require__.r(__webpack_exports__);
       type: String
     },
     header: {
+      type: String
+    },
+    label: {
       type: String
     }
   },
@@ -49194,7 +49200,12 @@ var render = function() {
       },
       [
         _c("h6", { staticClass: "font-weight-light mb-0" }, [
-          _vm._v("Essayer la requête")
+          _c("span", { staticClass: "mr-2" }, [_vm._v("🚀")]),
+          _vm._v(
+            "\n            " +
+              _vm._s(_vm.label || "Essayer la requête") +
+              "\n        "
+          )
         ]),
         _vm._v(" "),
         _c(

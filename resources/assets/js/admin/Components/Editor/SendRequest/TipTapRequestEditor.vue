@@ -5,7 +5,15 @@
 
             <div class="content">
                 <div class="bg-light border rounded p-3 mb-3">
-                    <div class="text-secondary font-weight-light mb-2">1 - Information de l'url</div>
+                    <div class="text-secondary font-weight-light mb-2">1 - Nom du bouton</div>
+                    <div class="row">
+                        <div class="col-12">
+                            <input class="form-control" type="text" placeholder="Essayer la requête" v-model="node.attrs.label">
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-light border rounded p-3 mb-3">
+                    <div class="text-secondary font-weight-light mb-2">2 - Information de l'url</div>
                     <div class="row">
                         <div class="col-3">
                             <select class="form-control rounded" v-model="node.attrs.type">
@@ -19,7 +27,7 @@
                     </div>
                 </div>
                 <div class="bg-light border rounded p-3 mb-3">
-                    <div class="text-secondary font-weight-light mb-2">2 - Contenu du header de la requête</div>
+                    <div class="text-secondary font-weight-light mb-2">3 - Contenu du header de la requête</div>
                     <div class="row mb-2" v-for="(inp, index) in header" :key="'input-header-' + index">
                         <div class="col-4">
                             <input class="form-control" v-model="inp.label" placeholder="Clé" type="text">
@@ -42,7 +50,7 @@
                     </div>
                 </div>
                 <div class="bg-light border rounded p-3 mb-3">
-                    <div class="text-secondary font-weight-light mb-2">3 - Contenu de la requête</div>
+                    <div class="text-secondary font-weight-light mb-2">4 - Contenu de la requête</div>
                     <div class="row mb-2" v-for="(inp, index) in body" :key="'input-body-' + index">
                         <div class="col-4">
                             <input class="form-control" v-model="inp.label" placeholder="Clé" type="text">
@@ -65,7 +73,7 @@
                     </div>
                 </div>
                 <div class="bg-light border rounded p-3 mb-3">
-                    <div class="text-secondary font-weight-light mb-2">4 - Tester la requête</div>
+                    <div class="text-secondary font-weight-light mb-2">5 - Tester la requête</div>
                     <div class="row mt-3">
                         <div class="col-12">
                             <request-button-sender

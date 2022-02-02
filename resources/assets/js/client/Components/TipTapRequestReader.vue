@@ -1,7 +1,10 @@
 <template>
     <div class="border rounded p-3 bg-light">
         <div class="d-flex align-items-center justify-content-between" @click="tryRequest = !tryRequest">
-            <h6 class="font-weight-light mb-0">Essayer la requête</h6>
+            <h6 class="font-weight-light mb-0">
+                <span class="mr-2">🚀</span>
+                {{ label || 'Essayer la requête'}}
+            </h6>
             <div v-show="tryRequest">
                 <i class="fas fa-chevron-up"></i>
             </div>
@@ -93,6 +96,9 @@ export default {
             type: String,
         },
         header: {
+            type: String,
+        },
+        label: {
             type: String,
         }
     },

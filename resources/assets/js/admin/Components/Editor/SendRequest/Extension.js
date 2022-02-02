@@ -22,6 +22,9 @@ export default Node.create({
       },
       header: {
         default: ""
+      },
+      label: {
+        default: ""
       }
     }
   },
