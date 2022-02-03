@@ -1,13 +1,13 @@
 <template>
     <div class="d-flex mb-5">
         <div class="col-3">
-            <div class="bg-white border rounded bg-light p-4">
+            <div class="bg-white border my-rounded bg-light p-4">
                 <h5 class="mb-1">Administrateur</h5>
                 <h6 class="font-weight-light text-secondary mb-3">Documentation</h6>
-                <router-link :to="{ name: 'structure'}" class="d-block my-1 p-3 px-4 text-dark" :class="btnIsSelected('structure')">
+                <router-link :to="{ name: 'structure'}" class="d-block my-1 p-3 px-4 text-dark my-rounded" :class="btnIsSelected('structure')">
                     <i class="fas fa-sitemap" style="margin-right: 8px;"></i>Structure
                 </router-link>
-                <router-link :to="{ name: 'members'}" class="d-block my-1 p-3 px-4 text-dark" :class="btnIsSelected('members')">
+                <router-link :to="{ name: 'members'}" class="d-block my-1 p-3 px-4 text-dark my-rounded" :class="btnIsSelected('members')">
                     <i class="fas fa-users" style="margin-right: 8px;"></i>Membres
                 </router-link>
                 <!-- <router-link to="#" class="d-block my-1 p-3">
@@ -16,7 +16,7 @@
             </div>
         </div>
         <div class="col-9">
-            <div class="p-3 bg-light border rounded" style="min-height: 500px;">
+            <div class="p-3  border my-rounded" style="min-height: 500px;">
                 <slot></slot>
             </div>
         </div>
@@ -46,8 +46,18 @@ export default {
     },
     methods: {
         btnIsSelected(routeName) {
-            return routeName === this.$route.name ? 'bg-light border rounded-pill' : ''
+            return routeName === this.$route.name ? 'nav-selected my-rounded border' : 'nav-not-selected'
         },
     }
 }
 </script>
+
+<style>
+.nav-not-selected {
+    border: 1px solid #fff !important;
+}
+
+.nav-selected {
+    background: #F4F4F4 !important;
+}
+</style>

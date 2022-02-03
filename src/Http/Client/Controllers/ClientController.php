@@ -17,6 +17,7 @@ class ClientController extends LaradocController
     {
         $category = Category::findOrFail($categoryId);
         $children = $category->children;
+
         return view('laradoc::client.page', compact('category', 'children'));
     }
 }

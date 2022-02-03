@@ -1,4 +1,4 @@
-@extends('laradoc::client.template')
+@extends('laradoc::template')
 
 @section('head')
     {{-- EditorCss --}}
@@ -12,7 +12,9 @@
 @endsection
 
 @section('content')
+<div class="pt-2">
     @yield('admin-content')
+</div>
 @endsection
 
 @section('scripts')

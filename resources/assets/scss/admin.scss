@@ -6,6 +6,18 @@ a {
     cursor: pointer !important;
 }
 
+.my-rounded {
+    border-radius: 15px !important;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 1px solid #ced4da;
+}
+
+.index-top {
+    z-index: 999 !important;
+}
 
 
 
