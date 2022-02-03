@@ -21,3 +21,126 @@ body {
   background: #F4F4F4 !important;
   cursor: pointer;
 }
+
+.doc-reader {
+  min-height: 60vh !important;
+}
+.doc-reader h1 {
+  font-size: 200% !important;
+}
+.doc-reader h2 {
+  font-size: 150% !important;
+}
+.doc-reader h3 {
+  font-size: 135% !important;
+}
+.doc-reader h4 {
+  font-size: 125% !important;
+}
+.doc-reader h5 {
+  font-size: 110% !important;
+}
+.doc-reader h6 {
+  font-size: 90% !important;
+}
+.doc-reader > * + * {
+  margin-top: 0.75em;
+}
+.doc-reader ul,
+.doc-reader ol {
+  padding: 0 1rem;
+}
+.doc-reader h1,
+.doc-reader h2,
+.doc-reader h3,
+.doc-reader h4,
+.doc-reader h5,
+.doc-reader h6 {
+  line-height: 1.1;
+}
+.doc-reader code {
+  background-color: rgba(97, 97, 97, 0.1);
+  color: #616161;
+}
+.doc-reader pre {
+  background: #0D0D0D;
+  color: #FFF;
+  font-family: "JetBrainsMono", monospace;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+}
+.doc-reader pre code {
+  color: inherit;
+  padding: 0;
+  background: none;
+  font-size: 0.8rem;
+}
+.doc-reader img {
+  max-width: 100%;
+  height: auto;
+}
+.doc-reader blockquote {
+  padding-left: 1rem;
+  border-left: 2px solid rgba(13, 13, 13, 0.1);
+}
+.doc-reader hr {
+  border: none;
+  border-top: 2px solid rgba(13, 13, 13, 0.1);
+  margin: 2rem 0;
+}
+.doc-reader table {
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+.doc-reader table td,
+.doc-reader table th {
+  min-width: 1em;
+  border: 1px solid #ced4da;
+  padding: 3px 5px;
+  vertical-align: top;
+  box-sizing: border-box;
+  position: relative;
+}
+.doc-reader table td > *,
+.doc-reader table th > * {
+  margin-bottom: 0;
+}
+.doc-reader table th {
+  font-weight: bold;
+  text-align: left;
+  background-color: #f1f3f5;
+}
+.doc-reader table .selectedCell:after {
+  z-index: 2;
+  position: absolute;
+  content: "";
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(200, 200, 255, 0.4);
+  pointer-events: none;
+}
+.doc-reader table .column-resize-handle {
+  position: absolute;
+  right: -2px;
+  top: 0;
+  bottom: -2px;
+  width: 4px;
+  background-color: #adf;
+  pointer-events: none;
+}
+.doc-reader table p {
+  margin: 0;
+}
+.doc-reader .tableWrapper {
+  padding: 1rem 0;
+  overflow-x: auto;
+}
+.doc-reader .resize-cursor {
+  cursor: ew-resize;
+  cursor: col-resize;
+}

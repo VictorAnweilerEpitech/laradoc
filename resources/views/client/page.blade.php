@@ -2,7 +2,7 @@
     'pageTitle' => $category->name
 ])
 
-@section('head')
+@section('client-head')
 <style>
 .doc_nav .selected, .doc_nav .selected:hover
 {
@@ -38,7 +38,7 @@
 </style>
 @endsection
 
-@section('content')
+@section('client-content')
 <div class="container">
     <div class="row">
         <div class="col-4">
@@ -86,11 +86,11 @@
             </div>
         </div>
         <div class="col-8">
-            <div class="mt-3">
+            <div class="mt-3 doc-reader">
                 <div class="js-section"></div>
                 @if (count($category->pages) <= 0)
                 <div class="bg-light p-3 border my-rounded text-center shadow">
-                    <img height="75" class="mt-2" src="https://cdn-icons-png.flaticon.com/512/869/869078.png" />
+                    <img style="height: 75px !important;" class="mt-2" src="https://cdn-icons-png.flaticon.com/512/869/869078.png" />
                     <h4 class="font-weight-light mt-2 mb-1">
                         Aucun contenu disponible
                     </h4>
@@ -105,7 +105,7 @@
                                 {{$page->name}}
                             </b>
                         </h3>
-                        <div class="pl-4 pb-5">
+                        <div class="pl-4 pb-5 page-content-reader">
                             {!!$page->content!!}
                         </div>
                         @if ($index < count($category->pages) - 1)

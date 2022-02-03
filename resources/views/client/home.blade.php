@@ -2,7 +2,7 @@
     'pageTitle' => 'Accueil'
 ])
 
-@section('content')
+@section('client-content')
     <div class="text-center">
         <div class="d-flex align-items-center justify-content-center mt-5 mb-4">
             <img class="mr-3" src="{{config('laradoc.logo')}}" height="70" />
