@@ -38,7 +38,8 @@
                                 <span class="badge text-white bg-my-primary">{{item.value.type}}</span>
                             </td>
                             <td class="font-weight-light text-secondary">
-                                <small>{{item.value.value}}</small>
+                                <small v-if="!item.edit">{{item.value.value}}</small>
+                                <input v-if="item.edit" placeholder="Valeur" class="form-control" type="text" v-model="headerRequest[index].value.value">
                             </td>
                         </tr>
                     </tbody>
@@ -61,7 +62,8 @@
                                 <span class="badge text-white bg-my-primary">{{item.value.type}}</span>
                             </td>
                             <td class="font-weight-light text-secondary">
-                                <small>{{item.value.value}}</small>
+                                <small v-if="!item.edit">{{item.value.value}}</small>
+                                <input v-if="item.edit" placeholder="Valeur" class="form-control" type="text" v-model="bodyRequest[index].value.value">
                             </td>
                         </tr>
                     </tbody>

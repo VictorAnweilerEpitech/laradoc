@@ -29,13 +29,20 @@
                 <div class="bg-light border rounded p-3 mb-3">
                     <div class="text-secondary font-weight-light mb-2">3 - Contenu du header de la requête</div>
                     <div class="row mb-2" v-for="(inp, index) in header" :key="'input-header-' + index">
-                        <div class="col-4">
+                        <div class="col-3">
+                            <small>Editable par le lecteur</small><br />
+                            <input style="width: auto; transform: scale(1.5);" class="form-control float-left" v-model="inp.edit" type="checkbox">
+                        </div>
+                        <div class="col-3">
+                            <small>Nom dans la requête</small>
                             <input class="form-control" v-model="inp.label" placeholder="Clé" type="text">
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
+                            <small>Valeur par défaut</small>
                             <input class="form-control" v-model="inp.value.value" placeholder="Valeur" :type="inp.value.type">
                         </div>
                         <div class="col-1">
+                            <small>Retirer</small>
                             <button class="btn btn-danger" @click="removeInputHeader(index)">
                                 <i class="fas fa-minus"></i>
                             </button>
@@ -52,14 +59,21 @@
                 <div class="bg-light border rounded p-3 mb-3">
                     <div class="text-secondary font-weight-light mb-2">4 - Contenu de la requête</div>
                     <div class="row mb-2" v-for="(inp, index) in body" :key="'input-body-' + index">
-                        <div class="col-4">
+                        <div class="col-3">
+                            <small>Editable par le lecteur</small><br />
+                            <input style="width: auto; transform: scale(1.5);" class="form-control float-left" v-model="inp.edit" type="checkbox">
+                        </div>
+                        <div class="col-3">
+                            <small>Nom dans la requête</small>
                             <input class="form-control" v-model="inp.label" placeholder="Clé" type="text">
                         </div>
-                        <div class="col-6">
+                        <div class="col-4">
+                            <small>Valeur par défaut</small>
                             <input class="form-control" v-model="inp.value.value" placeholder="Valeur" :type="inp.value.type">
                         </div>
                         <div class="col-1">
-                            <button class="btn btn-danger" @click="removeInputBody(index)">
+                            <small>Retirer</small>
+                            <button class="btn btn-danger" @click="removeInputHeader(index)">
                                 <i class="fas fa-minus"></i>
                             </button>
                         </div>
@@ -134,7 +148,8 @@ export default {
                 label: "",
                 value: {
                     type: 'text',
-                    value: null
+                    value: null,
+                    edit: true,
                 }
             })
         },
@@ -148,7 +163,8 @@ export default {
                 label: "",
                 value: {
                     type: 'text',
-                    value: null
+                    value: null,
+                    edit: true,
                 }
             })
         }

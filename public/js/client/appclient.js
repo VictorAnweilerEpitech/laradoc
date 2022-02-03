@@ -2132,6 +2132,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: {
@@ -49322,7 +49324,49 @@ var render = function() {
                           _c(
                             "td",
                             { staticClass: "font-weight-light text-secondary" },
-                            [_c("small", [_vm._v(_vm._s(item.value.value))])]
+                            [
+                              !item.edit
+                                ? _c("small", [
+                                    _vm._v(_vm._s(item.value.value))
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              item.edit
+                                ? _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value:
+                                          _vm.headerRequest[index].value.value,
+                                        expression:
+                                          "headerRequest[index].value.value"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      placeholder: "Valeur",
+                                      type: "text"
+                                    },
+                                    domProps: {
+                                      value:
+                                        _vm.headerRequest[index].value.value
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.headerRequest[index].value,
+                                          "value",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                : _vm._e()
+                            ]
                           )
                         ]
                       )
@@ -49370,7 +49414,48 @@ var render = function() {
                           _c(
                             "td",
                             { staticClass: "font-weight-light text-secondary" },
-                            [_c("small", [_vm._v(_vm._s(item.value.value))])]
+                            [
+                              !item.edit
+                                ? _c("small", [
+                                    _vm._v(_vm._s(item.value.value))
+                                  ])
+                                : _vm._e(),
+                              _vm._v(" "),
+                              item.edit
+                                ? _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value:
+                                          _vm.bodyRequest[index].value.value,
+                                        expression:
+                                          "bodyRequest[index].value.value"
+                                      }
+                                    ],
+                                    staticClass: "form-control",
+                                    attrs: {
+                                      placeholder: "Valeur",
+                                      type: "text"
+                                    },
+                                    domProps: {
+                                      value: _vm.bodyRequest[index].value.value
+                                    },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          _vm.bodyRequest[index].value,
+                                          "value",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                : _vm._e()
+                            ]
                           )
                         ]
                       )
