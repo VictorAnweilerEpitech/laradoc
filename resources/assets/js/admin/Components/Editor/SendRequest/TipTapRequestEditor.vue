@@ -73,7 +73,7 @@
                         </div>
                         <div class="col-1">
                             <small>Retirer</small>
-                            <button class="btn btn-danger" @click="removeInputHeader(index)">
+                            <button class="btn btn-danger" @click="removeInputBody(index)">
                                 <i class="fas fa-minus"></i>
                             </button>
                         </div>
