@@ -194,11 +194,6 @@
                     icon="fas fa-rocket"
                     :action="() => {this.addTipTapRequest()}"
                     />
-                    <!-- <tip-tap-button
-                    class="mr-1"
-                    icon="fas fa-exclamation-circle"
-                    :action="() => {this.addAlertComponent()}"
-                    /> -->
                     <tip-tap-buttons
                     class="mr-1"
                     :buttons='{
@@ -254,56 +249,62 @@
                         items: [
                             {
                                 class: "border-bottom w-100",
-                                icon: "Ajouter un tableau",
+                                icon: "<small>Créer</small>",
                                 action: () => {editor.commands.insertTable()},
                             },
                             {
                                 class: "border-bottom w-100",
-                                icon: "Ajouter colonne avant",
+                                icon: "<small class=\"mt-3 d-inline-block\">Ajouter colonne avant</small>",
                                 action: () => {editor.commands.addColumnBefore()},
                             },
                             {
                                 class: "border-bottom w-100",
-                                icon: "Ajouter colonne après",
+                                icon: "<small class=\"mt-3 d-inline-block\">Ajouter colonne après</small>",
                                 action: () => {editor.commands.addColumnAfter()},
                             },
                             {
                                 class: "border-bottom w-100",
-                                icon: "Ajouter ligne dessus",
+                                icon: "<small class=\"mt-3 d-inline-block\">Ajouter ligne dessus</small>",
                                 action: () => {editor.commands.addRowBefore()},
                             },
                             {
                                 class: "border-bottom w-100",
-                                icon: "Ajouter ligne dessous",
+                                icon: "<small class=\"mt-3 d-inline-block\">Ajouter ligne dessous</small>",
                                 action: () => {editor.commands.addRowAfter()},
                             },
                             {
                                 class: "border-bottom w-100",
-                                icon: "Supprimer colonne",
+                                icon: "<small class=\"mt-3 d-inline-block\">Supprimer colonne</small>",
                                 action: () => {editor.commands.deleteColumn()},
                             },
                             {
                                 class: "border-bottom w-100",
-                                icon: "Supprimer ligne",
+                                icon: "<small class=\"mt-3 d-inline-block\">Supprimer ligne</small>",
                                 action: () => {editor.commands.deleteRow()},
                             },
                             {
                                 class: "border-bottom w-100",
-                                icon: "Merge",
+                                icon: "<small class=\"mt-3 d-inline-block\">Merge</small>",
                                 action: () => {editor.commands.mergeCells()},
                             },
                             {
                                 class: "border-bottom w-100",
-                                icon: "Split",
+                                icon: "<small class=\"mt-3 d-inline-block\">Split</small>",
                                 action: () => {editor.commands.splitCell()},
                             },
                             {
                                 class: "border-bottom w-100",
-                                icon: "Supprimer le tableau",
+                                icon: "<small class=\"mt-3 d-inline-block\">Supprimer le tableau</small>",
                                 action: () => {editor.commands.deleteTable()},
                             },
                         ]
                     }'
+                    />
+                    <tip-tap-button
+                    class="mr-1"
+                    icon="fas fa-link"
+                    :action="() => {editor.isActive('link') ?  editor.chain().focus().unsetLink().run() : this.setLink()}"
+                    :is-active="editor.isActive('link')"
                     />
                 </div>
                 <div class="d-flex align-items-center">
@@ -340,12 +341,13 @@ import TableRow from '@tiptap/extension-table-row'
 import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import Gapcursor from '@tiptap/extension-gapcursor'
-
+import Link from '@tiptap/extension-link'
 
 import TipTapButton from './TipTapButton.vue'
 import TipTapButtons from './TipTapButtons.vue'
 import TipTapRequest from './SendRequest/Extension'
 import TipTapAlert from './Alert/Extension'
+import TipTapLink from './Link/Extension'
 
 export default {
     props: {
@@ -355,8 +357,7 @@ export default {
     components: {
         EditorContent,
         TipTapButton,
-        TipTapButtons,
-        TipTapAlert,
+        TipTapButtons
     },
 
     data() {
@@ -392,6 +393,36 @@ export default {
             this.editor.commands.setContent((this.content || '') + '<tip-tap-alert type="' + type + '" value=""></tip-tap-alert><p></p>')
         },
 
+        setLink() {
+            const previousUrl = this.editor.getAttributes('link').href
+            const url = window.prompt('URL', previousUrl)
+
+            // cancelled
+            if (url === null) {
+                return
+            }
+
+            // empty
+            if (url === '') {
+                this.editor
+                .chain()
+                .focus()
+                .extendMarkRange('link')
+                .unsetLink()
+                .run()
+
+                return
+            }
+
+            // update link
+            this.editor
+                .chain()
+                .focus()
+                .extendMarkRange('link')
+                .setLink({ href: url })
+                .run()
+        },
+
         renderEditor() {
             this.editor = new Editor({
                 content: this.content,
@@ -405,6 +436,7 @@ export default {
                     TextStyle,
                     Color,
                     Gapcursor,
+                    Link,
                     Table.configure({
                         resizable: true,
                     }),
@@ -413,7 +445,8 @@ export default {
                     TableCell,
                     Typography,
                     TipTapRequest,
-                    TipTapAlert
+                    TipTapAlert,
+                    TipTapLink
                 ],
                 onUpdate: () => {
                     // HTML
