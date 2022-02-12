@@ -41,6 +41,7 @@ Route::prefix(config('laradoc.url_prefix'))->group(function () {
                 Route::post('/{page}/view', [PageController::class, 'view'])->name('laradoc.back.page.view');
                 Route::post('/{page}/update', [PageController::class, 'update'])->name('laradoc.back.page.update');
                 Route::post('/{page}/delete', [PageController::class, 'delete'])->name('laradoc.back.page.delete');
+                Route::post('/{page}/group', [PageController::class, 'group'])->name('laradoc.back.page.group');
             });
 
             Route::prefix('/member')->group(function () {
