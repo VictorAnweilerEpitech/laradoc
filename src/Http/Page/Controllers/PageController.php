@@ -9,6 +9,7 @@ use Victoranw\Laradoc\Models\Category;
 
 use Victoranw\Laradoc\Http\Controllers\LaradocController;
 use Victoranw\Laradoc\Http\Page\Requests\PageEditAddRequest;
+use Victoranw\Laradoc\Http\Page\Requests\PageEditGroupRequest;
 
 class PageController extends LaradocController
 {
@@ -47,5 +48,14 @@ class PageController extends LaradocController
     {
         $page = Page::findOrFail($pageId);
         $page->delete();
+    }
+
+    public function group(PageEditGroupRequest $request, $pageId)
+    {
+        $page = Page::findOrFail($pageId);
+        $page->group = $request->group;
+        $page->save();
+
+        return $page;
     }
 }

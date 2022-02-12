@@ -1,6 +1,17 @@
 <template>
     <div>
         <admin-template v-if="laraConfig && user" :config="laraConfig" :user="user">
+            <!-- Manage group -->
+            <b-modal id="modal-manage-group" hide-header hide-footer>
+                <template v-if="pageSelected">
+                    <h3>Gérer le groupe</h3>
+                    <small class="text-secondary">
+                        Le groupe est optionnel et permet de grouper plusieurs pages dans une même catégorie.
+                        <input class="form-control mt-3" v-model="pageSelected.group" placeholder="Groupe" />
+                        <button @click="updateGroup()" class="btn btn-dark mt-3">{{pageSelected.group ? 'Modifier' : 'Ajouter'}}</button>
+                    </small>
+                </template>
+            </b-modal>
             <!-- Add category -->
             <b-modal id="modal-add-category" hide-header hide-footer>
                 <h3>Ajouter un chapitre</h3>
@@ -152,6 +163,9 @@
                                     <tr :key="index">
                                         <td class="bg-white">{{page.name}}</td>
                                         <td class="text-right">
+                                            <b-button size="sm" v-b-modal.modal-manage-group class="btn bg-light border-light text-dark" @click="pageSelected = page">
+                                                <i class="fa-solid fa-layer-group"></i>
+                                            </b-button>
                                             <b-button size="sm" v-b-modal.modal-manage-page class="btn bg-light border-light text-dark" @click="pageSelected = page">
                                                 <i class="fas fa-eye"></i>
                                             </b-button>
@@ -309,6 +323,17 @@ export default {
             .then((response) => {
                 this.getPages(this.category.id)
                 this.$bvModal.hide('modal-delete-page')
+            })
+        },
+
+        updateGroup() {
+            axios.post(this.baseUrl + '/page/' + this.pageSelected.id + '/group', {
+                group: this.pageSelected.group
+            })
+            .then((response) => {
+                this.getPages(this.category.id)
+                this.$bvModal.hide('modal-manage-group')
+                this.pageSelected = null
             })
         }
     },

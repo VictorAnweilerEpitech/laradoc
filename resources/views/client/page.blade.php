@@ -69,14 +69,23 @@
                 <div class="doc_nav">
                     <ul class="pl-0" style="list-style-type: none">
                         @if (isset($category))
-                            @foreach ($category->pages as $index => $categoryPage)
-                                <li class="d-flex align-items-center js-btn mb-3 {{$index == 0 ? 'selected' : ''}} pr-5" style="cursor: pointer">
-                                    <div class="square-selected"></div>
-                                    {{$categoryPage->name}}
-                                </li>
+                            @foreach ($pages as $indexCateg => $categoryPage)
+                            <div class="mb-5">
+                                @if (!$indexCateg && count($pages) > 1)
+                                    <div class="font-weight-bold mb-3">Autre</div>
+                                @else
+                                    <div class="font-weight-bold mb-3">{{$indexCateg}}</div>
+                                @endif
+                                @foreach ($categoryPage as $indexPage => $page)
+                                    <li class="d-flex align-items-center js-btn mb-3 {{$indexPage == 0 ? 'selected' : ''}} pr-5" style="cursor: pointer">
+                                        <div class="square-selected"></div>
+                                        {{$page->name}}
+                                    </li>
+                                @endforeach
+                            </div>
                             @endforeach
                         @endif
-                        @if (count($category->pages) <= 0)
+                        @if (count($pages) <= 0)
                             <small class="font-weight-light text-secondary">
                                 Aucune page
                             </small>
@@ -88,7 +97,7 @@
         <div class="col-8">
             <div class="mt-3 doc-reader">
                 <div class="js-section"></div>
-                @if (count($category->pages) <= 0)
+                @if (count($pages) <= 0)
                 <div class="bg-light p-3 border my-rounded text-center shadow">
                     <img style="height: 75px !important;" class="mt-2" src="https://cdn-icons-png.flaticon.com/512/869/869078.png" />
                     <h4 class="font-weight-light mt-2 mb-1">
@@ -97,21 +106,23 @@
                     <p class="text-secondary font-weight-light">Cette page ne possède pas de contenu</p>
                 </div>
                 @endif
-                @foreach ($category->pages as $index => $page)
-                    <section class="my-5 js-section" id="{{'section-'.$page->id}}">
-                        <h3 class="section_title mb-4">
-                            <b>
-                                <span class="text-my-primary">#</span>
-                                {{$page->name}}
-                            </b>
-                        </h3>
-                        <div class="pl-4 pb-5 page-content-reader">
-                            {!!$page->content!!}
-                        </div>
-                        @if ($index < count($category->pages) - 1)
-                            <hr class="mt-3" style="border-top: 1px solid #E4E4E4" />
-                        @endif
-                    </section>
+                @foreach ($pages as $indexCateg => $categoryPage)
+                    @foreach ($categoryPage as $index => $page)
+                        <section class="my-5 js-section" id="{{'section-'.$page->id}}">
+                            <h3 class="section_title mb-4">
+                                <b>
+                                    <span class="text-my-primary">#</span>
+                                    {{$page->name}}
+                                </b>
+                            </h3>
+                            <div class="pl-4 pb-5 page-content-reader">
+                                {!!$page->content!!}
+                            </div>
+                            @if ($index < count($pages) - 1)
+                                <hr class="mt-3" style="border-top: 1px solid #E4E4E4" />
+                            @endif
+                        </section>
+                    @endforeach
                 @endforeach
             </div>
         </div>

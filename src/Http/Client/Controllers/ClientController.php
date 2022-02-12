@@ -3,6 +3,7 @@
 namespace Victoranw\Laradoc\Http\Client\Controllers;
 
 use Illuminate\Http\Request;
+use Victoranw\Laradoc\Models\Page;
 use Victoranw\Laradoc\Models\Category;
 use Victoranw\Laradoc\Http\Controllers\LaradocController;
 
@@ -18,6 +19,8 @@ class ClientController extends LaradocController
         $category = Category::findOrFail($categoryId);
         $children = $category->children;
 
-        return view('laradoc::client.page', compact('category', 'children'));
+        $pages = Page::where('parent_id', $categoryId)->get()->groupBy('group');
+
+        return view('laradoc::client.page', compact('pages', 'category', 'children'));
     }
 }
