@@ -15,7 +15,7 @@ class Category extends Model
 
     public function children()
     {
-        return $this->hasMany(Category::class, 'parent_id')->with('children');
+        return $this->hasMany(Category::class, 'parent_id')->with('children')->orderBy('order');
     }
 
     public function parent()
@@ -26,5 +26,10 @@ class Category extends Model
     public function pages()
     {
         return $this->hasMany(Page::class, 'parent_id');
+    }
+
+    public function pagesOrder()
+    {
+        return $this->hasMany(Page::class, 'parent_id')->orderBy('order');
     }
 }

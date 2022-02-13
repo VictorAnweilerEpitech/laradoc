@@ -10,6 +10,7 @@ use Victoranw\Laradoc\Models\Category;
 use Victoranw\Laradoc\Http\Controllers\LaradocController;
 use Victoranw\Laradoc\Http\Page\Requests\PageEditAddRequest;
 use Victoranw\Laradoc\Http\Page\Requests\PageEditGroupRequest;
+use Victoranw\Laradoc\Http\Page\Requests\PageEditOrderRequest;
 
 class PageController extends LaradocController
 {
@@ -17,7 +18,7 @@ class PageController extends LaradocController
     {
         $category = Category::findOrFail($categoryId);
 
-        return $category->pages;
+        return $category->pagesOrder;
     }
 
     public function create(PageEditAddRequest $request)
@@ -57,5 +58,14 @@ class PageController extends LaradocController
         $page->save();
 
         return $page;
+    }
+
+    public function order(PageEditOrderRequest $request)
+    {
+        foreach ($request->list as $index => $item) {
+            $page = Page::find($item['id']);
+            $page->order = $index;
+            $page->save();
+        }
     }
 }

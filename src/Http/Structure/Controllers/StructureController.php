@@ -7,6 +7,7 @@ use Victoranw\Laradoc\Http\Authentication\Requests\LoginRequest;
 use Victoranw\Laradoc\Http\Controllers\LaradocController;
 
 use Victoranw\Laradoc\Http\Structure\Requests\StructureEditAddRequest;
+use Victoranw\Laradoc\Http\Structure\Requests\StructureEditOrderRequest;
 use Victoranw\Laradoc\Http\Structure\Requests\SearchRequest;
 
 use Victoranw\Laradoc\Models\Category;
@@ -33,7 +34,10 @@ class StructureController extends LaradocController
 
     public function structure()
     {
-        $structures = Category::whereNull('parent_id')->with('children', 'parent')->get();
+        $structures = Category::whereNull('parent_id')
+                            ->orderBy('order')
+                            ->with('children', 'parent')
+                            ->get();
 
         return ['name' => 'Doc', 'children' => $structures];
     }
@@ -67,5 +71,14 @@ class StructureController extends LaradocController
         $category = Category::findOrFail($categoryId);
         $category->children()->delete();
         $category->delete();
+    }
+
+    public function order(StructureEditOrderRequest $request)
+    {
+        foreach ($request->list as $index => $item) {
+            $category = Category::find($item['id']);
+            $category->order = $index;
+            $category->save();
+        }
     }
 }

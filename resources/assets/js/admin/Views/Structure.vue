@@ -68,133 +68,168 @@
             <p class="font-weight-light text-secondary">Contenu de la documentation</p>
             <hr>
             <!-- List categories -->
-            <div class="mb-3">
-                <div
-                v-for="(categ, index) in startData.children"
-                :key="'categ-' + index"
-                class="d-inline-block text-center">
-                    <span
+            <div class="mb-4 border-bottom pb-4">
+                <h5 class="mb-3">
+                    <span class="text-my-primary mr-2">#</span>Catégories principales
+                </h5>
+                <draggable
+                :list="startData.children"
+                class="list-group"
+                :class="pages.length > 0 ? 'mb-2' : ''"
+                ghost-class="ghost"
+                @change="newOrderCategory(startData.children)"
+                >
+                    <div
+                    class="list-group-item"
+                    v-for="(categ, index) in startData.children"
+                    :key="'categ-' + index"
+                    style="cursor: pointer;"
                     @click="getCategory(categ.id); categorySelected = categ"
-                    style="cursor: pointer; padding-bottom: 6px;"
-                    class="px-3 pt-1 mr-1 font-weight-light rounded-pill"
-                    :class="categorySelected && categorySelected.id == categ.id ? 'bg-secondary text-white' : 'bg-light text-secondary'"
                     >
-                        <small class="w-100 mb-0">{{categ.name}}</small>
-                    </span>
-                </div>
-                <span
+                        <div class="d-inline-block text-center">
+                            <span
+                            style="padding-bottom: 6px;"
+                            class="px-3 pt-1 mr-1 font-weight-light rounded-pill"
+                            :class="categorySelected && categorySelected.id == categ.id ? 'bg-secondary text-white' : 'bg-light text-secondary'"
+                            >
+                                <small class="w-100 mb-0">{{categ.name}}</small>
+                            </span>
+                        </div>
+                    </div>
+                </draggable>
+                <button
                 @click="$bvModal.show('modal-add-category')"
                 style="cursor: pointer"
-                class="px-3 py-1 mr-1 font-weight-light my-rounded"
+                class="btn btn-dark mt-2 px-3 py-1 mr-1 font-weight-light my-rounded"
                 >
                     <small class="w-100 mb-0">
-                        <i class="fas fa-plus"></i>
+                        Ajouter une catégorie <i class="fas fa-plus ml-2"></i>
                     </small>
-                </span>
+                </button>
             </div>
 
-            <div class="mb-3 d-flex align-items-center" v-if="subCategory">
-                <div class="mr-2">
-                    <b-dropdown variant="white" size="sm">
-                        <template #button-content>
-                            <i class="fas fa-pen"></i>
-                        </template>
-                        <b-dropdown-item>
-                            <button class="btn btn-sm text-dark" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-update-category')">
-                                Editer
-                            </button>
-                        </b-dropdown-item>
-                        <b-dropdown-item>
-                            <button class="btn btn-sm text-danger" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-delete-category')">
-                                Supprimer
-                            </button>
-                        </b-dropdown-item>
-                    </b-dropdown>
-                </div>
-                <div class="d-flex align-items-center">
-                    <button class="btn btn-sm" v-if="subCategory.parent_id" @click="getCategory(subCategory.parent_id)">
-                        <i class="fas fa-arrow-left"></i>
-                    </button>
-                    <h4 class="mb-0">{{subCategory.name}}</h4>
-                </div>
-            </div>
-            <div class="row" v-if="subCategory">
-                <div class="col-4">
-                    <div
-                    style="cursor: pointer"
-                    class="p-2 border-bottom"
-                    v-for="(child, index) in subCategory.children"
-                    :key="'child-menu-' + index"
-                    >
-                        <div class="d-flex align-items-center justify-content-between">
-                            <div class="flex-fill" @click="getCategory(child.id)">
-                                {{child.name}}
-                            </div>
-                            <div>
-                                <button class="btn btn-sm bg-light border-light text-dark" @click="subCategorySelectedModal = {...child}; $bvModal.show('modal-update-category')">
+            <template v-if="subCategory">
+                <h5 class="mb-3">
+                    <span class="text-my-primary mr-2">#</span>Contenu de la catégorie
+                </h5>
+                <div class="bg-light p-3 rounded border mb-3">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="mr-2">
+                            <b-dropdown variant="white" size="sm">
+                                <template #button-content>
                                     <i class="fas fa-pen"></i>
-                                </button>
-                                <button class="btn btn-sm bg-light border-light text-danger" @click="subCategorySelectedModal = {...child}; $bvModal.show('modal-delete-category')">
-                                    <i class="fas fa-trash"></i>
-                                </button>
+                                </template>
+                                <b-dropdown-item>
+                                    <button class="btn btn-sm text-dark" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-update-category')">
+                                        Editer
+                                    </button>
+                                </b-dropdown-item>
+                                <b-dropdown-item>
+                                    <button class="btn btn-sm text-danger" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-delete-category')">
+                                        Supprimer
+                                    </button>
+                                </b-dropdown-item>
+                            </b-dropdown>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-sm" v-if="subCategory.parent_id" @click="getCategory(subCategory.parent_id)">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <h4 class="mb-0">{{subCategory.name}}</h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <draggable
+                            :list="subCategory.children"
+                            class="list-group"
+                            :class="pages.length > 0 ? 'mb-2' : ''"
+                            ghost-class="ghost"
+                            @change="newOrderCategory(subCategory.children)"
+                            >
+                                <div
+                                class="list-group-item"
+                                v-for="(child, index) in subCategory.children"
+                                :key="'child-menu-' + index"
+                                >
+                                    <div
+                                    style="cursor: pointer"
+                                    class="p-2"
+                                    >
+                                        <div class="d-flex align-items-center justify-content-between">
+                                            <div class="flex-fill" @click="getCategory(child.id)">
+                                                {{child.name}}
+                                            </div>
+                                            <div>
+                                                <button class="btn btn-sm bg-light border-light text-dark" @click="subCategorySelectedModal = {...child}; $bvModal.show('modal-update-category')">
+                                                    <i class="fas fa-pen"></i>
+                                                </button>
+                                                <button class="btn btn-sm bg-light border-light text-danger" @click="subCategorySelectedModal = {...child}; $bvModal.show('modal-delete-category')">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </draggable>
+                            <div v-if="subCategory.children.length <= 0" class="p-2 text-secondary font-weight-light">
+                                <small class="text-secondary font-weight-light">Aucune catégorie</small>
+                            </div>
+                            <b-button size="sm" class="bg-dark mt-2" v-b-modal.modal-add-subcategory>
+                                <small>
+                                    Ajouter <i class="fas fa-plus ml-1"></i>
+                                </small>
+                            </b-button>
+                        </div>
+                        <div class="col-8">
+                            <div v-if="subCategory && subCategory.id">
+                                <draggable
+                                :list="pages"
+                                class="list-group"
+                                :class="pages.length > 0 ? 'mb-2' : ''"
+                                ghost-class="ghost"
+                                @change="newOrderPages"
+                                >
+                                    <div
+                                    class="list-group-item"
+                                    v-for="page in pages"
+                                    :key="page.id"
+                                    >
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-fill">
+                                                <div>
+                                                    {{page.name}}
+                                                </div>
+                                                <div v-if="page.group" class="badge badge-dark">{{page.group}}</div>
+                                                <div v-else class="badge badge-secondary">Autre</div>
+                                            </div>
+                                            <div>
+                                                <b-button size="sm" v-b-modal.modal-manage-page class="btn bg-light border-light text-dark" @click="pageSelected = page">
+                                                    <i class="fas fa-eye"></i>
+                                                </b-button>
+                                                <b-button size="sm" v-b-modal.modal-manage-group class="btn bg-light border-light text-dark" @click="pageSelected = page">
+                                                    <i class="fa-solid fa-layer-group"></i>
+                                                </b-button>
+                                                <b-button size="sm" v-b-modal.modal-delete-page class="btn bg-light border-light text-danger" @click="pageSelected = page">
+                                                    <i class="fas fa-trash"></i>
+                                                </b-button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </draggable>
+                                <div class="bg-white d-flex align-items-center justify-content-between bg-light border rounded p-3 text-right">
+                                    <div class="font-weight-bold">
+                                        Ajouter une nouvelle page
+                                    </div>
+                                    <b-button class="btn btn-success btn-sm" @click="pageSelected = null" v-b-modal.modal-manage-page>
+                                        <i class="fas fa-plus"></i>
+                                    </b-button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div v-if="subCategory.children.length <= 0" class="p-2 text-secondary font-weight-light">
-                        <small class="text-secondary font-weight-light">Aucune catégorie</small>
-                    </div>
-                    <b-button size="sm" class="bg-dark mt-2" v-b-modal.modal-add-subcategory>
-                        <small>
-                            Ajouter <i class="fas fa-plus ml-1"></i>
-                        </small>
-                    </b-button>
                 </div>
-                <div class="col-8">
-                    <div v-if="subCategory && subCategory.id" class="mt-3">
-                        <table class="table mt-3 border bg-white">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Nom</th>
-                                    <th scope="col text-right">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <template v-for="(page, index) in pages">
-                                    <tr :key="index">
-                                        <td class="bg-white">{{page.name}}</td>
-                                        <td class="text-right">
-                                            <b-button size="sm" v-b-modal.modal-manage-group class="btn bg-light border-light text-dark" @click="pageSelected = page">
-                                                <i class="fa-solid fa-layer-group"></i>
-                                            </b-button>
-                                            <b-button size="sm" v-b-modal.modal-manage-page class="btn bg-light border-light text-dark" @click="pageSelected = page">
-                                                <i class="fas fa-eye"></i>
-                                            </b-button>
-                                            <b-button size="sm" v-b-modal.modal-delete-page class="btn bg-light border-light text-danger" @click="pageSelected = page">
-                                                <i class="fas fa-trash"></i>
-                                            </b-button>
-                                        </td>
-                                    </tr>
-                                </template>
-                                <tr v-if="pages.length <= 0">
-                                    <td>
-                                        <small class="text-secondary font-weight-light">Aucune page</small>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td class="text-right">
-                                        <b-button class="btn btn-dark btn-sm" @click="pageSelected = null" v-b-modal.modal-manage-page>
-                                            <small>
-                                                Ajouter <i class="fas fa-plus ml-1"></i>
-                                            </small>
-                                        </b-button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
+            </template>
         </admin-template>
     </div>
 </template>
@@ -206,6 +241,8 @@ import BaseComponent from './../../default/Components/BaseComponent'
 import Tree from './../Components/Tree'
 import MyEditor from '../Components/Editor/TipTapEditor.vue'
 
+import draggable from 'vuedraggable'
+
 export default {
     name: 'admin-structure',
     extends: BaseComponent,
@@ -214,6 +251,7 @@ export default {
         AdminTemplate,
         Tree,
         MyEditor,
+        draggable,
     },
 
     data() {
@@ -335,7 +373,23 @@ export default {
                 this.$bvModal.hide('modal-manage-group')
                 this.pageSelected = null
             })
-        }
+        },
+
+        newOrderPages(result) {
+            axios.post(this.baseUrl + '/page/change-order', {
+                list: this.pages
+            })
+            .then((response) => {
+            })
+        },
+
+        newOrderCategory(list) {
+            axios.post(this.baseUrl + '/structure/change-order', {
+                list: list
+            })
+            .then((response) => {
+            })
+        },
     },
     mounted() {
         this.getStartStructure()

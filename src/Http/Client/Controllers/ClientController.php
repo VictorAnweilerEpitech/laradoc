@@ -10,7 +10,9 @@ use Victoranw\Laradoc\Http\Controllers\LaradocController;
 class ClientController extends LaradocController
 {
     public function home() {
-        $categories = Category::whereNull('parent_id')->get();
+        $categories = Category::orderBy('order')
+                            ->whereNull('parent_id')
+                            ->get();
         return view('laradoc::client.home', compact('categories'));
     }
 
@@ -19,7 +21,7 @@ class ClientController extends LaradocController
         $category = Category::findOrFail($categoryId);
         $children = $category->children;
 
-        $pages = Page::where('parent_id', $categoryId)->get()->groupBy('group');
+        $pages = Page::where('parent_id', $categoryId)->orderBy('order')->get()->unique('order')->groupBy('group');
 
         return view('laradoc::client.page', compact('pages', 'category', 'children'));
     }
