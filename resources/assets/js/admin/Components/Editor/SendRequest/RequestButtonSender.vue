@@ -6,7 +6,7 @@
             </span>
             <div v-if="requestLoading" class="spinner-border spinner-border-sm" role="status"></div>
         </button>
-        <div v-if="resultSuccess" class="alert alert-success" role="alert">
+        <div v-if="resultSuccess" class="alert alert-success" role="alert" style="word-wrap: break-word;">
             <div class="text-right mb-2 d-flex justify-content-between align-items-center" style="cursor: pointer">
                 <b>Succès</b>
                 <small @click="resultSuccess = null">
