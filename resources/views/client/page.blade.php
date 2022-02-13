@@ -42,7 +42,7 @@
 <div class="container">
     <div class="row">
         <div class="col-4">
-            <div class="sticky-top">
+            <div class="sticky-top" style="overflow-y: auto; max-height: 100vh;">
                 <div class="pt-3">
                     <h1>{{$category->name}}</h1>
                     @if ($category->parent || count($children) > 0)

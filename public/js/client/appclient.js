@@ -49052,7 +49052,11 @@ var render = function() {
     _vm.resultSuccess
       ? _c(
           "div",
-          { staticClass: "alert alert-success", attrs: { role: "alert" } },
+          {
+            staticClass: "alert alert-success",
+            staticStyle: { "word-wrap": "break-word" },
+            attrs: { role: "alert" }
+          },
           [
             _c(
               "div",
