@@ -33,6 +33,7 @@ Route::prefix(config('laradoc.url_prefix'))->group(function () {
                 Route::post('/{category}/voir', [StructureController::class, 'view'])->name('laradoc.back.structure.view');
                 Route::post('/{category}/update', [StructureController::class, 'update'])->name('laradoc.back.structure.delete');
                 Route::post('/{category}/delete', [StructureController::class, 'delete'])->name('laradoc.back.structure.delete');
+                Route::post('/change-order', [StructureController::class, 'order'])->name('laradoc.back.page.order');
             });
 
             Route::prefix('/page')->group(function () {
@@ -42,6 +43,7 @@ Route::prefix(config('laradoc.url_prefix'))->group(function () {
                 Route::post('/{page}/update', [PageController::class, 'update'])->name('laradoc.back.page.update');
                 Route::post('/{page}/delete', [PageController::class, 'delete'])->name('laradoc.back.page.delete');
                 Route::post('/{page}/group', [PageController::class, 'group'])->name('laradoc.back.page.group');
+                Route::post('/change-order', [PageController::class, 'order'])->name('laradoc.back.page.order');
             });
 
             Route::prefix('/member')->group(function () {
