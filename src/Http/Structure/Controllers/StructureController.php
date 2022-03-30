@@ -45,6 +45,7 @@ class StructureController extends LaradocController
     public function create(StructureEditAddRequest $request)
     {
         $categorie = new Category;
+        $request->order = 0;
         $categorie->fill($request->validated());
         $categorie->save();
 

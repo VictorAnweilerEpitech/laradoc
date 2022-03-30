@@ -11,7 +11,7 @@ class Category extends Model
     use HasFactory;
 
     protected $table = "laradoc_categories";
-    protected $fillable = ['name', 'parent_id'];
+    protected $fillable = ['name', 'order', 'parent_id'];
 
     public function children()
     {
