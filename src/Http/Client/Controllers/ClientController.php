@@ -21,7 +21,7 @@ class ClientController extends LaradocController
         $category = Category::findOrFail($categoryId);
         $children = $category->children;
 
-        $pages = Page::where('parent_id', $categoryId)->orderBy('order')->get()->unique('order')->groupBy('group');
+        $pages = Page::where('parent_id', $categoryId)->orderBy('order')->get()->groupBy('group');
 
         return view('laradoc::client.page', compact('pages', 'category', 'children'));
     }
