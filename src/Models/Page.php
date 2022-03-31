@@ -11,7 +11,7 @@ class Page extends Model
     use HasFactory;
 
     protected $table = "laradoc_pages";
-    protected $fillable = ['name', 'content', 'parent_id'];
+    protected $fillable = ['name', 'order', 'content', 'parent_id'];
 
     public function parent()
     {
