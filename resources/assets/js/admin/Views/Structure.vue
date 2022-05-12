@@ -64,7 +64,7 @@
             </b-modal>
 
             <!-- Content -->
-            <h3 class="mt-2">Gestion du contenu</h3>
+            <h3 class="mt-2">Espace d'édition</h3>
             <p class="font-weight-light text-secondary">Contenu de la documentation</p>
             <hr>
             <!-- List categories -->
