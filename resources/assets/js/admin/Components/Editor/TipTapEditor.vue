@@ -379,7 +379,7 @@ export default {
 
     methods: {
         async getPage(pageId) {
-            let response = await axios.post('/doc/page/' + pageId + '/view')
+            let response = await axios.post(this.$laraConfig.url_prefix + '/page/' + pageId + '/view')
             this.title = response.data.name
             this.content = response.data.content
             this.renderEditor()
@@ -462,12 +462,12 @@ export default {
 
             this.timerUpdate = setTimeout(async () => {
                 if (this.pageId) {
-                    await axios.post('/doc/page/' + this.pageId + '/update', {
+                    await axios.post(this.$laraConfig.url_prefix + '/page/' + this.pageId + '/update', {
                         name: this.title,
                         content: this.content
                     })
                 } else {
-                    let response = await axios.post('/doc/page/create', {
+                    let response = await axios.post(this.$laraConfig.url_prefix + '/page/create', {
                         name: this.title,
                         content: this.content,
                         parent_id: this.parentId

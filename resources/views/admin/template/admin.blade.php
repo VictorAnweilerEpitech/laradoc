@@ -40,5 +40,5 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/trumbowyg@2.25.1/dist/langs/fr.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/trumbowyg@2.25.1/dist/plugins/table/trumbowyg.table.min.js"></script>
     {{-- My Script --}}
-    <script src="{{route('laradoc.assets.js', 'admin/appadmin.js')}}"></script>
+    <script id="scriptappadmin" src="{{route('laradoc.assets.js', 'admin/appadmin.js')}}" config="{{json_encode(config('laradoc'))}}"></script>
 @endsection
