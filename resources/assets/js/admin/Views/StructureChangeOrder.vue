@@ -53,9 +53,15 @@
                             </h4>
                         </div>
                         <div>
-                            <button @click="$router.push({name: 'structure.page.view', params: {id: categ.id}})" class="btn btn-sm btn-primary font-weight-light my-rounded">Voir</button>
-                            <button @click="docSelectedModal = categ; $modal.show('modal-update-category')" class="btn btn-sm btn-warning font-weight-light my-rounded">Modifier</button>
-                            <button @click="docSelectedModal = categ; $modal.show('modal-delete-category')" class="btn btn-sm btn-danger font-weight-light my-rounded">Supprimer</button>
+                            <button @click="$router.push({name: 'structure.page.view', params: {id: categ.id}})" class="btn btn-sm btn-primary font-weight-light my-rounded">
+                                <i class="fas fa-pen mr-2"></i>Ecrire
+                            </button>
+                            <button @click="docSelectedModal = categ; $modal.show('modal-update-category')" class="btn btn-sm btn-light font-weight-light my-rounded text-secondary">
+                                <i class="fas fa-cog mr-2"></i>Paramètres
+                            </button>
+                            <button @click="docSelectedModal = categ; $modal.show('modal-delete-category')" class="btn btn-sm btn-danger font-weight-light my-rounded">
+                                <i class="fas fa-trash mr-2"></i>Supprimer
+                            </button>
                         </div>
                     </div>
                 </div>

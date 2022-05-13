@@ -42,7 +42,7 @@
                     </a></li>
                     @if ($permission->admin)
                         <li class="ml-4">
-                            <a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/structure'}}">
+                            <a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/structure/docs'}}">
                                 <i class="fas fa-pen"></i>
                             </a>
                         </li>

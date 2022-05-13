@@ -33,7 +33,7 @@ const router = new VueRouter({
     base: config.url_prefix + '/admin',
     routes: [
         { path: '/', redirect: '/structure'},
-        { path: '/structure/order', component: StructureChangeOrder, name: 'structure.order' },
+        { path: '/structure/docs', component: StructureChangeOrder, name: 'structure.order' },
         { path: '/structure/page/:id', component: StructurePageView, name: 'structure.page.view' },
         { path: '/structure', component: Structure, name: 'structure' },
         { path: '/members', component: Members, name: 'members' },
