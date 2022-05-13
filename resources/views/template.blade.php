@@ -41,9 +41,16 @@
                         <i class="fas fa-home"></i>
                     </a></li>
                     @if ($permission->admin)
-                        <li class="ml-4"><a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/structure'}}">
-                            <i class="fas fa-pen"></i>
-                        </a></li>
+                        <li class="ml-4">
+                            <a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/structure'}}">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </li>
+                        <li class="ml-4">
+                            <a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/members'}}">
+                                <i class="fas fa-user"></i>
+                            </a>
+                        </li>
                     @endif
                     <li class="ml-4"><a class="text-dark" href="{{route('laradoc.back.auth.logout')}}"><i class="fas fa-sign-out-alt"></i></a></li>
                 </ul>

@@ -63,15 +63,8 @@
                 </div>
             </b-modal>
 
-            <!-- Content -->
-            <h3 class="mt-2">Gestion du contenu</h3>
-            <p class="font-weight-light text-secondary">Contenu de la documentation</p>
-            <hr>
             <!-- List categories -->
-            <div class="mb-4 border-bottom pb-4">
-                <h5 class="mb-3">
-                    <span class="text-my-primary mr-2">#</span>Catégories principales
-                </h5>
+            <div v-if="!categorySelected">
                 <draggable
                 :list="startData.children"
                 class="list-group"
@@ -109,15 +102,21 @@
             </div>
 
             <template v-if="subCategory">
-                <h5 class="mb-3">
-                    <span class="text-my-primary mr-2">#</span>Contenu de la catégorie
-                </h5>
                 <div class="bg-light p-3 rounded border mb-3">
                     <div class="d-flex align-items-center mb-3">
+                        <button @click="categorySelected = null; subCategory = null" type="button" class="btn btn-link text-dark">
+                            <i class="fas fa-arrow-left"></i>
+                        </button>
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-sm" v-if="subCategory.parent_id" @click="getCategory(subCategory.parent_id)">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <h4 class="mb-0">{{subCategory.name}}</h4>
+                        </div>
                         <div class="mr-2">
                             <b-dropdown variant="white" size="sm">
                                 <template #button-content>
-                                    <i class="fas fa-pen"></i>
+                                    <button type="button" class="btn btn-light">Modifier</button>
                                 </template>
                                 <b-dropdown-item>
                                     <button class="btn btn-sm text-dark" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-update-category')">
@@ -130,12 +129,6 @@
                                     </button>
                                 </b-dropdown-item>
                             </b-dropdown>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <button class="btn btn-sm" v-if="subCategory.parent_id" @click="getCategory(subCategory.parent_id)">
-                                <i class="fas fa-arrow-left"></i>
-                            </button>
-                            <h4 class="mb-0">{{subCategory.name}}</h4>
                         </div>
                     </div>
                     <div class="row">
