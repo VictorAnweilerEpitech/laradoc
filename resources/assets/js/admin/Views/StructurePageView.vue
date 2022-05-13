@@ -19,12 +19,23 @@
                             </div>
                             <hr>
                             <div class="doc_nav">
-                                <ul class="pl-0" style="list-style-type: none">
-                                    <template v-if="category">
-                                        <div style="cursor: pointer" @click="pageSelected = page" v-for="(page, pageIndex) in pages" :key="'page-' + pageIndex" :style="pageSelected && pageSelected.id == page.id ? 'color:' + $laraConfig.color : ''" class="mb-2">
-                                            {{page.name}}
-                                        </div>
-                                    </template>
+                                <draggable
+                                :list="pages"
+                                class="list-group"
+                                handle=".handle"
+                                @change="newOrderPages"
+                                >
+                                    <div
+                                    class="mb-2 border-0 p-0 list-group-item"
+                                    style="cursor: pointer"
+                                    @click="pageSelected = page"
+                                    v-for="(page, pageIndex) in pages"
+                                    :key="'page-' + pageIndex" :style="pageSelected && pageSelected.id == page.id ? 'color:' + $laraConfig.color : ''"
+                                    >
+                                        <small><i class="handle fas fa-arrows-alt mr-2 text-secondary" style="cursor: grab; opacity: 0.5"></i></small>
+                                        {{page.name}}
+                                    </div>
+                                </draggable>
                                     <!-- @if (isset($category))
                                         @foreach ($pages as $indexCateg => $categoryPage)
                                         <div class="mb-5">
@@ -47,7 +58,7 @@
                                             Aucune page
                                         </small>
                                     @endif -->
-                                </ul>
+                                <!-- </ul> -->
                             </div>
                         </div>
                     </div>
@@ -151,6 +162,13 @@ export default {
                     this.getCategory(this.$route.params.id)
                 }
             }, 700)
+        },
+        newOrderPages(result) {
+            axios.post(this.baseUrl + '/page/change-order', {
+                list: this.pages
+            })
+            .then((response) => {
+            })
         },
     },
 

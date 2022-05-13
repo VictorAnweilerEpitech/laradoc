@@ -1,8 +1,10 @@
 <template>
     <div class="pb-4">
+        <label class="form-label">Titre de la page</label>
         <input v-model="titleInput" @input="save" type="text" class="form-control w-100" placeholder="Nom de la page">
         <div v-if="editor" class="mb-2">
-            <editor-content class="border p-4 rounded mt-3 mb-4" :editor="editor" />
+            <label class="form-label mt-4">Contenu</label>
+            <editor-content class="border p-4 rounded mb-4" :editor="editor" />
             <div class="d-flex align-items-center justify-content-between editor-navbar-buttons bg-light rounded shadow p-3">
                 <div class="d-flex align-items-center">
                     <tip-tap-buttons
