@@ -482,7 +482,7 @@ export default {
 .editor-navbar-buttons {
     position: fixed;
     bottom: 10px;
-    z-index: 999;
+    z-index: 2;
     left: 50%;
     width: 715px !important;
     transform: translate(-50%, 0);

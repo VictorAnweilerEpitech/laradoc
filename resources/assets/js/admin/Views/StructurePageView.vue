@@ -1,85 +1,99 @@
 <template>
     <div>
         <admin-template v-if="laraConfig && user" :config="laraConfig" :user="user">
+            <!-- Delete Page -->
+            <modal name="modal-delete-page">
+                <div class="p-4">
+                    <template v-if="pageSelected">
+                        <h3>Confirmation</h3>
+                        <p class="mb-2">Êtes-vous sûr de vouloir supprimer <b>{{pageSelected.name}}</b> ?</p>
+                        <b-button variant="danger" @click="deletePage(pageSelected.id)">Supprimer</b-button>
+                    </template>
+                </div>
+            </modal>
+
             <div class="container">
                 <div class="row">
                     <div class="col-4">
-                        <div class="sticky-top" style="overflow-y: auto; max-height: 100vh;">
-                            <div class="pt-3" v-if="category">
-                                <h1>{{category.name}}</h1>
-                                <hr v-if="category.parent_id" />
-                                <ul class="pl-0 mb-0" style="list-style-type: none;">
-                                    <li style="cursor: pointer" class="js-btn" @click="navigateOtherPage({name: 'structure.page.view', params: {id: category.parent_id}})" v-if="category.parent_id">
-                                        <i class="fas fa-arrow-left mr-2"></i>Retour
-                                    </li>
-                                    <li style="cursor: pointer" @click="navigateOtherPage({name: 'structure.page.view', params: {id: child.id}})" v-for="(child, childIndex) in category.children" :key="'child-' + childIndex" class="js-btn">
-                                        <i class="fas fa-external-link-square-alt mr-2"></i>{{child.name}}
-                                    </li>
-                                </ul>
-                            </div>
-                            <hr>
-                            <div class="doc_nav">
-                                <draggable
-                                :list="pages"
-                                class="list-group"
-                                handle=".handle"
-                                @change="newOrderPages"
-                                >
-                                    <div
-                                    class="mb-2 border-0 p-0 list-group-item"
-                                    style="cursor: pointer"
-                                    @click="pageSelected = page"
-                                    v-for="(page, pageIndex) in pages"
-                                    :key="'page-' + pageIndex"
-                                    :style="pageSelected && pageSelected.id == page.id ? 'color:' + $laraConfig.color : ''"
-                                    >
-                                        <small><i class="handle fas fa-arrows-alt mr-2 text-secondary" style="cursor: grab; opacity: 0.5"></i></small>
-                                        {{page.name}}
-                                    </div>
-                                </draggable>
+                        <div class="pt-3" v-if="category">
+                            <h1>{{category.name}}</h1>
+                            <hr v-if="category.parent_id" />
+                            <ul class="pl-0 mb-0" style="list-style-type: none;">
+                                <li style="cursor: pointer" class="js-btn" @click="navigateOtherPage({name: 'structure.page.view', params: {id: category.parent_id}})" v-if="category.parent_id">
+                                    <i class="fas fa-arrow-left mr-2"></i>Retour
+                                </li>
+                                <li style="cursor: pointer" @click="navigateOtherPage({name: 'structure.page.view', params: {id: child.id}})" v-for="(child, childIndex) in category.children" :key="'child-' + childIndex" class="js-btn">
+                                    <i class="fas fa-external-link-square-alt mr-2"></i>{{child.name}}
+                                </li>
+                            </ul>
+                        </div>
+                        <hr>
+                        <div class="doc_nav">
+                            <draggable
+                            :list="pages"
+                            class="list-group"
+                            handle=".handle"
+                            @change="newOrderPages"
+                            >
                                 <div
+                                class="mb-2 border-0 p-0 list-group-item"
                                 style="cursor: pointer"
-                                :style="pageSelected && !pageSelected.id ? 'color:' + $laraConfig.color : ''"
-                                @click="initNewPage"
+                                @click="pageSelected = page"
+                                v-for="(page, pageIndex) in pages"
+                                :key="'page-' + pageIndex"
+                                :style="pageSelected && pageSelected.id == page.id ? 'color:' + $laraConfig.color : ''"
                                 >
-                                    <small><i class="handle fas fa-plus mr-2 text-secondary" style="opacity: 0.5"></i></small>
-                                    Nouvelle page
+                                    <small><i class="handle fas fa-arrows-alt mr-2 text-secondary" style="cursor: grab; opacity: 0.5"></i></small>
+                                    {{page.name}}
                                 </div>
-                                    <!-- @if (isset($category))
-                                        @foreach ($pages as $indexCateg => $categoryPage)
-                                        <div class="mb-5">
-                                            @if (!$indexCateg && count($pages) > 1)
-                                                <div class="font-weight-bold mb-3">Autre</div>
-                                            @else
-                                                <div class="font-weight-bold mb-3">{{$indexCateg}}</div>
-                                            @endif
-                                            @foreach ($categoryPage as $indexPage => $page)
-                                                <li class="d-flex align-items-center js-btn mb-3 {{$indexPage == 0 ? 'selected' : ''}} pr-5" style="cursor: pointer">
-                                                    <div class="square-selected"></div>
-                                                    {{$page->name}}
-                                                </li>
-                                            @endforeach
-                                        </div>
-                                        @endforeach
-                                    @endif
-                                    @if (count($pages) <= 0)
-                                        <small class="font-weight-light text-secondary">
-                                            Aucune page
-                                        </small>
-                                    @endif -->
-                                <!-- </ul> -->
+                            </draggable>
+                            <div
+                            style="cursor: pointer"
+                            :style="pageSelected && !pageSelected.id ? 'color:' + $laraConfig.color : ''"
+                            @click="initNewPage"
+                            >
+                                <small><i class="handle fas fa-plus mr-2 text-secondary" style="opacity: 0.5"></i></small>
+                                Nouvelle page
                             </div>
+                                <!-- @if (isset($category))
+                                    @foreach ($pages as $indexCateg => $categoryPage)
+                                    <div class="mb-5">
+                                        @if (!$indexCateg && count($pages) > 1)
+                                            <div class="font-weight-bold mb-3">Autre</div>
+                                        @else
+                                            <div class="font-weight-bold mb-3">{{$indexCateg}}</div>
+                                        @endif
+                                        @foreach ($categoryPage as $indexPage => $page)
+                                            <li class="d-flex align-items-center js-btn mb-3 {{$indexPage == 0 ? 'selected' : ''}} pr-5" style="cursor: pointer">
+                                                <div class="square-selected"></div>
+                                                {{$page->name}}
+                                            </li>
+                                        @endforeach
+                                    </div>
+                                    @endforeach
+                                @endif
+                                @if (count($pages) <= 0)
+                                    <small class="font-weight-light text-secondary">
+                                        Aucune page
+                                    </small>
+                                @endif -->
+                            <!-- </ul> -->
                         </div>
                     </div>
                     <div class="col-8">
                         <div class="mt-3" v-if="pageSelected">
                             <div class="btn-toolbar justify-content-end mb-3 border-bottom pb-3" role="toolbar" aria-label="Toolbar with button groups">
                                 <div class="btn-group" role="group" aria-label="Basic example">
-                                    <button @click="pageEdition = true" type="button" class="btn btn-light btn-sm">
+                                    <button @click="pageEdition = true" type="button" :class="pageEdition ? 'btn-dark' : 'btn-light'" class="btn btn-sm">
                                         Edition
                                     </button>
-                                    <button @click="pageEdition = false" type="button" class="btn btn-light btn-sm">
+                                    <button @click="pageEdition = false" type="button" :class="!pageEdition ? 'btn-dark' : 'btn-light'" class="btn btn-sm">
                                         Voir
+                                    </button>
+                                </div>
+                                <div class="ml-2">
+                                    <button @click="$modal.show('modal-delete-page')" type="button" class="btn btn-danger btn-sm">
+                                        Supprimer
                                     </button>
                                 </div>
                             </div>
@@ -186,7 +200,15 @@ export default {
                 title: null,
                 content: null
             }
-        }
+        },
+        deletePage(id) {
+            axios.post(this.baseUrl + '/page/' + id + '/delete')
+            .then((response) => {
+                this.getPages(this.category.id)
+                this.$modal.hide('modal-delete-page')
+                this.pageSelected = null
+            })
+        },
     },
 
     mounted() {
