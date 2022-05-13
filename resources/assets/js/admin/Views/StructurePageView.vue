@@ -30,12 +30,21 @@
                                     style="cursor: pointer"
                                     @click="pageSelected = page"
                                     v-for="(page, pageIndex) in pages"
-                                    :key="'page-' + pageIndex" :style="pageSelected && pageSelected.id == page.id ? 'color:' + $laraConfig.color : ''"
+                                    :key="'page-' + pageIndex"
+                                    :style="pageSelected && pageSelected.id == page.id ? 'color:' + $laraConfig.color : ''"
                                     >
                                         <small><i class="handle fas fa-arrows-alt mr-2 text-secondary" style="cursor: grab; opacity: 0.5"></i></small>
                                         {{page.name}}
                                     </div>
                                 </draggable>
+                                <div
+                                style="cursor: pointer"
+                                :style="pageSelected && !pageSelected.id ? 'color:' + $laraConfig.color : ''"
+                                @click="initNewPage"
+                                >
+                                    <small><i class="handle fas fa-plus mr-2 text-secondary" style="opacity: 0.5"></i></small>
+                                    Nouvelle page
+                                </div>
                                     <!-- @if (isset($category))
                                         @foreach ($pages as $indexCateg => $categoryPage)
                                         <div class="mb-5">
@@ -140,36 +149,44 @@ export default {
             location.reload();
         },
         savePage(data) {
-            window.clearTimeout(this.timerUpdatePage)
-
-            this.timerUpdatePage = setTimeout(async () => {
-                if (this.pageSelected.id) {
-                    await axios.post(this.$laraConfig.url_prefix + '/page/' + this.pageSelected.id + '/update', {
-                        name: data.title,
-                        content: data.content
-                    })
-                } else {
-                    let response = await axios.post(this.$laraConfig.url_prefix + '/page/create', {
-                        name: data.title,
-                        content: data.content,
-                        parent_id: this.$route.params.id
-                    })
-                    this.pageId = response.data.id
-                }
-                this.pageSelected.content = data.content
-                if (data.title != this.pageSelected.name) {
-                    this.pageSelected.name = data.title
-                    this.getCategory(this.$route.params.id)
-                }
-            }, 700)
+            if (data.title) {
+                window.clearTimeout(this.timerUpdatePage)
+                this.timerUpdatePage = setTimeout(async () => {
+                    if (this.pageSelected.id) {
+                        await axios.post(this.$laraConfig.url_prefix + '/page/' + this.pageSelected.id + '/update', {
+                            name: data.title,
+                            content: data.content
+                        })
+                    } else {
+                        let response = await axios.post(this.$laraConfig.url_prefix + '/page/create', {
+                            name: data.title,
+                            content: data.content,
+                            parent_id: this.$route.params.id
+                        })
+                        this.pageSelected.id = response.data.id
+                    }
+                    this.pageSelected.content = data.content
+                    if (data.title != this.pageSelected.name) {
+                        this.pageSelected.name = data.title
+                        this.getCategory(this.$route.params.id)
+                    }
+                }, 700)
+            }
         },
         newOrderPages(result) {
             axios.post(this.baseUrl + '/page/change-order', {
                 list: this.pages
             })
             .then((response) => {
+                this.$toast.success('Modifié')
             })
         },
+        initNewPage() {
+            this.pageSelected = {
+                title: null,
+                content: null
+            }
+        }
     },
 
     mounted() {
