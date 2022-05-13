@@ -1,8 +1,10 @@
 <template>
     <div class="pb-4">
-        <input v-model="title" type="text" class="form-control w-100" placeholder="Nom de la page">
+        <label class="form-label">Titre de la page</label>
+        <input v-model="titleInput" @input="save" type="text" class="form-control w-100" placeholder="Nom de la page">
         <div v-if="editor" class="mb-2">
-            <editor-content class="border p-4 rounded mt-3 mb-4" :editor="editor" />
+            <label class="form-label mt-4">Contenu</label>
+            <editor-content class="border p-4 rounded mb-4" :editor="editor" />
             <div class="d-flex align-items-center justify-content-between editor-navbar-buttons bg-light rounded shadow p-3">
                 <div class="d-flex align-items-center">
                     <tip-tap-buttons
@@ -351,8 +353,8 @@ import TipTapLink from './Link/Extension'
 
 export default {
     props: {
-        id: {},
-        parentId: {}
+        title: {},
+        content: {}
     },
     components: {
         EditorContent,
@@ -363,34 +365,31 @@ export default {
     data() {
         return {
             pageId: null,
-            title: "",
             editor: null,
-            content: null,
+            contentInput: null,
             timerUpdate: null,
+            titleInput: ""
         }
     },
 
     watch: {
         content: function(value) {
-            this.save()
-            // console.log(value);
+            this.editor.destroy()
+            this.contentInput = value
+            this.renderEditor()
+        },
+        title: function(value) {
+            this.titleInput = value
         }
     },
 
     methods: {
-        async getPage(pageId) {
-            let response = await axios.post(this.$laraConfig.url_prefix + '/page/' + pageId + '/view')
-            this.title = response.data.name
-            this.content = response.data.content
-            this.renderEditor()
-        },
-
         addTipTapRequest() {
-            this.editor.commands.setContent((this.content || '') + '<tip-tap-request url="" type="get" header="" body=""></tip-tap-request><p></p>')
+            this.editor.commands.setContent((this.contentInput || '') + '<tip-tap-request url="" type="get" header="" body=""></tip-tap-request><p></p>')
         },
 
         addAlertComponent(type) {
-            this.editor.commands.setContent((this.content || '') + '<tip-tap-alert type="' + type + '" value=""></tip-tap-alert><p></p>')
+            this.editor.commands.setContent((this.contentInput || '') + '<tip-tap-alert type="' + type + '" value=""></tip-tap-alert><p></p>')
         },
 
         setLink() {
@@ -424,8 +423,9 @@ export default {
         },
 
         renderEditor() {
+            console.log(this.title);
             this.editor = new Editor({
-                content: this.content,
+                content: this.contentInput,
                 extensions: [
                     StarterKit,
                     Highlight,
@@ -450,7 +450,8 @@ export default {
                 ],
                 onUpdate: () => {
                     // HTML
-                    this.content = this.editor.getHTML()
+                    this.contentInput = this.editor.getHTML()
+                    this.save()
 
                     // JSON
                     // this.$emit('input', this.editor.getJSON())
@@ -458,35 +459,17 @@ export default {
             })
         },
         save() {
-            window.clearTimeout(this.timerUpdate)
-
-            this.timerUpdate = setTimeout(async () => {
-                if (this.pageId) {
-                    await axios.post(this.$laraConfig.url_prefix + '/page/' + this.pageId + '/update', {
-                        name: this.title,
-                        content: this.content
-                    })
-                } else {
-                    let response = await axios.post(this.$laraConfig.url_prefix + '/page/create', {
-                        name: this.title,
-                        content: this.content,
-                        parent_id: this.parentId
-                    })
-                    this.pageId = response.data.id
-                    this.$emit('new-page', response.data.id)
-                }
-            }, 700)
+            this.$emit('input', {
+                title: this.titleInput,
+                content: this.editor.getHTML()
+            })
         },
     },
 
     mounted() {
-        console.log('ta grosse mere la pute');
-        if (this.id) {
-            this.pageId = this.id
-            this.getPage(this.id)
-        } else {
-            this.renderEditor()
-        }
+        this.contentInput = this.content
+        this.titleInput = this.title
+        this.renderEditor()
     },
 
     beforeUnmount() {
@@ -499,7 +482,7 @@ export default {
 .editor-navbar-buttons {
     position: fixed;
     bottom: 10px;
-    z-index: 999;
+    z-index: 2;
     left: 50%;
     width: 715px !important;
     transform: translate(-50%, 0);

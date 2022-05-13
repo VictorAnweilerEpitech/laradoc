@@ -1,6 +1,6 @@
 <template>
     <div @mouseover="onOver" @mouseleave="onLeave">
-        <b-dropdown variant="white" class="dropdown-button-tipta" text="Dropdown Button" ref="dropdown">
+        <!-- <b-dropdown variant="white" class="dropdown-button-tiptap" text="Dropdown Button" ref="dropdown">
             <template #button-content>
                 <span
                 class="tiptap-btn rounded p-2 text-dark border"
@@ -26,7 +26,7 @@
                 :is-active="btn.isActive"
                 />
             </b-dropdown-text>
-        </b-dropdown>
+        </b-dropdown> -->
     </div>
 </template>
 

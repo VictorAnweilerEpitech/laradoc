@@ -10,7 +10,6 @@ export default {
     props: {
         config: {
             type: Object,
-            required: true,
         },
         user: {
             type: Object,
