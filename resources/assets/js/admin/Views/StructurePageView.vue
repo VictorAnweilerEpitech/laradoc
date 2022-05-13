@@ -36,15 +36,18 @@
                             @change="newOrderPages"
                             >
                                 <div
-                                class="mb-2 border-0 p-0 list-group-item"
+                                class="mb-2 border-0 p-0 list-group-item d-flex justify-content-between align-items-center"
                                 style="cursor: pointer"
                                 @click="pageSelected = page"
                                 v-for="(page, pageIndex) in pages"
                                 :key="'page-' + pageIndex"
                                 :style="pageSelected && pageSelected.id == page.id ? 'color:' + $laraConfig.color : ''"
                                 >
-                                    <small><i class="handle fas fa-arrows-alt mr-2 text-secondary" style="cursor: grab; opacity: 0.5"></i></small>
-                                    {{page.name}}
+                                    <div>
+                                        <small><i class="handle fas fa-arrows-alt mr-2 text-secondary" style="cursor: grab; opacity: 0.5"></i></small>
+                                        {{page.name}}
+                                    </div>
+                                    <div v-if="page.group" class="badge badge-light">{{page.group}}</div>
                                 </div>
                             </draggable>
                             <div
@@ -95,7 +98,7 @@
                                 />
                                 <div class="ml-2">
                                     <button @click="pageEdition = true" type="button" :class="pageEdition ? 'btn-dark' : 'btn-light'" class="btn btn-sm">
-                                        Edition
+                                        Editer
                                     </button>
                                     <button @click="pageEdition = false" type="button" :class="!pageEdition ? 'btn-dark' : 'btn-light'" class="btn btn-sm">
                                         Voir
@@ -117,6 +120,11 @@
                             v-if="pageEdition"
                             @input="savePage"
                             />
+                        </div>
+                        <div class="mt-3" v-if="!pageSelected">
+                            <div class="bg-light p-3 rounded">
+                                <h5 class="text-secondary font-weight-light text-center">Aucune page séléctonné</h5>
+                            </div>
                         </div>
                     </div>
                 </div>
