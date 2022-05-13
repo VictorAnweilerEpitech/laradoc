@@ -23,7 +23,7 @@ Vue.component('search-bar', require('./../default/Components/SearchBar').default
 // Pages
 import Structure from './Views/Structure';
 import Members from './Views/Members';
-import StructureChangeOrder from './Views/StructureChangeOrder'
+import StructureDocs from './Views/StructureDocs'
 import StructurePageView from './Views/StructurePageView'
 
 // Router
@@ -32,8 +32,8 @@ const router = new VueRouter({
     mode: 'history',
     base: config.url_prefix + '/admin',
     routes: [
-        { path: '/', redirect: '/structure'},
-        { path: '/structure/docs', component: StructureChangeOrder, name: 'structure.order' },
+        { path: '/', redirect: '/structure/docs'},
+        { path: '/structure/docs', component: StructureDocs, name: 'structure.order' },
         { path: '/structure/page/:id', component: StructurePageView, name: 'structure.page.view' },
         { path: '/structure', component: Structure, name: 'structure' },
         { path: '/members', component: Members, name: 'members' },

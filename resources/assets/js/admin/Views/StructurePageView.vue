@@ -1,7 +1,82 @@
 <template>
     <div>
         <admin-template v-if="laraConfig && user" :config="laraConfig" :user="user">
-            {{$route.params.id}}
+            <div class="container">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="sticky-top" style="overflow-y: auto; max-height: 100vh;">
+                            <div class="pt-3" v-if="category">
+                                <h1>{{category.name}}</h1>
+                                <hr v-if="category.parent_id" />
+                                <ul class="pl-0 mb-0" style="list-style-type: none;">
+                                    <li style="cursor: pointer" class="js-btn" @click="navigateOtherPage({name: 'structure.page.view', params: {id: category.parent_id}})" v-if="category.parent_id">
+                                        <i class="fas fa-arrow-left mr-2"></i>Retour
+                                    </li>
+                                    <li style="cursor: pointer" @click="navigateOtherPage({name: 'structure.page.view', params: {id: child.id}})" v-for="(child, childIndex) in category.children" :key="'child-' + childIndex" class="js-btn">
+                                        <i class="fas fa-external-link-square-alt mr-2"></i>{{child.name}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <hr>
+                            <div class="doc_nav">
+                                <ul class="pl-0" style="list-style-type: none">
+                                    <template v-if="category">
+                                        <div style="cursor: pointer" @click="pageSelected = page" v-for="(page, pageIndex) in pages" :key="'page-' + pageIndex" :style="pageSelected && pageSelected.id == page.id ? 'color:' + $laraConfig.color : ''" class="mb-2">
+                                            {{page.name}}
+                                        </div>
+                                    </template>
+                                    <!-- @if (isset($category))
+                                        @foreach ($pages as $indexCateg => $categoryPage)
+                                        <div class="mb-5">
+                                            @if (!$indexCateg && count($pages) > 1)
+                                                <div class="font-weight-bold mb-3">Autre</div>
+                                            @else
+                                                <div class="font-weight-bold mb-3">{{$indexCateg}}</div>
+                                            @endif
+                                            @foreach ($categoryPage as $indexPage => $page)
+                                                <li class="d-flex align-items-center js-btn mb-3 {{$indexPage == 0 ? 'selected' : ''}} pr-5" style="cursor: pointer">
+                                                    <div class="square-selected"></div>
+                                                    {{$page->name}}
+                                                </li>
+                                            @endforeach
+                                        </div>
+                                        @endforeach
+                                    @endif
+                                    @if (count($pages) <= 0)
+                                        <small class="font-weight-light text-secondary">
+                                            Aucune page
+                                        </small>
+                                    @endif -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="mt-3" v-if="pageSelected">
+                            <div class="btn-toolbar justify-content-end mb-3 border-bottom pb-3" role="toolbar" aria-label="Toolbar with button groups">
+                                <div class="btn-group" role="group" aria-label="Basic example">
+                                    <button @click="pageEdition = true" type="button" class="btn btn-light btn-sm">
+                                        Edition
+                                    </button>
+                                    <button @click="pageEdition = false" type="button" class="btn btn-light btn-sm">
+                                        Voir
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div v-if="!pageEdition" class="doc-reader">
+                                <div v-html="pageSelected.content"></div>
+                            </div>
+                            <my-editor
+                            :title="pageSelected.name"
+                            :content="pageSelected.content"
+                            v-if="pageEdition"
+                            @input="savePage"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </admin-template>
     </div>
 </template>
@@ -9,6 +84,7 @@
 <script>
 import BaseComponent from './../../default/Components/BaseComponent'
 import AdminTemplate from './Template'
+import MyEditor from '../Components/Editor/TipTapEditor.vue'
 
 import axios from 'axios'
 
@@ -18,17 +94,68 @@ export default {
 
     components: {
         AdminTemplate,
+        MyEditor,
     },
 
     data() {
         return {
+            category: null,
+            pages: null,
+            pageSelected: null,
+            pageEdition: true,
+            timerUpdatePage: null
         }
     },
 
     methods: {
+        getCategory(id) {
+            this.pages = []
+            if (id) {
+                axios.post(this.baseUrl + '/structure/' + id + '/voir')
+                .then((response) => {
+                    this.category = response.data
+                    this.getPages(id)
+                })
+            }
+        },
+        getPages(categoryId) {
+            axios.post(this.baseUrl + '/page/browse/category/' + categoryId)
+            .then((response) => {
+                this.pages = response.data
+            })
+        },
+        navigateOtherPage(obj) {
+            this.$router.replace(obj)
+            location.reload();
+        },
+        savePage(data) {
+            window.clearTimeout(this.timerUpdatePage)
+
+            this.timerUpdatePage = setTimeout(async () => {
+                if (this.pageSelected.id) {
+                    await axios.post(this.$laraConfig.url_prefix + '/page/' + this.pageSelected.id + '/update', {
+                        name: data.title,
+                        content: data.content
+                    })
+                } else {
+                    let response = await axios.post(this.$laraConfig.url_prefix + '/page/create', {
+                        name: data.title,
+                        content: data.content,
+                        parent_id: this.$route.params.id
+                    })
+                    this.pageId = response.data.id
+                }
+                this.pageSelected.content = data.content
+                if (data.title != this.pageSelected.name) {
+                    this.pageSelected.name = data.title
+                    this.getCategory(this.$route.params.id)
+                }
+            }, 700)
+        },
     },
 
     mounted() {
+        this.getCategory(this.$route.params.id)
     }
 }
 </script>
