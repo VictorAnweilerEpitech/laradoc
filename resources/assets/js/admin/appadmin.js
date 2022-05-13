@@ -14,11 +14,16 @@ Vue.use(VModal)
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 
+// VueSelect
+import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect)
+
 const options = {};
 Vue.use(Toast, options);
 
 // Components
 Vue.component('search-bar', require('./../default/Components/SearchBar').default);
+
 
 // Pages
 import Structure from './Views/Structure';

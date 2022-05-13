@@ -82,19 +82,29 @@
                     </div>
                     <div class="col-8">
                         <div class="mt-3" v-if="pageSelected">
-                            <div class="btn-toolbar justify-content-end mb-3 border-bottom pb-3" role="toolbar" aria-label="Toolbar with button groups">
-                                <div class="btn-group" role="group" aria-label="Basic example">
+                            <div class="mb-3 d-flex align-items-center justify-content-between border-bottom pb-3">
+                                <multiselect
+                                class="w-50"
+                                v-model="pageSelected.group"
+                                tag-placeholder="Catégorie menu"
+                                placeholder="Catégorie menu"
+                                :options="tagsList"
+                                :taggable="true"
+                                @tag="createTag"
+                                @input="linkTag"
+                                />
+                                <div class="ml-2">
                                     <button @click="pageEdition = true" type="button" :class="pageEdition ? 'btn-dark' : 'btn-light'" class="btn btn-sm">
                                         Edition
                                     </button>
                                     <button @click="pageEdition = false" type="button" :class="!pageEdition ? 'btn-dark' : 'btn-light'" class="btn btn-sm">
                                         Voir
                                     </button>
-                                </div>
-                                <div class="ml-2">
-                                    <button @click="$modal.show('modal-delete-page')" type="button" class="btn btn-danger btn-sm">
-                                        Supprimer
-                                    </button>
+                                    <span class="ml-2">
+                                        <button @click="$modal.show('modal-delete-page')" type="button" class="btn btn-danger btn-sm">
+                                            Supprimer
+                                        </button>
+                                    </span>
                                 </div>
                             </div>
 
@@ -137,7 +147,17 @@ export default {
             pages: null,
             pageSelected: null,
             pageEdition: true,
-            timerUpdatePage: null
+            timerUpdatePage: null,
+        }
+    },
+
+    computed: {
+        tagsList() {
+            let result = this.pages.map(function(item) { return item["group"]; });
+            result = [...new Set(result)];
+            result = result.filter(n => n)
+
+            return result
         }
     },
 
@@ -204,11 +224,26 @@ export default {
         deletePage(id) {
             axios.post(this.baseUrl + '/page/' + id + '/delete')
             .then((response) => {
-                this.getPages(this.category.id)
+                this.getPages(this.$route.params.id)
                 this.$modal.hide('modal-delete-page')
                 this.pageSelected = null
             })
         },
+        createTag(newTag) {
+            axios.post(this.baseUrl + '/page/' + this.pageSelected.id + '/group', {
+                group: newTag
+            })
+            .then((response) => {
+                this.pageSelected.group = newTag
+            })
+        },
+        linkTag() {
+            axios.post(this.baseUrl + '/page/' + this.pageSelected.id + '/group', {
+                group: this.pageSelected.group
+            })
+            .then((response) => {
+            })
+        }
     },
 
     mounted() {
