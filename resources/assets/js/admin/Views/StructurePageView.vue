@@ -137,6 +137,7 @@
 import BaseComponent from './../../default/Components/BaseComponent'
 import AdminTemplate from './Template'
 import MyEditor from '../Components/Editor/TipTapEditor.vue'
+import draggable from 'vuedraggable'
 
 import axios from 'axios'
 
@@ -147,6 +148,7 @@ export default {
     components: {
         AdminTemplate,
         MyEditor,
+        draggable,
     },
 
     data() {
@@ -220,6 +222,7 @@ export default {
                 list: this.pages
             })
             .then((response) => {
+                this.getCategory(this.$route.params.id)
                 this.$toast.success('Modifié')
             })
         },

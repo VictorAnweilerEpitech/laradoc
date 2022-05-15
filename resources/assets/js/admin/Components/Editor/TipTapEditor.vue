@@ -432,7 +432,6 @@ export default {
         },
 
         renderEditor() {
-            console.log(this.title);
             this.editor = new Editor({
                 content: this.contentInput,
                 extensions: [
@@ -494,7 +493,7 @@ export default {
     bottom: 10px;
     z-index: 2;
     left: 50%;
-    width: 715px !important;
+    width: 800px !important;
     transform: translate(-50%, 0);
 }
 

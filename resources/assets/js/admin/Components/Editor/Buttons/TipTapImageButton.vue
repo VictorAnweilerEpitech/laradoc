@@ -3,7 +3,7 @@
         <dropdown-menu
         :dropup="true"
         mode="hover"
-        direction="right"
+        direction="center"
         >
             <button slot="trigger" class="bg-white p-0 border-0">
                 <span
@@ -20,6 +20,20 @@
                 </span>
             </button>
             <div slot="body" class="p-3">
+                <dropdown-menu
+                :dropup="true"
+                mode="hover"
+                direction="right"
+                :withDropdownCloser="true"
+                >
+                    <button slot="trigger" class="bg-white p-0 border-0">
+                        Test
+                    </button>
+                    <div slot="body" class="p-3">
+                        <h1>test</h1>
+                    </div>
+                    <div slot="footer"></div>
+                </dropdown-menu>
                 <input v-model="url" class="form-control" placeholder="Url de l'image" type="text">
                 <button @click="addImage" class="btn btn-success btn-sm mt-2">Ajouter</button>
             </div>
