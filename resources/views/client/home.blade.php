@@ -15,15 +15,13 @@
             <div class="mb-5 col-4">
                 <div class="w-100 mb-0 border p-4 my-rounded">
                     <i class="fa-solid fa-book text-my-primary h4"></i>
-                    <a class="text-my-primary" style="text-decoration: none" href="{{route('laradoc.client.page', $category->id)}}">
-                        <h4>{{$category->name}}</h4>
-                    </a>
+                    <h4 class="text-my-primary">{{$category->name}}</h4>
                     <p>
-                        Démarrez rapidement grâce à nos bibliothèques, clés API et outils d'intégration.
+                        Aucune description
                     </p>
-                    <button class="btn bg-my-primary text-white">
+                    <a href="{{route('laradoc.client.page', $category->id)}}" class="btn bg-my-primary text-white">
                         Consulter
-                    </button>
+                    </a>
                 </div>
             </div>
         @endforeach

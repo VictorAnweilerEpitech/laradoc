@@ -44,7 +44,7 @@ const router = new VueRouter({
     mode: 'history',
     base: config.url_prefix + '/admin',
     routes: [
-        { path: '/', redirect: '/structure/docs'},
+        { path: '/', redirect: '/structure/docs', name: 'home'},
         { path: '/structure/docs', component: StructureDocs, name: 'structure.order' },
         { path: '/structure/page/:id', component: StructurePageView, name: 'structure.page.view' },
         { path: '/structure', component: Structure, name: 'structure' },
