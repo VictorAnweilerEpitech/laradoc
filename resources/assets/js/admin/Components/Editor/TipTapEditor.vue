@@ -375,17 +375,20 @@ export default {
         return {
             pageId: null,
             editor: null,
-            contentInput: null,
             timerUpdate: null,
-            titleInput: ""
+            titleInput: "",
+            contentInput: null,
         }
     },
 
     watch: {
         content: function(value) {
-            this.editor.destroy()
+            if (value != this.contentInput) {
+                this.contentInput = value
+                this.editor.destroy()
+                this.renderEditor()
+            }
             this.contentInput = value
-            this.renderEditor()
         },
         title: function(value) {
             this.titleInput = value
@@ -470,7 +473,7 @@ export default {
         save() {
             this.$emit('input', {
                 title: this.titleInput,
-                content: this.editor.getHTML()
+                content: this.contentInput
             })
         },
     },

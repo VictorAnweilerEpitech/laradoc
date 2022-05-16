@@ -54,7 +54,8 @@
                         </div>
                         <div>
                             <button @click="$router.push({name: 'structure.page.view', params: {id: categ.id}})" class="btn btn-sm btn-primary font-weight-light my-rounded">
-                                <i class="fas fa-pen mr-2"></i>Ecrire
+                                <i class="fas fa-pen mr-2"></i>
+                                <span class="mr-2">Ecrire</span>
                             </button>
                             <button @click="docSelectedModal = categ; $modal.show('modal-update-category')" class="btn btn-sm btn-light font-weight-light my-rounded text-secondary">
                                 <i class="fas fa-cog mr-2"></i>Paramètres
