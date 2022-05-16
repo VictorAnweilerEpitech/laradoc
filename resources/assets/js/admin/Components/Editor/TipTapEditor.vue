@@ -385,8 +385,8 @@ export default {
         content: function(value) {
             if (value != this.contentInput) {
                 this.contentInput = value
-                this.editor.destroy()
-                this.renderEditor()
+                // this.editor.destroy()
+                // this.renderEditor()
             }
             this.contentInput = value
         },
