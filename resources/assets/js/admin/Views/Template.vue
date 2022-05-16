@@ -1,25 +1,17 @@
 <template>
-    <div class="d-flex mb-5">
-        <div class="col-3">
-            <div class="bg-white border my-rounded bg-light p-4">
-                <h5 class="mb-1">Administrateur</h5>
-                <h6 class="font-weight-light text-secondary mb-3">Documentation</h6>
-                <router-link :to="{ name: 'structure'}" class="d-block my-1 p-3 px-4 text-dark my-rounded" :class="btnIsSelected('structure')">
-                    <i class="fas fa-sitemap" style="margin-right: 8px;"></i>Structure
-                </router-link>
-                <router-link :to="{ name: 'members'}" class="d-block my-1 p-3 px-4 text-dark my-rounded" :class="btnIsSelected('members')">
-                    <i class="fas fa-users" style="margin-right: 8px;"></i>Membres
-                </router-link>
-                <!-- <router-link to="#" class="d-block my-1 p-3">
-                    <i class="fas fa-list-ol" style="margin-right: 8px;"></i>Versions
-                </router-link> -->
-            </div>
-        </div>
-        <div class="col-9">
-            <div class="p-3  border my-rounded" style="min-height: 500px;">
-                <slot></slot>
-            </div>
-        </div>
+    <div class="mb-5">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-white py-2">
+                <li class="breadcrumb-item"><a :href="$laraConfig.url_prefix">Accueil</a></li>
+                <li class="breadcrumb-item">
+                   <router-link :to="{name: 'home'}">Documentations</router-link>
+                </li>
+                <li class="breadcrumb-item" v-if="displayDocBreadcrumb">
+                   Edition
+                </li>
+            </ol>
+        </nav>
+        <slot></slot>
     </div>
 </template>
 
@@ -29,7 +21,6 @@ export default {
     props: {
         config: {
             type: Object,
-            required: true,
         },
         user: {
             type: Object,
@@ -42,6 +33,11 @@ export default {
         },
         avatar() {
             return 'https://eu.ui-avatars.com/api/?name=' + this.username
+        },
+        displayDocBreadcrumb() {
+            let urls = ['structure.page.view']
+            console.log(this.$route.name);
+            return urls.find((url) => url == this.$route.name)
         }
     },
     methods: {

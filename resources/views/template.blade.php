@@ -11,6 +11,10 @@
     <link rel="icon" type="image/png" href="{{config('laradoc.logo')}}" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/vue-multiselect@2.1.0/dist/vue-multiselect.min.css">
+
+    {{-- css --}}
+    <link href="{{route('laradoc.assets.css', 'client/client.css')}}" rel="stylesheet" />
 
     @yield('head')
 </head>
@@ -41,9 +45,16 @@
                         <i class="fas fa-home"></i>
                     </a></li>
                     @if ($permission->admin)
-                        <li class="ml-4"><a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/structure'}}">
-                            <i class="fas fa-pen"></i>
-                        </a></li>
+                        <li class="ml-4">
+                            <a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/structure/docs'}}">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                        </li>
+                        <li class="ml-4">
+                            <a class="text-dark" href="{{config('laradoc.url_prefix').'/admin/members'}}">
+                                <i class="fas fa-user"></i>
+                            </a>
+                        </li>
                     @endif
                     <li class="ml-4"><a class="text-dark" href="{{route('laradoc.back.auth.logout')}}"><i class="fas fa-sign-out-alt"></i></a></li>
                 </ul>

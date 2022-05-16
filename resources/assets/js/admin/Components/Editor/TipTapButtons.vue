@@ -1,7 +1,10 @@
 <template>
     <div @mouseover="onOver" @mouseleave="onLeave">
-        <b-dropdown variant="white" class="dropdown-button-tipta" text="Dropdown Button" ref="dropdown">
-            <template #button-content>
+        <dropdown-menu
+        :dropup="true"
+        mode="hover"
+        >
+            <button slot="trigger" class="bg-white p-0 border-0">
                 <span
                 class="tiptap-btn rounded p-2 text-dark border"
                 >
@@ -15,8 +18,8 @@
                         <span v-html="buttons.icon"></span>
                     </template>
                 </span>
-            </template>
-            <b-dropdown-text>
+            </button>
+            <div slot="body" class="pb-3">
                 <tip-tap-button
                 v-for="(btn, index) in buttons.items"
                 :key="'index-' + buttons.icon + '-' + index"
@@ -25,8 +28,9 @@
                 :action="btn.action"
                 :is-active="btn.isActive"
                 />
-            </b-dropdown-text>
-        </b-dropdown>
+            </div>
+            <div slot="footer"></div>
+        </dropdown-menu>
     </div>
 </template>
 

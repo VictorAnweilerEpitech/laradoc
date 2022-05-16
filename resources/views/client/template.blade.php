@@ -8,6 +8,15 @@
     {{-- MyCss --}}
     <link href="{{route('laradoc.assets.css', 'client/client.css')}}" rel="stylesheet" />
 
+    <style>
+        .text-my-primary {
+            color: {{config('laradoc.color')}};
+        }
+        .bg-my-primary {
+            background-color: {{config('laradoc.color')}};
+        }
+    </style>
+
 
     @yield('client-head')
 @endsection

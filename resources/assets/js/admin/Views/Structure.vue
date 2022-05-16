@@ -12,33 +12,11 @@
                     </small>
                 </template>
             </b-modal>
-            <!-- Add category -->
-            <b-modal id="modal-add-category" hide-header hide-footer>
-                <h3>Ajouter un chapitre</h3>
-                <input v-model="newCategoryName" class="form-control mt-3 mb-2" placeholder="Nom" />
-                <button class="btn btn-sm bg-dark text-white" @click="createCategory">Ajouter</button>
-            </b-modal>
             <!-- Add sub category -->
             <b-modal id="modal-add-subcategory" hide-header hide-footer>
                 <h3>Ajouter une catégorie</h3>
                 <input v-model="newSubCategoryName" class="form-control mt-3 mb-2" placeholder="Nom" />
                 <button class="btn btn-sm bg-dark text-white" @click="createSubCategory">Ajouter</button>
-            </b-modal>
-            <!-- Update category -->
-            <b-modal id="modal-update-category" hide-header hide-footer>
-                <template v-if="subCategorySelectedModal">
-                    <h3>Modification</h3>
-                    <input v-model="subCategorySelectedModal.name" class="form-control mt-3 mb-2" placeholder="Nom" />
-                    <button class="btn btn-sm bg-dark text-white" @click="updateCategory(subCategorySelectedModal.id)">Modifier</button>
-                </template>
-            </b-modal>
-            <!-- Delete category -->
-            <b-modal id="modal-delete-category" hide-header hide-footer>
-                <template v-if="subCategorySelectedModal">
-                    <h3>Confirmation</h3>
-                    <p class="mb-2">Êtes-vous sûr de vouloir supprimer <b>{{subCategorySelectedModal.name}}</b> ?</p>
-                    <b-button variant="danger" @click="deleteCategory(subCategorySelectedModal.id)">Supprimer</b-button>
-                </template>
             </b-modal>
             <!-- Delete Page -->
             <b-modal id="modal-delete-page" hide-header hide-footer>
@@ -63,15 +41,8 @@
                 </div>
             </b-modal>
 
-            <!-- Content -->
-            <h3 class="mt-2">Gestion du contenu</h3>
-            <p class="font-weight-light text-secondary">Contenu de la documentation</p>
-            <hr>
             <!-- List categories -->
-            <div class="mb-4 border-bottom pb-4">
-                <h5 class="mb-3">
-                    <span class="text-my-primary mr-2">#</span>Catégories principales
-                </h5>
+            <div v-if="!categorySelected">
                 <draggable
                 :list="startData.children"
                 class="list-group"
@@ -109,15 +80,21 @@
             </div>
 
             <template v-if="subCategory">
-                <h5 class="mb-3">
-                    <span class="text-my-primary mr-2">#</span>Contenu de la catégorie
-                </h5>
                 <div class="bg-light p-3 rounded border mb-3">
                     <div class="d-flex align-items-center mb-3">
+                        <button @click="categorySelected = null; subCategory = null" type="button" class="btn btn-link text-dark">
+                            <i class="fas fa-home"></i>
+                        </button>
+                        <div class="d-flex align-items-center">
+                            <button class="btn btn-sm" v-if="subCategory.parent_id" @click="getCategory(subCategory.parent_id)">
+                                <i class="fas fa-arrow-left"></i>
+                            </button>
+                            <h4 class="mb-0">{{subCategory.name}}</h4>
+                        </div>
                         <div class="mr-2">
                             <b-dropdown variant="white" size="sm">
                                 <template #button-content>
-                                    <i class="fas fa-pen"></i>
+                                    <button type="button" class="btn btn-light">Modifier</button>
                                 </template>
                                 <b-dropdown-item>
                                     <button class="btn btn-sm text-dark" @click="subCategorySelectedModal = {...categorySelected}; $bvModal.show('modal-update-category')">
@@ -130,12 +107,6 @@
                                     </button>
                                 </b-dropdown-item>
                             </b-dropdown>
-                        </div>
-                        <div class="d-flex align-items-center">
-                            <button class="btn btn-sm" v-if="subCategory.parent_id" @click="getCategory(subCategory.parent_id)">
-                                <i class="fas fa-arrow-left"></i>
-                            </button>
-                            <h4 class="mb-0">{{subCategory.name}}</h4>
                         </div>
                     </div>
                     <div class="row">
@@ -283,13 +254,6 @@ export default {
         //     }
         // },
 
-        getStartStructure() {
-            axios.post(this.baseUrl + '/structure/browse')
-            .then((response) => {
-                this.startData = response.data
-            })
-        },
-
         getCategory(id) {
             this.pages = []
             if (id) {
@@ -310,18 +274,6 @@ export default {
             })
         },
 
-        createCategory() {
-            axios.post(this.baseUrl + '/structure/create', {
-                name: this.newCategoryName,
-                parent_id: null
-            })
-            .then((response) => {
-                this.getStartStructure()
-                this.newCategoryName = null
-                this.$bvModal.hide('modal-add-category')
-            })
-        },
-
         createSubCategory() {
             let copySubCategory = this.subCategory
             axios.post(this.baseUrl + '/structure/create', {
@@ -332,27 +284,6 @@ export default {
                 this.getCategory(copySubCategory.id)
                 this.newSubCategoryName = null
                 this.$bvModal.hide('modal-add-subcategory')
-            })
-        },
-
-        updateCategory(id) {
-            axios.post(this.baseUrl + '/structure/' + id + '/update', {
-                name: this.subCategorySelectedModal.name,
-            })
-            .then((response) => {
-                this.subCategorySelectedModal = null
-                this.getStartStructure()
-                this.getCategory(id)
-                this.$bvModal.hide('modal-update-category')
-            })
-        },
-
-        deleteCategory(id) {
-            axios.post(this.baseUrl + '/structure/' + id + '/delete')
-            .then((response) => {
-                this.subCategory = null
-                this.getStartStructure()
-                this.$bvModal.hide('modal-delete-category')
             })
         },
 
@@ -378,14 +309,6 @@ export default {
         newOrderPages(result) {
             axios.post(this.baseUrl + '/page/change-order', {
                 list: this.pages
-            })
-            .then((response) => {
-            })
-        },
-
-        newOrderCategory(list) {
-            axios.post(this.baseUrl + '/structure/change-order', {
-                list: list
             })
             .then((response) => {
             })
