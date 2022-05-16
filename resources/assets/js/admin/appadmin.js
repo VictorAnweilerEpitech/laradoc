@@ -18,6 +18,13 @@ import "vue-toastification/dist/index.css";
 import Multiselect from 'vue-multiselect'
 Vue.component('multiselect', Multiselect)
 
+// Dropdown
+import Vue from 'vue'
+import DropdownMenu from 'v-dropdown-menu'
+import 'v-dropdown-menu/dist/v-dropdown-menu.css' // Base style, required.
+
+Vue.use(DropdownMenu)  
+
 const options = {};
 Vue.use(Toast, options);
 
@@ -37,7 +44,7 @@ const router = new VueRouter({
     mode: 'history',
     base: config.url_prefix + '/admin',
     routes: [
-        { path: '/', redirect: '/structure/docs'},
+        { path: '/', redirect: '/structure/docs', name: 'home'},
         { path: '/structure/docs', component: StructureDocs, name: 'structure.order' },
         { path: '/structure/page/:id', component: StructurePageView, name: 'structure.page.view' },
         { path: '/structure', component: Structure, name: 'structure' },

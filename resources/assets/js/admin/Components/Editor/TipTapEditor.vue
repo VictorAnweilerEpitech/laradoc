@@ -308,6 +308,10 @@
                     :action="() => {editor.isActive('link') ?  editor.chain().focus().unsetLink().run() : this.setLink()}"
                     :is-active="editor.isActive('link')"
                     />
+                    <tip-tap-image-button
+                    class="mr-1"
+                    icon="fas fa-camera"
+                    />
                 </div>
                 <div class="d-flex align-items-center">
                     <tip-tap-button
@@ -344,12 +348,14 @@ import TableCell from '@tiptap/extension-table-cell'
 import TableHeader from '@tiptap/extension-table-header'
 import Gapcursor from '@tiptap/extension-gapcursor'
 import Link from '@tiptap/extension-link'
+import Image from '@tiptap/extension-image'
 
 import TipTapButton from './TipTapButton.vue'
 import TipTapButtons from './TipTapButtons.vue'
 import TipTapRequest from './SendRequest/Extension'
 import TipTapAlert from './Alert/Extension'
 import TipTapLink from './Link/Extension'
+import TipTapImageButton from './Buttons/TipTapImageButton'
 
 export default {
     props: {
@@ -359,7 +365,10 @@ export default {
     components: {
         EditorContent,
         TipTapButton,
-        TipTapButtons
+        TipTapButtons,
+
+        TipTapImageButton,
+        TipTapImageButton
     },
 
     data() {
@@ -423,7 +432,6 @@ export default {
         },
 
         renderEditor() {
-            console.log(this.title);
             this.editor = new Editor({
                 content: this.contentInput,
                 extensions: [
@@ -437,6 +445,7 @@ export default {
                     Color,
                     Gapcursor,
                     Link,
+                    Image,
                     Table.configure({
                         resizable: true,
                     }),
@@ -446,7 +455,7 @@ export default {
                     Typography,
                     TipTapRequest,
                     TipTapAlert,
-                    TipTapLink
+                    TipTapLink,
                 ],
                 onUpdate: () => {
                     // HTML
@@ -484,7 +493,7 @@ export default {
     bottom: 10px;
     z-index: 2;
     left: 50%;
-    width: 715px !important;
+    width: 800px !important;
     transform: translate(-50%, 0);
 }
 
