@@ -12,7 +12,7 @@
     </div>
     <div class="pb-1 row">
         @foreach ($categories as $category)
-            <div class="mb-5 col-4">
+            <div class="mb-5 col-12 col-md-4">
                 <div class="w-100 mb-0 border p-4 my-rounded">
                     <i class="fa-solid fa-book text-my-primary h4"></i>
                     <h4 class="text-my-primary">{{$category->name}}</h4>

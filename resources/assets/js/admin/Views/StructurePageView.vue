@@ -14,7 +14,7 @@
 
             <div class="container">
                 <div class="row">
-                    <div class="col-4">
+                    <div class="col-12 col-md-4">
                         <div class="pt-3" v-if="category">
                             <h1>{{category.name}}</h1>
                             <hr v-if="category.parent_id" />
@@ -29,10 +29,11 @@
                         </div>
                         <hr>
                         <div class="doc_nav">
+                            <!-- :list="pages" -->
                             <draggable
-                            :list="pages"
                             class="list-group"
                             handle=".handle"
+                            :list="[]"
                             @change="newOrderPages"
                             >
                                 <div
@@ -83,7 +84,7 @@
                             <!-- </ul> -->
                         </div>
                     </div>
-                    <div class="col-8">
+                    <div class="col-12 col-md-8">
                         <div class="mt-3" v-if="pageSelected">
                             <div class="mb-3 d-flex align-items-center justify-content-between border-bottom pb-3">
                                 <multiselect
