@@ -41,7 +41,7 @@
 @section('client-content')
 <div class="container">
     <div class="row">
-        <div class="col-4">
+        <div class="col-12 col-md-4">
             <div class="sticky-top" style="overflow-y: auto; max-height: 100vh;">
                 <div class="pt-3">
                     <h1>{{$category->name}}</h1>
@@ -94,7 +94,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-8">
+        <div class="col-12 col-md-8">
             <div class="mt-3 doc-reader">
                 <div class="js-section"></div>
                 @if (count($pages) <= 0)
